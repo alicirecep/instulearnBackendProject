@@ -8,4 +8,6 @@ public class Manage {
 	 * bos birakilamaz
      * US_01 Categories tablosunda 'slug = fashion' olan bir categorie'nin name değerini dogrulayınız.
      */
+
+	// Ben geldim
 }
