@@ -16,12 +16,9 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class API_Methods {
 
-    public static Response response;
-
+    public static Response response = null;
     public static int id;
     public static String fullPath;
-    public static Faker faker = new Faker();
-    public static JSONObject requestBody;
 
 
     public static void pathParam(String rawPaths) {
@@ -53,163 +50,76 @@ public class API_Methods {
         System.out.println("id : " + id);
     }
 
-    public static String registerEmail() {
-        spec = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base_url", "api")).build();
-        spec.pathParams("pp1", "api", "pp2", "register");
+    public static Response sendRequest(String httpMethod, Object requestBody) {
 
-        String password = faker.internet().password();
+        switch (httpMethod.toUpperCase()) {
+            case "GET":
+                response = given()
+                        .spec(spec)
+                        .when()
+                        .get(fullPath);
+                break;
+            case "POST":
+                response = given()
+                        .spec(spec)
+                        .contentType(ContentType.JSON)
+                        .when()
+                        .body(requestBody)
+                        .post(fullPath);
+                break;
+            case "PATCH":
+                response = given()
+                        .spec(spec)
+                        .contentType(ContentType.JSON)
+                        .when()
+                        .body(requestBody)
+                        .patch(fullPath);
+                break;
+            case "DELETE":
+                response = given()
+                        .spec(spec)
+                        .when()
+                        .delete(fullPath);
+                break;
+        }
 
-        requestBody = new JSONObject();
-        requestBody.put("first_name", faker.name().firstName());
-        requestBody.put("last_name", faker.name().lastName());
-        requestBody.put("email", faker.internet().emailAddress());
-        requestBody.put("password", password);
-        requestBody.put("password_confirmation", password);
-        requestBody.put("user_type", "customer");
-        requestBody.put("referral_code", "0101010101");
-
-        Response response = given()
-                .spec(spec)
-                .contentType(ContentType.JSON)
-                .header("Accept", "application/json")
-                .when()
-                .body(requestBody.toString())
-                .post("/{pp1}/{pp2}");
-
-        JsonPath repJP = response.jsonPath();
-
-        String email = repJP.getString("user.email");
-        System.out.println("email = " + email);
-
-        return email;
-    }
-
-    public static Response getResponse() {
-        response = given()
-                .spec(spec)
-                .when()
-                .get(fullPath);
-
-        response.prettyPrint();
+        if (response != null) {
+            response.prettyPrint();
+        }
 
         return response;
     }
 
-    public static Response getBodyResponse(Object requestBody) {
-        response = given()
-                .spec(spec)
-                .contentType(ContentType.JSON)
-                .when()
-                .body(requestBody)
-                .get(fullPath);
 
-        response.prettyPrint();
-
-        return response;
-    }
-
-    public static Response postResponse(Object requestBody) {
-        response = given()
-                .spec(spec)
-                .contentType(ContentType.JSON)
-                .when()
-                .body(requestBody)
-                .post(fullPath);
-
-        response.prettyPrint();
-
-        return response;
-    }
-
-    public static Response patchResponse(Object requestBody) {
-        response = given()
-                .spec(spec)
-                .contentType(ContentType.JSON)
-                .when()
-                .body(requestBody)
-                .patch(fullPath);
-
-        response.prettyPrint();
-
-        return response;
-    }
-
-    public static Response deleteResponse(Object requestBody) {
-        response = given()
-                .spec(spec)
-                .contentType(ContentType.JSON)
-                .when()
-                .body(requestBody)
-                .delete(fullPath);
-
-        response.prettyPrint();
-
-        return response;
-    }
-
-    public static String tryCatchGet() {
+    public static String tryCatchRequest(String httpMethod, Object requestBody) {
         String exceptionMesaj = null;
         try {
-            response = given()
-                    .spec(spec)
-                    .when()
-                    .get(fullPath);
+            switch (httpMethod.toUpperCase()) {
+                case "GET":
+                    response = given()
+                            .spec(spec)
+                            .when()
+                            .get(fullPath);
+                    break;
+                case "DELETE":
+                    response = given()
+                            .spec(spec)
+                            .when()
+                            .delete(fullPath);
+                    break;
+                case "PATCH":
+                    response = given()
+                            .spec(spec)
+                            .contentType(ContentType.JSON)
+                            .when()
+                            .body(requestBody)
+                            .patch(fullPath);
+                    break;
+            }
         } catch (Exception e) {
             exceptionMesaj = e.getMessage();
         }
         System.out.println("Exception Mesaj : " + exceptionMesaj);
-
-        return exceptionMesaj;
-    }
-
-    public static String tryCatchGetBody(Object requestBody) {
-        String exceptionMesaj = null;
-        try {
-            response = given()
-                    .spec(spec)
-                    .contentType(ContentType.JSON)
-                    .when()
-                    .body(requestBody)
-                    .get(fullPath);
-        } catch (Exception e) {
-            exceptionMesaj = e.getMessage();
-        }
-        System.out.println("Exception Mesaj : " + exceptionMesaj);
-
-        return exceptionMesaj;
-    }
-
-    public static String tryCatchDelete(Object requestBody) {
-        String exceptionMesaj = null;
-        try {
-            response = given()
-                    .spec(spec)
-                    .contentType(ContentType.JSON)
-                    .when()
-                    .body(requestBody)
-                    .delete(fullPath);
-        } catch (Exception e) {
-            exceptionMesaj = e.getMessage();
-        }
-        System.out.println("Exception Mesaj : " + exceptionMesaj);
-
-        return exceptionMesaj;
-    }
-
-    public static String tryCatchPatch(Object requestBody) {
-        String exceptionMesaj = null;
-        try {
-            response = given()
-                    .spec(spec)
-                    .contentType(ContentType.JSON)
-                    .when()
-                    .body(requestBody)
-                    .patch(fullPath);
-        } catch (Exception e) {
-            exceptionMesaj = e.getMessage();
-        }
-        System.out.println("Exception Mesaj : " + exceptionMesaj);
-
         return exceptionMesaj;
     }
 
@@ -219,9 +129,9 @@ public class API_Methods {
                 .statusCode(statusCode);
     }
 
-    public static void messageAssert(String message) {
+    public static void assertBody(String path, String value) {
         response.then()
                 .assertThat()
-                .body("message", equalTo(message));
+                .body(path, equalTo(value));
     }
 }

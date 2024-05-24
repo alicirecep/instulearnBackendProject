@@ -1,6 +1,7 @@
 package utilities.API_Utilities;
 
 import config_Requirements.ConfigReader;
+import env.EnvironmentManager;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -15,36 +16,43 @@ public class Authentication {
 
         JSONObject reqBody = null;
 
-        spec = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base_url","api")).build();
+        spec = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base_url", "api")).build();
 
         switch (user) {
             case "admin":
-                spec.pathParams("pp1", "api", "pp2", "login");
+                spec.pathParams("pp1", "api", "pp2", "token");
                 reqBody = new JSONObject();
-                reqBody.put("email", ConfigReader.getProperty("adminEmail","api"));
-                reqBody.put("password", ConfigReader.getProperty("adminPassword","api"));
+                reqBody.put("email", ConfigReader.getProperty("adminEmail", "api"));
+                reqBody.put("password", ConfigReader.getProperty("adminPassword", "api"));
                 break;
-            case "customer":
-                spec.pathParams("pp1", "api", "pp2", "login");
+            case "student":
+                spec.pathParams("pp1", "api", "pp2", "token");
                 reqBody = new JSONObject();
-                reqBody.put("email", ConfigReader.getProperty("customerEmail","api"));
-                reqBody.put("password", ConfigReader.getProperty("customerPassword","api"));
+                reqBody.put("email", ConfigReader.getProperty("studentEmail", "api"));
+                reqBody.put("password", ConfigReader.getProperty("studentPassword", "api"));
                 break;
-
+            case "instructor":
+                spec.pathParams("pp1", "api", "pp2", "token");
+                reqBody = new JSONObject();
+                reqBody.put("email", ConfigReader.getProperty("instructorEmail", "api"));
+                reqBody.put("password", ConfigReader.getProperty("instructorPassword", "api"));
+                break;
         }
 
         Response response = given()
-                              .spec(spec)
-                              .contentType(ContentType.JSON)
-                              .header("Accept", "application/json")
-                          .when()
-                              .body(reqBody.toString())
-                              .post("/{pp1}/{pp2}");
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .header("x-api-key", "1234")
+                .when()
+                .body(reqBody.toString())
+                .post("/{pp1}/{pp2}");
+        response.prettyPrint();
 
 
         JsonPath repJP = response.jsonPath();
 
-        String token = repJP.getString("token");
+        String token = repJP.getString("data.access_token");
         System.out.println("token = " + token);
 
         return token;
