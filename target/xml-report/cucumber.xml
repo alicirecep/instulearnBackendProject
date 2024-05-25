@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="7.418">
-    <testcase classname="As an administrator, I want to update the information of the course with the specified ID via an API connection." name="When a PATCH request is sent to the /api/updateCourse/{id} endpoint with valid authorization" time="6.978">
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="8.256">
+    <testcase classname="As an administrator, I want to delete the course information with the specified ID via an API connection." name="When a DELETE request with valid authorization information and correct data (id) is sent to the" time="7.789">
         <system-out><![CDATA[* The api user constructs the base url with the "admin" token...............passed
-* The api user sets "api/updateCourse/2388" path parameters.................passed
-* The api user prepares a PATCH request to send to the API updateCourse endpoint containing the information 100, 15, 50 and "Web Development 101"..passed
-* The api user sends a PATCH request and saves the response returned from the API updateCourse endpoint..passed
+* The api user sets "api/deleteCourse/2392" path parameters.................passed
+* The api user sends a DELETE request and saves the returned response.......passed
 * The api user verifies that the status code is 200.........................passed
 * The api user confirms that the remark information in the response body is "success"..passed
-* The api user verifies that the Message information in the response body is "Successfully Updated.".passed
+* The api user verifies that the Message information in the response body is "Successfully Deleted.".passed
+* The api user verifies that the "Deleted Course ID" information in the returned response body is the same as the id path parameter written in the endpoint..passed
 ]]></system-out>
     </testcase>
 </testsuite>

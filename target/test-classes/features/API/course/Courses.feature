@@ -20,7 +20,7 @@ Feature:As an administrator, I want to access courses via an API connection.
 
     Examples:
       | dataIndex | teacher_id | creator_id | category_id | type   | private | slug                     | duration | id | webinar_id | locale | title                    | seo_description    | description     |
-      | 0         | 1995       | 1016       | 1016        | course | 0       | Become-a-Project-Manager | 150      | 1  | 1995       | en     | Become a Project Manager | Project Management | (227, 227, 227) |
+      | 0         | 1016       | 1016       | 611         | course | 0       | Become-a-Project-Manager | 150      | 1  | 1995       | en     | Become a Project Manager | Project Management | (227, 227, 227) |
 
 
   Scenario: When a GET request is sent to the /api/courses endpoint with invalid (student or teacher) authorization credentials,
@@ -36,7 +36,7 @@ Feature:As an administrator, I want to access courses via an API connection.
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
     * The api user confirms that the remark information in the response body is "failed".
-    # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
+    # Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
     * The api user verifies that the message information in the response body is "To access this data, you must log in as a admin."
     # Api kullanicisi response bodydeki message bilgisinin "To access this data, you must log in as a admin." oldugunu dogrular
 
