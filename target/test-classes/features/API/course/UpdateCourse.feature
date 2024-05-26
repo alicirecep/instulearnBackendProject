@@ -12,8 +12,8 @@ Feature: As an administrator, I want to update the information of the course wit
     # Api kullanicisi "api/updateCourse/{id}" path parametrelerini olusturur
     * The api user prepares a PATCH request to send to the API updateCourse endpoint containing the information <duration>, <capacity>, <price> and "<title>".
     # Api kullanicisi api updateCourse endpointine gondermek icin <duration>, <capacity>, <price> ve "<title>" bilgilerini iceren bir patch request hazirlar
-    * The api user sends a PATCH request and records the received response.
-    # Api kullanicisi PATCH request gonderir ve donen responsei kaydeder
+    * The api user sends a "PATCH" request body and saves the returned response.
+    # Api kullanicisi PATCH request body gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 200.
     # Api kullanicisi status codeun 200 oldugunu dogrular
     * The api user confirms that the remark information in the response body is "success".
@@ -38,8 +38,8 @@ Feature: As an administrator, I want to update the information of the course wit
     # Api kullanicisi "api/updateCourse/{id}" path parametrelerini olusturur
     * The api user prepares a PATCH request without containing any data.
     # Api kullanicisi data icermeyen bir patch request hazırlar
-    * The api user sends a PATCH request and records the received response.
-    # Api kullanicisi PATCH request gonderir ve donen responsei kaydeder
+    * The api user sends a "PATCH" request body and saves the returned response.
+    # Api kullanicisi PATCH request body gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
     * The api user confirms that the remark information in the response body is "failed".
@@ -62,8 +62,8 @@ Feature: As an administrator, I want to update the information of the course wit
     # Api kullanicisi "api/updateCourse/{id}" path parametrelerini olusturur
     * The api user prepares a PATCH request to send to the API updateCourse endpoint containing the information <duration>, <capacity>, <price> and "<title>".
     # Api kullanicisi api updateCourse endpointine gondermek icin <duration>, <capacity>, <price> ve "<title>" bilgilerini iceren bir patch request hazirlar
-    * The api user sends a PATCH request and records the received response.
-    # Api kullanicisi PATCH request gonderir ve donen responsei kaydeder
+    * The api user sends a "PATCH" request body and saves the returned response.
+    # Api kullanicisi PATCH request body gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
     * The api user confirms that the remark information in the response body is "failed".
@@ -86,8 +86,8 @@ Feature: As an administrator, I want to update the information of the course wit
     # Api kullanicisi "api/updateCourse/{id}" path parametrelerini olusturur
     * The api user prepares a PATCH request to send to the API updateCourse endpoint containing the information <duration>, <capacity>, <price> and "<title>".
     # Api kullanicisi api updateCourse endpointine gondermek icin <duration>, <capacity>, <price> ve "<title>" bilgilerini iceren bir patch request hazirlar
-    * The api user sends a PATCH request and records the received response.
-    # Api kullanicisi PATCH request gonderir ve donen responsei kaydeder
+    * The api user sends a "PATCH" request body and saves the returned response.
+    # Api kullanicisi PATCH request body gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
     * The api user confirms that the remark information in the response body is "failed".
@@ -111,8 +111,8 @@ Feature: As an administrator, I want to update the information of the course wit
     # Api kullanicisi "api/updateCourse/{id}" path parametrelerini olusturur
     * The api user prepares a PATCH request to send to the API updateCourse endpoint containing the information <duration>, <capacity>, <price> and "<title>".
     # Api kullanicisi api updateCourse endpointine gondermek icin <duration>, <capacity>, <price> ve "<title>" bilgilerini iceren bir patch request hazirlar
-    * The api user sends a PATCH request and records the received response.
-    # Api kullanicisi PATCH request gonderir ve donen responsei kaydeder
+    * The api user sends a "PATCH" request body and saves the returned response.
+    # Api kullanicisi PATCH request body gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
     * The api user confirms that the remark information in the response body is "failed".
@@ -135,7 +135,7 @@ Feature: As an administrator, I want to update the information of the course wit
     # Api kullanicisi "api/updateCourse/{id}" path parametrelerini olusturur
     * The api user prepares a PATCH request to send to the API updateCourse endpoint containing the information <duration>, <capacity>, <price> and "<title>".
     # Api kullanicisi api updateCourse endpointine gondermek icin <duration>, <capacity>, <price> ve "<title>" bilgilerini iceren bir patch request hazirlar
-    * The api user sends a PATCH request, saves the response, and verifies that the status code is '401' with the reason phrase Unauthorized.
+    * The api user sends a "PATCH" request, saves the response, and verifies that the status code is '401' with the reason phrase Unauthorized.
     # Api kullanicisi PATCH request gonderir, donen responsei kaydeder, status codeun '401' ve reason phrase bilgisinin Unauthorized oldugunu dogrular
 
     Examples:
@@ -151,7 +151,7 @@ Feature: As an administrator, I want to update the information of the course wit
     # Api kullanicisi "admin" token ile base urli olusturur
     * The api user sets "api/course/<id>" path parameters.
     # Api kullanicisi "api/course/{id}" path parametrelerini olusturur
-    * The api user sends a GET request and saves the returned response.
+    * The api user sends a "GET" request and saves the returned response.
     # Api kullanicisi GET request gonderir ve donen responsei kaydeder
     * The api user confirms that the title information in the response body is "<titleValue>".
     # Api kullanicisi response bodydeki title bilgisinin "<titleValue>" olduğunu doğrular.

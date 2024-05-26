@@ -1,7 +1,7 @@
 Feature:As an administrator, I want to access courses via an API connection.
 
   Scenario Outline: When a GET request is sent to the /api/courses endpoint with valid authorization, it should be verified
-  that the status code is 200 and that the 'remark' in the response body is "success". Additionally, it should be
+  that the status code is 200 and that the remark in the response body is "success". Additionally, it should be
   confirmed that the course with id(x) has accurate details for teacher_id, creator_id, category_id, type, private,
   slug, start_date, duration, id, webinar_id, locale, title, seo_description, and description.
 
@@ -9,7 +9,7 @@ Feature:As an administrator, I want to access courses via an API connection.
     # Api kullanicisi "admin" token ile base urli olusturur
     * The api user sets "api/courses" path parameters.
     # Api kullanicisi "api/courses" path parametrelerini olusturur
-    * The api user sends a GET request and saves the returned response.
+    * The api user sends a "GET" request and saves the returned response.
     # Api kullanicisi GET request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 200.
     # Api kullanicisi status codeun 200 oldugunu dogrular
@@ -31,7 +31,7 @@ Feature:As an administrator, I want to access courses via an API connection.
     # Api kullanicisi "student" token ile base urli olusturur
     * The api user sets "api/courses" path parameters.
     # Api kullanicisi "api/courses" path parametrelerini olusturur
-    * The api user sends a GET request and saves the returned response.
+    * The api user sends a "GET" request and saves the returned response.
     # Api kullanicisi GET request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
@@ -49,6 +49,6 @@ Feature:As an administrator, I want to access courses via an API connection.
     # Api kullanicisi "invalid" token ile base urli olusturur
     * The api user sets "api/courses" path parameters.
     # Api kullanicisi "api/courses" path parametrelerini olusturur
-    * The api user sends a GET request, saves the returned response, and verifies that the status code is '401' with the reason phrase Unauthorized.
+    * The api user sends a "GET" request, saves the returned response, and verifies that the status code is '401' with the reason phrase Unauthorized.
     # Api kullanicisi GET request gonderir, donen responsei kaydeder, status codeun '401' ve reason phrase bilgisinin Unauthorized oldugunu dogrular
 
