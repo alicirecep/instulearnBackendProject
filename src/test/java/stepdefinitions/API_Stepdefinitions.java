@@ -30,9 +30,9 @@ public class API_Stepdefinitions {
     }
 
     // ******************************************* /api/courses ************************************************
-    @Given("The api user sends a GET request and saves the returned response.")
-    public void the_api_user_sends_a_get_request_and_saves_the_returned_response() {
-        API_Methods.sendRequest("GET", null);
+    @Given("The api user sends a {string} request and saves the returned response.")
+    public void the_api_user_sends_a_request_and_saves_the_returned_response(String httpMethod) {
+        API_Methods.sendRequest(httpMethod, null);
     }
 
     @Given("The api user verifies that the status code is {int}.")
@@ -70,9 +70,9 @@ public class API_Stepdefinitions {
         API_Methods.assertBody("data.message", message);
     }
 
-    @Given("The api user sends a GET request, saves the returned response, and verifies that the status code is '401' with the reason phrase Unauthorized.")
-    public void the_api_user_sends_a_get_request_saves_the_returned_response_and_verifies_that_the_status_code_is_with_the_reason_phrase_unauthorized() {
-        assertTrue(API_Methods.tryCatchRequest("GET", null).equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
+    @Given("The api user sends a {string} request, saves the returned response, and verifies that the status code is '401' with the reason phrase Unauthorized.")
+    public void the_api_user_sends_a_request_saves_the_returned_response_and_verifies_that_the_status_code_is_with_the_reason_phrase_unauthorized(String httpeMethod) {
+        assertTrue(API_Methods.tryCatchRequest(httpeMethod, null).equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
     // *********************************************************************************************************
 
@@ -117,9 +117,9 @@ public class API_Stepdefinitions {
         System.out.println("POST Request Body : " + requestBody);
     }
 
-    @Given("The api user sends a POST request and saves the returned response.")
-    public void the_api_user_sends_a_post_request_and_saves_the_returned_response() {
-        API_Methods.sendRequest("POST", requestBody);
+    @Given("The api user sends a {string} request body and saves the returned response.")
+    public void the_api_user_sends_a_request_body_and_saves_the_returned_response(String httpMethod) {
+        API_Methods.sendRequest(httpMethod, requestBody);
     }
 
     @Given("The api user verifies that the Message information in the response body is {string}")
@@ -167,19 +167,15 @@ public class API_Stepdefinitions {
         System.out.println("PATCH Request Body : " + requestBody);
     }
 
-    @Given("The api user sends a PATCH request and records the received response.")
-    public void the_api_user_sends_a_patch_request_and_records_the_received_response() {
-        API_Methods.sendRequest("PATCH", requestBody);
-    }
-
     @Given("The api user prepares a PATCH request without containing any data.")
     public void the_api_user_prepares_a_patch_request_without_containing_any_data() {
         requestBody = builder.buildUsingJSONObject();
     }
 
-    @Given("The api user sends a PATCH request, saves the response, and verifies that the status code is '401' with the reason phrase Unauthorized.")
-    public void the_api_user_sends_a_patch_request_saves_the_response_and_verifies_that_the_status_code_is_with_the_reason_phrase_unauthorized() {
-        assertTrue(API_Methods.tryCatchRequest("PATCH", requestBody).equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
+    @Given("The api user sends a {string} request, saves the response, and verifies that the status code is '401' with the reason phrase Unauthorized.")
+    public void the_api_user_sends_a_request_saves_the_response_and_verifies_that_the_status_code_is_with_the_reason_phrase_unauthorized(String httpMethod) {
+        assertTrue(API_Methods.tryCatchRequest(httpMethod, requestBody).equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
+
     }
 
     @Given("The api user verifies that the {string} information in the returned response body is the same as the id path parameter written in the endpoint.")
@@ -191,8 +187,8 @@ public class API_Stepdefinitions {
         int id = 0;
         if (idValue instanceof String) {
             id = Integer.parseInt((String) idValue);
-        }else{
-            id= (int) idValue;
+        } else {
+            id = (int) idValue;
         }
         assertEquals(API_Methods.id, id);
     }
@@ -203,12 +199,43 @@ public class API_Stepdefinitions {
                 .assertThat()
                 .body("data.translations[0].title", equalTo(titleValue));
     }
-    // *********************************************************************************************************
+    // ************************************************************************************************************
 
-    // *************************************** /api/deleteCourse/{id} ******************************************
-    @Given("The api user sends a DELETE request and saves the returned response.")
-    public void the_api_user_sends_a_delete_request_and_saves_the_returned_response() {
-        API_Methods.sendRequest("DELETE", null);
+    // ******************************************* /api/categories ************************************************
+    @Given("The api user verifies that the information for the entry with the specified {int} in the response body includes {string}, {string}, {int}, {int}, {int}, {string} and {string}.")
+    public void the_api_user_verifies_that_the_information_for_the_entry_with_the_specified_in_the_response_body_includes_and(int dataIndex, String slug, String icon, int order, int id, int category_id, String locale, String title) {
+        API_Methods.response.then()
+                .assertThat()
+                .body("data.categories[" + dataIndex + "].slug", equalTo(slug),
+                        "data.categories[" + dataIndex + "].parent_id", nullValue(),
+                        "data.categories[" + dataIndex + "].icon", equalTo(icon),
+                        "data.categories[" + dataIndex + "].order", equalTo(order),
+                        "data.categories[" + dataIndex + "].title", nullValue(),
+                        "data.categories[" + dataIndex + "].translations[0].id", equalTo(id),
+                        "data.categories[" + dataIndex + "].translations[0].category_id", equalTo(category_id),
+                        "data.categories[" + dataIndex + "].translations[0].locale", equalTo(locale),
+                        "data.categories[" + dataIndex + "].translations[0].title", equalTo(title));
     }
-    // *********************************************************************************************************
+    // ************************************************************************************************************
+
+    // **************************************** /api/category/{id} ************************************************
+    @Given("The api user verifies that the data in the response body includes {int}, {string}, {string}, {int}, {int}, {int}, {string} and {string}.")
+    public void the_api_user_verifies_that_the_data_in_the_response_body_includes_and(int data_id, String slug, String icon, int order, int translations_id, int category_id, String locale, String title) {
+        jsonPath = API_Methods.response.jsonPath();
+
+        assertEquals(data_id, jsonPath.getInt("data.id"));
+        assertEquals(slug, jsonPath.getString("data.slug"));
+        assertNull(jsonPath.get("data.parent_id"));
+        assertEquals(icon, jsonPath.getString("data.icon"));
+        assertEquals(order, jsonPath.getInt("data.order"));
+        assertNull(jsonPath.get("data.title"));
+        assertEquals(translations_id, jsonPath.getInt("data.translations[0].id"));
+        assertEquals(category_id, jsonPath.getInt("data.translations[0].category_id"));
+        assertEquals(locale, jsonPath.getString("data.translations[0].locale"));
+        assertEquals(title, jsonPath.getString("data.translations[0].title"));
+    }
+    // ************************************************************************************************************
+
+
+
 }

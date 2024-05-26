@@ -9,7 +9,7 @@ Feature: As an administrator, I want to delete the course information with the s
     # Api kullanicisi "admin" token ile base urli olusturur
     * The api user sets "api/deleteCourse/<id>" path parameters.
     # Api kullanicisi "api/deleteCourse/{id}" path parametrelerini olusturur
-    * The api user sends a DELETE request and saves the returned response.
+    * The api user sends a "DELETE" request and saves the returned response.
     # Api kullanicisi DELETE request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 200.
     # Api kullanicisi status codeun 200 oldugunu dogrular
@@ -19,6 +19,105 @@ Feature: As an administrator, I want to delete the course information with the s
     # Api kullanicisi response bodydeki Message bilgisinin "Successfully Deleted." oldugunu dogrular
     * The api user verifies that the "Deleted Course ID" information in the returned response body is the same as the id path parameter written in the endpoint.
     # Api kullanicisi donen response body icindeki "Deleted Course ID" bilgisinin endpointde yazan id path parametresi ile ayni oldugunu dogrular
+
+    Examples:
+      | id   |
+      | 2392 |
+
+
+  Scenario Outline: When a DELETE request is sent to the /api/deleteCourse/{id} endpoint with valid authorization credentials and
+  a non-existing (id), the returned status code should be 203. The remark information in the response body should be verified as
+  "failed", and the message information should be "There is not course for this id."
+
+    * The api user constructs the base url with the "admin" token.
+    # Api kullanicisi "admin" token ile base urli olusturur
+    * The api user sets "api/deleteCourse/<id>" path parameters.
+    # Api kullanicisi "api/deleteCourse/{id}" path parametrelerini olusturur
+    * The api user sends a "DELETE" request and saves the returned response.
+    # Api kullanicisi DELETE request gonderir ve donen responsei kaydeder
+    * The api user verifies that the status code is 203.
+    # Api kullanicisi status codeun 203 oldugunu dogrular
+    * The api user confirms that the remark information in the response body is "failed".
+    # Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
+    * The api user verifies that the message information in the response body is "There is not course for this id."
+    # Api kullanicisi response bodydeki message bilgisinin "There is not course for this id." oldugunu dogrular
+
+    Examples:
+      | id   |
+      | 5568 |
+
+
+  Scenario: When a DELETE request is sent to the /api/deleteCourse/{id} endpoint with valid authorization credentials but without
+  including an (id), the returned status code should be 203. The remark information in the response body should be verified as
+  "failed", and the message information should be "No id"
+
+    * The api user constructs the base url with the "admin" token.
+    # Api kullanicisi "admin" token ile base urli olusturur
+    * The api user sets "api/deleteCourse" path parameters.
+    # Api kullanicisi "api/deleteCourse/{id}" path parametrelerini olusturur
+    * The api user sends a "DELETE" request and saves the returned response.
+    # Api kullanicisi DELETE request gonderir ve donen responsei kaydeder
+    * The api user verifies that the status code is 203.
+    # Api kullanicisi status codeun 203 oldugunu dogrular
+    * The api user confirms that the remark information in the response body is "failed".
+    # Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
+    * The api user verifies that the message information in the response body is "No id"
+    # Api kullanicisi response bodydeki message bilgisinin "No id" oldugunu dogrular
+
+
+  Scenario Outline: When a DELETE request is sent to the /api/deleteCourse/{id} endpoint with invalid (student or teacher)
+  authorization credentials but with correct (id), the returned status code should be 203. The 'remark' information in the
+  response body should be verified as "failed", and the message information should be
+  "To access this data, you must log in as a admin."
+
+    * The api user constructs the base url with the "instructor" token.
+    # Api kullanicisi "instructor" token ile base urli olusturur
+    * The api user sets "api/deleteCourse/<id>" path parameters.
+    # Api kullanicisi "api/deleteCourse/{id}" path parametrelerini olusturur
+    * The api user sends a "DELETE" request and saves the returned response.
+    # Api kullanicisi DELETE request gonderir ve donen responsei kaydeder
+    * The api user verifies that the status code is 203.
+    # Api kullanicisi status codeun 203 oldugunu dogrular
+    * The api user confirms that the remark information in the response body is "failed".
+    # Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
+    * The api user verifies that the message information in the response body is "To access this data, you must log in as a admin."
+    # Api kullanicisi response bodydeki message bilgisinin "To access this data, you must log in as a admin." oldugunu dogrular
+
+    Examples:
+      | id   |
+      | 2392 |
+
+
+  Scenario Outline: When a DELETE request is sent to the /api/deleteCourse/{id} endpoint with invalid (invalid token)
+  authorization credentials but with correct (id), the returned status code should be 401, and the message information in
+  the response body should be verified as "Unauthenticated."
+
+    * The api user constructs the base url with the "invalid" token.
+    # Api kullanicisi "invalid" token ile base urli olusturur
+    * The api user sets "api/deleteCourse/<id>" path parameters.
+    # Api kullanicisi "api/deleteCourse/{id}" path parametrelerini olusturur
+    * The api user sends a "DELETE" request, saves the returned response, and verifies that the status code is '401' with the reason phrase Unauthorized.
+    # Api kullanicisi DELETE request gonderir, donen responsei kaydeder, status codeun '401' ve reason phrase bilgisinin Unauthorized oldugunu dogrular
+
+    Examples:
+      | id   |
+      | 2392 |
+
+
+  Scenario Outline: The deletion of a course registration via the API should be verified.
+  (The deletion can be confirmed by sending a GET request to the endpoint /api/course/{id} with the Deleted Course ID
+  returned in the response body.)
+
+    * The api user constructs the base url with the "admin" token.
+    # Api kullanicisi "admin" token ile base urli olusturur
+    * The api user sets "api/course/<id>" path parameters.
+    # Api kullanicisi "api/course/{id}" path parametrelerini olusturur
+    * The api user sends a "GET" request and saves the returned response.
+    # Api kullanicisi GET request gonderir ve donen responsei kaydeder
+    * The api user verifies that the status code is 203.
+    # Api kullanicisi status codeun 203 oldugunu dogrular
+    * The api user verifies that the message information in the response body is "There is not course for this id."
+    # Api kullanicisi response bodydeki message bilgisinin "There is not course for this id." oldugunu dogrular
 
     Examples:
       | id   |

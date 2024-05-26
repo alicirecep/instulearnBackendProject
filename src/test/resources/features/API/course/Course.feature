@@ -1,21 +1,21 @@
 Feature: As an administrator, I need to access detailed information about the course with the specified ID via an API connection.
 
   Scenario Outline: When a GET request is sent to the /api/course/{id} endpoint with valid authorization and correct data (id),
-  it should be verified that the returned status code is 200 and that the 'remark' in the response body is "success".
+  it should be verified that the returned status code is 200 and that the remark in the response body is "success".
   Additionally, it should be confirmed that the data in the response body is accurate.
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
     * The api user sets "api/course/<id>" path parameters.
     # Api kullanicisi "api/course/{id}" path parametrelerini olusturur
-    * The api user sends a GET request and saves the returned response.
+    * The api user sends a "GET" request and saves the returned response.
     # Api kullanicisi GET request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 200.
     # Api kullanicisi status codeun 200 oldugunu dogrular
     * The api user confirms that the remark information in the response body is "success".
     # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
     * The API user verifies that the data in the response body includes <data_id>, <teacher_id>, <creator_id>, <category_id>, "<type>", <private>, "<slug>", <start_date>, <duration>, <translations_id>, <webinar_id>, "<locale>", "<title>", "<seo_description>" and "<description>".
-    # API kullanicisi response bodydeki data <data_id>, <teacher_id>, <creator_id>, <category_id>, "<type>", <private>, "<slug>", <start_date>, <duration>, <translations_id>, <webinar_id>, "<locale>", "<title>", "<seo_description>" ve "<description>" içeriklerini doğrular.
+    # Api kullanicisi response bodydeki data <data_id>, <teacher_id>, <creator_id>, <category_id>, "<type>", <private>, "<slug>", <start_date>, <duration>, <translations_id>, <webinar_id>, "<locale>", "<title>", "<seo_description>" ve "<description>" içeriklerini doğrular.
 
     Examples:
       | id   | data_id | teacher_id | creator_id | category_id | type    | private | slug                            | start_date | duration | translations_id | webinar_id | locale | title                           | seo_description                 | description     |
@@ -30,7 +30,7 @@ Feature: As an administrator, I need to access detailed information about the co
     # Api kullanicisi "admin" token ile base urli olusturur
     * The api user sets "api/course/<id>" path parameters.
     # Api kullanicisi "api/course/{id}" path parametrelerini olusturur
-    * The api user sends a GET request and saves the returned response.
+    * The api user sends a "GET" request and saves the returned response.
     # Api kullanicisi GET request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
@@ -52,7 +52,7 @@ Feature: As an administrator, I need to access detailed information about the co
     # Api kullanicisi "admin" token ile base urli olusturur
     * The api user sets "api/course" path parameters.
     # Api kullanicisi "api/course/{id}" path parametrelerini olusturur
-    * The api user sends a GET request and saves the returned response.
+    * The api user sends a "GET" request and saves the returned response.
     # Api kullanicisi GET request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
@@ -70,7 +70,7 @@ Feature: As an administrator, I need to access detailed information about the co
     # Api kullanicisi "instructor" token ile base urli olusturur
     * The api user sets "api/course/<id>" path parameters.
     # Api kullanicisi "api/course/{id}" path parametrelerini olusturur
-    * The api user sends a GET request and saves the returned response.
+    * The api user sends a "GET" request and saves the returned response.
     # Api kullanicisi GET request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
@@ -92,7 +92,7 @@ Feature: As an administrator, I need to access detailed information about the co
     # Api kullanicisi "invalid" token ile base urli olusturur
     * The api user sets "api/course/<id>" path parameters.
     # Api kullanicisi "api/course/{id}" path parametrelerini olusturur
-    * The api user sends a GET request, saves the returned response, and verifies that the status code is '401' with the reason phrase Unauthorized.
+    * The api user sends a "GET" request, saves the returned response, and verifies that the status code is '401' with the reason phrase Unauthorized.
     # Api kullanicisi GET request gonderir, donen responsei kaydeder, status codeun '401' ve reason phrase bilgisinin Unauthorized oldugunu dogrular
 
     Examples:
