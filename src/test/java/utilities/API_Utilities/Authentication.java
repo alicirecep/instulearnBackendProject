@@ -1,7 +1,6 @@
 package utilities.API_Utilities;
 
 import config_Requirements.ConfigReader;
-import env.EnvironmentManager;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;

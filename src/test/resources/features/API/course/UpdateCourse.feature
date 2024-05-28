@@ -1,10 +1,8 @@
 Feature: As an administrator, I want to update the information of the course with the specified ID via an API connection.
 
-  Scenario Outline: When a PATCH request with valid authorization information, correct data (id), and accurate values in the body
-  is sent to the /api/updateCourse/{id} endpoint, the response should have a status code of 200. The 'remark' information in the
-  response body should be "success", and the 'Message' information should be "Successfully Updated." Additionally, in this test
-  case, the Updated Course ID in the response body from the /api/updateCourse/{id} endpoint should be the same as the id path
-  parameter in the /api/updateCourse/{id} endpoint.
+  Scenario Outline: Valid authorization, correct data (id), and accurate information should return a 200 status code from the
+  /api/updateCourse/{id} endpoint. The response body should have remark as "success" and Message as "Successfully Updated."
+  The "Updated Course ID" value in the response body should match the id path parameter.
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -28,9 +26,9 @@ Feature: As an administrator, I want to update the information of the course wit
       | 2389 | 100      | 15       | 50    | Web Development 101 |
 
 
-  Scenario Outline: When a PATCH request is sent to the /api/updateCourse/{id} endpoint with valid authorization credentials and a
-  correct (id) but an empty data body, the expected status code should be 203. The remark information in the response body should
-  be verified as "failed", and the message information should be "There is no information to update.".
+  Scenario Outline: Valid authorization credentials and correct (id) should return a 203 status code from the /api/updateCourse/{id}
+  endpoint when no data is included in the PATCH request. The response body should have remark as "failed" and message as
+  "There is no information to update."
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -52,9 +50,9 @@ Feature: As an administrator, I want to update the information of the course wit
       | 2389 |
 
 
-  Scenario Outline: When a PATCH request is sent to the /api/updateCourse/{id} endpoint with valid authorization credentials,
-  a non-existing (id), and correct data in the body, the returned status code should be 203. The remark information in the response
-  body should be verified as "failed", and the message information should be "There is not course for this id."
+  Scenario Outline: Valid authorization credentials and correct data should return a 203 status code from the /api/updateCourse/{id}
+  endpoint when a non-existent record (id) is provided in the PATCH request. The response body should have remark as "failed"
+  and message as "There is no course for this id."
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -76,9 +74,8 @@ Feature: As an administrator, I want to update the information of the course wit
       | 5412568 | 100      | 15       | 50    | Web Development 101 |
 
 
-  Scenario Outline: When a PATCH request is sent to the /api/updateCourse/{id} endpoint with valid authorization credentials
-  but without including an (id) and correct data in the body, the returned status code should be 203. The remark information in
-  the response body should be verified as "failed"', and the message information should be "No id"
+  Scenario Outline: Valid authorization credentials and correct data without including an (id) should return a 203 status code
+  from the /api/updateCourse/{id} endpoint. The response body should have remark as "failed" and message as "No id"
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -100,10 +97,9 @@ Feature: As an administrator, I want to update the information of the course wit
       | 100      | 15       | 50    | Web Development 101 |
 
 
-  Scenario Outline: When a PATCH request is sent to the /api/updateCourse/{id} endpoint with invalid (student or teacher)
-  authorization credentials but correct (id) and accurate data in the body, the returned status code should be 203. The remark
-  information in the response body should be verified as "failed", and the message information should be
-  "To access this data, you must log in as a admin."
+  Scenario Outline: Invalid (student or teacher) authorization credentials with correct data (id) should return a 203 status code
+  from the /api/updateCourse/{id} endpoint. The response body should have remark as "failed" and message as
+  "To access this data, you must log in as an admin."
 
     * The api user constructs the base url with the "student" token.
     # Api kullanicisi "student" token ile base urli olusturur
@@ -125,9 +121,8 @@ Feature: As an administrator, I want to update the information of the course wit
       | 2389 | 100      | 15       | 50    | Web Development 101 |
 
 
-  Scenario Outline: When a PATCH request is sent to the /api/updateCourse/{id} endpoint with invalid (invalid token)
-  authorization credentials but correct (id) and accurate data (duration, capacity, price, title) in the body, the returned
-  status code should be 401. The message information in the response body should be verified as "Unauthenticated."
+  Scenario Outline: Invalid (invalid token) authorization credentials with correct data (id) should return a 401 status code from
+  the /api/updateCourse/{id} endpoint. The response body should have the message field as "Unauthenticated."
 
     * The api user constructs the base url with the "invalid" token.
     # Api kullanicisi "invalid" token ile base urli olusturur
@@ -143,9 +138,9 @@ Feature: As an administrator, I want to update the information of the course wit
       | 2389 | 100      | 15       | 50    | Web Development 101 |
 
 
-  Scenario Outline: The updating of a course registration via the API should be verified.
-  (The update can be confirmed by sending a GET request to the endpoint /api/course/{id} with the Updated Course ID returned
-  in the response body.)
+  Scenario Outline: The update of the course record via the API should be verified. This can be confirmed by sending a GET request
+  to the /api/course/{id} endpoint using the "Updated Course ID" value obtained from the response body, thus confirming that
+  the record has been updated.
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
