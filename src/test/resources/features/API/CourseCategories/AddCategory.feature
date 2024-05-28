@@ -1,0 +1,1 @@
+Feature: As an administrator, I want to create a new course category record via an API connection.

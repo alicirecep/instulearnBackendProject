@@ -1,8 +1,8 @@
 Feature: As an administrator, I need to access detailed information about the course with the specified ID via an API connection.
 
   Scenario Outline: When a GET request is sent to the /api/course/{id} endpoint with valid authorization and correct data (id),
-  it should be verified that the returned status code is 200 and that the remark in the response body is "success".
-  Additionally, it should be confirmed that the data in the response body is accurate.
+  it should be verified that the status code is 200 and that the remark field in the response body is "success". Additionally,
+  it should be confirmed that the data in the response body is accurate.
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -23,8 +23,8 @@ Feature: As an administrator, I need to access detailed information about the co
 
 
   Scenario Outline: When a GET request is sent to the /api/course/{id} endpoint with valid authorization credentials and a
-  non-existent (id), the returned status code should be 203, and the remark information in the response body should be verified as
-  "failed", with the message information being "There is not course for this id."
+  non-existent record (id), it should be verified that the status code is 203 and that the remark field in the response body
+  is "failed". Additionally, the message field in the response body should be "There is not course for this id."
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -44,9 +44,9 @@ Feature: As an administrator, I need to access detailed information about the co
       | 254167 |
 
 
-  Scenario: When a GET request is sent to the /api/course/{id} endpoint with valid authorization credentials but without including
-  an (id), the returned status code should be 203, and the remark information in the response body should be verified as "failed",
-  with the message information being "No id"
+  Scenario: When a GET request is sent to the /api/course/{id} endpoint without including an id, but with valid authorization
+  credentials, it should be verified that the status code is 203 and that the remark field in the response body is "failed".
+  Additionally, the message field in the response body should be "No id".
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -62,9 +62,9 @@ Feature: As an administrator, I need to access detailed information about the co
     # Api kullanicisi response bodydeki message bilgisinin "No id" oldugunu dogrular
 
 
-  Scenario Outline: When a GET request is sent to the /api/course/{id} endpoint with invalid (student or teacher) authorization
-  credentials and correct data (id), the returned status code should be 203, and the remark information in the response body should
-  be verified as "failed", with the message information being "To access this data, you must log in as a admin."
+  Scenario Outline: When a GET request is sent to the /api/course/{id} endpoint with invalid authorization credentials and correct
+  data (id), it should be verified that the status code is 203 and that the remark field in the response body is "failed".
+  Additionally, the message field in the response body should be "To access this data, you must log in as an admin."
 
     * The api user constructs the base url with the "instructor" token.
     # Api kullanicisi "instructor" token ile base urli olusturur
@@ -85,8 +85,8 @@ Feature: As an administrator, I need to access detailed information about the co
 
 
   Scenario Outline: When a GET request is sent to the /api/course/{id} endpoint with invalid (invalid token) authorization
-  credentials and correct data (id), the returned status code should be 401, and the message information in the response body
-  should be verified as "Unauthenticated."
+  credentials and correct data (id), it should be verified that the status code is 401 and that the message field in the
+  response body is "Unauthenticated."
 
     * The api user constructs the base url with the "invalid" token.
     # Api kullanicisi "invalid" token ile base urli olusturur
