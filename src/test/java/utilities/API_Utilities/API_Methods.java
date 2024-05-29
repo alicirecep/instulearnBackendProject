@@ -1,12 +1,7 @@
 package utilities.API_Utilities;
 
-import com.github.javafaker.Faker;
-import config_Requirements.ConfigReader;
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.json.JSONObject;
 
 import java.util.Arrays;
 
