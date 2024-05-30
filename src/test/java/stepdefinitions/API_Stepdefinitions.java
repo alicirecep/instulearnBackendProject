@@ -236,6 +236,26 @@ public class API_Stepdefinitions {
     }
     // ************************************************************************************************************
 
+    // ******************************************* /api/addCategory ***********************************************
+    @Given("The api user prepares a POST request to send to the API addCategory endpoint containing the {string} information.")
+    public void the_api_user_prepares_a_post_request_to_send_to_the_apı_add_category_endpoint_containing_the_information(String title) {
+        requestBody = builder
+                .addParameterForJSONObject("title", title)
+                .buildUsingJSONObject();
 
+        System.out.println("POST Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // *************************************** /api/updateCategory/{id} *******************************************
+    @Given("The api user prepares a PATCH request containing the {string} information to send to the api updateCategory endpoint.")
+    public void the_api_user_prepares_a_patch_request_containing_the_information_to_send_to_the_api_update_category_endpoint(String title) {
+        requestBody = builder
+                .addParameterForMap("title", title)
+                .buildUsingMap();
+
+        System.out.println("PATCH Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
 
 }

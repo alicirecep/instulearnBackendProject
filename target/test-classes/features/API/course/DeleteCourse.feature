@@ -1,9 +1,9 @@
 Feature: As an administrator, I want to delete the course information with the specified ID via an API connection.
 
-  Scenario Outline: When a DELETE request with valid authorization information and correct data (id) is sent to the
-  /api/deleteCourse/{id} endpoint, the returned status code should be 200. The 'remark' information in the response body should
-  be "success", and the 'Message' information should be "Successfully Deleted." Additionally, the "Deleted Course ID" in the
-  response body should be the same as the id sent.
+  Scenario Outline: When a DELETE request is sent with valid authorization credentials and correct data (id), it should return a
+  200 status code from the /api/deleteCourse/{id} endpoint. Additionally, it should be verified that the remark field in the
+  response body is "success", the Message field is "Successfully Deleted.", and the "Deleted Course ID" value matches the
+  id sent in the request.
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -25,9 +25,9 @@ Feature: As an administrator, I want to delete the course information with the s
       | 2392 |
 
 
-  Scenario Outline: When a DELETE request is sent to the /api/deleteCourse/{id} endpoint with valid authorization credentials and
-  a non-existing (id), the returned status code should be 203. The remark information in the response body should be verified as
-  "failed", and the message information should be "There is not course for this id."
+  Scenario Outline: When a DELETE request is sent with valid authorization credentials and a non-existent record (id), it should
+  return a 203 status code from the /api/deleteCourse/{id} endpoint. Additionally, it should be verified that the remark
+  field in the response body is "failed" and the message field is "There is no course for this id."
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -47,9 +47,9 @@ Feature: As an administrator, I want to delete the course information with the s
       | 5568 |
 
 
-  Scenario: When a DELETE request is sent to the /api/deleteCourse/{id} endpoint with valid authorization credentials but without
-  including an (id), the returned status code should be 203. The remark information in the response body should be verified as
-  "failed", and the message information should be "No id"
+  Scenario: When a DELETE request is sent without including an (id) parameter with valid authorization credentials, it should
+  return a 203 status code from the /api/deleteCourse/{id} endpoint. Additionally, it should be verified that the remark
+  field in the response body is "failed" and the message field is "No id"
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -65,10 +65,9 @@ Feature: As an administrator, I want to delete the course information with the s
     # Api kullanicisi response bodydeki message bilgisinin "No id" oldugunu dogrular
 
 
-  Scenario Outline: When a DELETE request is sent to the /api/deleteCourse/{id} endpoint with invalid (student or teacher)
-  authorization credentials but with correct (id), the returned status code should be 203. The 'remark' information in the
-  response body should be verified as "failed", and the message information should be
-  "To access this data, you must log in as a admin."
+  Scenario Outline: When a DELETE request is sent with invalid (student or teacher) authorization credentials and correct (id),
+  it should return a 203 status code from the /api/deleteCourse/{id} endpoint. Additionally, it should be verified that the
+  remark field in the response body is "failed" and the message field is "To access this data, you must log in as an admin."
 
     * The api user constructs the base url with the "instructor" token.
     # Api kullanicisi "instructor" token ile base urli olusturur
@@ -88,9 +87,9 @@ Feature: As an administrator, I want to delete the course information with the s
       | 2392 |
 
 
-  Scenario Outline: When a DELETE request is sent to the /api/deleteCourse/{id} endpoint with invalid (invalid token)
-  authorization credentials but with correct (id), the returned status code should be 401, and the message information in
-  the response body should be verified as "Unauthenticated."
+  Scenario Outline: When a DELETE request is sent with invalid (invalid token) authorization credentials and correct (id),
+  it should return a 401 status code from the /api/deleteCourse/{id} endpoint. Additionally, it should be verified that the
+  message field in the response body is "Unauthenticated."
 
     * The api user constructs the base url with the "invalid" token.
     # Api kullanicisi "invalid" token ile base urli olusturur
@@ -104,9 +103,9 @@ Feature: As an administrator, I want to delete the course information with the s
       | 2392 |
 
 
-  Scenario Outline: The deletion of a course registration via the API should be verified.
-  (The deletion can be confirmed by sending a GET request to the endpoint /api/course/{id} with the Deleted Course ID
-  returned in the response body.)
+  Scenario Outline: The deletion of the course record via the API should be verified. This can be confirmed by sending a GET
+  request to the /api/course/{id} endpoint using the "Deleted Course ID" value obtained from the response body,
+  thus confirming that the record has been deleted.
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
