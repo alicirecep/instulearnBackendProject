@@ -66,8 +66,7 @@ Feature: As an administrator, I want to create a new course record via an API co
 
   Scenario Outline:  When a POST request with invalid (student or teacher) authorization credentials and correct data is sent,
   it should be verified that the status code returned from the /api/addCourse endpoint is 203. Additionally, it should be confirmed
-  that the remark field in the response body is "failed" and the message field is "To access this data, you must log in as an
-  admin."
+  that the remark field in the response body is "failed" and the message field is "To access this data, you must log in as a admin."
 
     * The api user constructs the base url with the "student" token.
     # Api kullanicisi "student" token ile base urli olusturur

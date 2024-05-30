@@ -64,7 +64,7 @@ Feature: As an administrator, I need to access detailed information about the co
 
   Scenario Outline: When a GET request is sent to the /api/course/{id} endpoint with invalid authorization credentials and correct
   data (id), it should be verified that the status code is 203 and that the remark field in the response body is "failed".
-  Additionally, the message field in the response body should be "To access this data, you must log in as an admin."
+  Additionally, the message field in the response body should be "To access this data, you must log in as a admin."
 
     * The api user constructs the base url with the "instructor" token.
     # Api kullanicisi "instructor" token ile base urli olusturur

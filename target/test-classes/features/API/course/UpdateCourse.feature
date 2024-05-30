@@ -99,7 +99,7 @@ Feature: As an administrator, I want to update the information of the course wit
 
   Scenario Outline: Invalid (student or teacher) authorization credentials with correct data (id) should return a 203 status code
   from the /api/updateCourse/{id} endpoint. The response body should have remark as "failed" and message as
-  "To access this data, you must log in as an admin."
+  "To access this data, you must log in as a admin."
 
     * The api user constructs the base url with the "student" token.
     # Api kullanicisi "student" token ile base urli olusturur
