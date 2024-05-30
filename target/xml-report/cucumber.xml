@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="7.698">
-    <testcase classname="As an administrator, I want to access detailed information about the course category with the specified ID via an API connection." name="When a GET request is sent to the /api/category/{id} endpoint with valid authorization and correct data (id)," time="7.236">
-        <system-out><![CDATA[* The api user constructs the base url with the "admin" token...............passed
-* The api user sets "api/category/636" path parameters......................passed
-* The api user sends a "GET" request and saves the returned response........passed
-* The api user verifies that the status code is 200.........................passed
-* The api user confirms that the remark information in the response body is "success"..passed
-* The api user verifies that the data in the response body includes 636, "Online-Education-2", "/store/1/default_images/categories_icons/code.png", 11, 79, 636, "en" and "Online Education"..passed
-]]></system-out>
+<testsuite errors="0" failures="1" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="0.744">
+    <testcase classname="As an administrator, I want to update the information of the course category with the specified ID via an API connection." name="When a PATCH request is sent with valid authorization credentials, correct id, and data to the" time="0.152">
+        <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception"><![CDATA[* The api user constructs the base url with the "admin" token...............passed
+* The api user sets "api/updateCategory/637" path parameters................passed
+* The api user prepares a PATCH request containing the "Web Development 101" information to send to the api updateCategory endpoint..undefined
+* The api user sends a "PATCH" request body and saves the returned response..skipped
+* The api user verifies that the status code is 200.........................skipped
+* The api user confirms that the remark information in the response body is "success"..skipped
+* The api user verifies that the Message information in the response body is "Successfully Updated.".skipped
+* The api user verifies that the "Updated Category Id" information in the returned response body is the same as the id path parameter written in the endpoint..skipped
+]]></failure>
     </testcase>
 </testsuite>

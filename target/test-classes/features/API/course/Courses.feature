@@ -1,9 +1,8 @@
 Feature:As an administrator, I want to access courses via an API connection.
 
-  Scenario Outline: When a GET request is sent to the /api/courses endpoint with valid authorization, it should be verified
-  that the status code is 200 and that the remark in the response body is "success". Additionally, it should be
-  confirmed that the course with id(x) has accurate details for teacher_id, creator_id, category_id, type, private,
-  slug, start_date, duration, id, webinar_id, locale, title, seo_description, and description.
+  Scenario Outline: When a GET request is sent to the /api/courses endpoint with valid authorization, it should be verified that
+  the status code is 200 and that the remark field in the response body is "success". Additionally, the information for
+  the course with a specific id should be validated.
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -24,8 +23,8 @@ Feature:As an administrator, I want to access courses via an API connection.
 
 
   Scenario: When a GET request is sent to the /api/courses endpoint with invalid (student or teacher) authorization credentials,
-  the returned status code should be 203, and the remark information in the response body should be verified as "failed", with
-  the message information being "To access this data, you must log in as a admin."
+  it should be verified that the status code is 203 and that the remark field in the response body is "failed". Additionally,
+  the message field in the response body should be "To access this data, you must log in as an admin."
 
     * The api user constructs the base url with the "student" token.
     # Api kullanicisi "student" token ile base urli olusturur
@@ -41,9 +40,8 @@ Feature:As an administrator, I want to access courses via an API connection.
     # Api kullanicisi response bodydeki message bilgisinin "To access this data, you must log in as a admin." oldugunu dogrular
 
 
-  Scenario:When a GET request is sent to the /api/courses endpoint with invalid (invalid token) authorization credentials,
-  the returned status code should be 401, and the message information in the response body should be verified
-  as "Unauthenticated."
+  Scenario: When a GET request is sent to the /api/courses endpoint with invalid (invalid token) authorization credentials,
+  it should be verified that the status code is 401 and that the message field in the response body is "Unauthenticated."
 
     * The api user constructs the base url with the "invalid" token.
     # Api kullanicisi "invalid" token ile base urli olusturur
