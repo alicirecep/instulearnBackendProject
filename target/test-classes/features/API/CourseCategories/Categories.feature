@@ -25,7 +25,7 @@ Feature: As an administrator, I want to access course categories via an API conn
 
   Scenario: When a GET request is sent to the /api/categories endpoint with invalid (student or teacher) authorization credentials,
   it should return a 203 status code. Additionally, it should be verified that the remark field in the response body is "failed"
-  and the message field is "To access this data, you must log in as an admin."
+  and the message field is "To access this data, you must log in as a admin."
 
     * The api user constructs the base url with the "instructor" token.
     # Api kullanicisi "instructor" token ile base urli olusturur

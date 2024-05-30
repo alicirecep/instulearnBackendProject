@@ -24,7 +24,7 @@ Feature:As an administrator, I want to access courses via an API connection.
 
   Scenario: When a GET request is sent to the /api/courses endpoint with invalid (student or teacher) authorization credentials,
   it should be verified that the status code is 203 and that the remark field in the response body is "failed". Additionally,
-  the message field in the response body should be "To access this data, you must log in as an admin."
+  the message field in the response body should be "To access this data, you must log in as a admin."
 
     * The api user constructs the base url with the "student" token.
     # Api kullanicisi "student" token ile base urli olusturur
