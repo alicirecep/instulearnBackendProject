@@ -14,9 +14,9 @@ Feature: As an administrator, I want to create a new course category record via 
     # Api kullanicisi POST request body gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 200.
     # Api kullanicisi status codeun 200 oldugunu dogrular
-    * The api user confirms that the remark information in the response body is "success".
+    * The api user verifies that the "remark" information in the response body is "success".
     # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
-    * The api user verifies that the Message information in the response body is "Successfully Added."
+    * The api user verifies that the "Message" information in the response body is "Successfully Added.".
     # Api kullanicisi response bodydeki Message bilgisinin "Successfully Added." oldugunu dogrular
 
     Examples:
@@ -38,7 +38,7 @@ Feature: As an administrator, I want to create a new course category record via 
     # Api kullanicisi POST request body gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 422.
     # Api kullanicisi status codeun 422 oldugunu dogrular
-    * The api user confirms that the message in the response body is "The title field is required."
+    * The api user verifies that the "message" information in the response body is "The title field is required.".
     # Api kullanicisi response bodyde dönen message bilgisinin "The title field is required." oldugunu dogrular
 
 
@@ -56,9 +56,9 @@ Feature: As an administrator, I want to create a new course category record via 
     # Api kullanicisi POST request body gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
-    * The api user confirms that the remark information in the response body is "failed".
+    * The api user verifies that the "remark" information in the response body is "failed".
     # Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
-    * The api user verifies that the message information in the response body is "To access this data, you must log in as a admin."
+    * The api user verifies that the "data.message" information in the response body is "To access this data, you must log in as a admin.".
     # Api kullanicisi response bodydeki message bilgisinin "To access this data, you must log in as a admin." oldugunu dogrular
 
     Examples:
@@ -80,7 +80,7 @@ Feature: As an administrator, I want to create a new course category record via 
     # Api kullanicisi POST request body gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 401.
     # Api kullanicisi status codeun 401 oldugunu dogrular
-    * The api user confirms that the message in the response body is "Unauthenticated."
+    * The api user verifies that the "message" information in the response body is "Unauthenticated.".
     # Api kullanicisi response bodyde dönen message bilgisinin "Unauthenticated." oldugunu dogrular
 
     Examples:
@@ -100,7 +100,7 @@ Feature: As an administrator, I want to create a new course category record via 
     # Api kullanicisi GET request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 200.
     # Api kullanicisi status codeun 200 oldugunu dogrular
-    * The api user confirms that the remark information in the response body is "success".
+    * The api user verifies that the "remark" information in the response body is "success".
     # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
 
     Examples:

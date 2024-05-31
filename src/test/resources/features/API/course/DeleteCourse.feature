@@ -13,16 +13,16 @@ Feature: As an administrator, I want to delete the course information with the s
     # Api kullanicisi DELETE request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 200.
     # Api kullanicisi status codeun 200 oldugunu dogrular
-    * The api user confirms that the remark information in the response body is "success".
+    * The api user verifies that the "remark" information in the response body is "success".
     # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
-    * The api user verifies that the Message information in the response body is "Successfully Deleted."
+    * The api user verifies that the "Message" information in the response body is "Successfully Deleted.".
     # Api kullanicisi response bodydeki Message bilgisinin "Successfully Deleted." oldugunu dogrular
     * The api user verifies that the "Deleted Course ID" information in the returned response body is the same as the id path parameter written in the endpoint.
     # Api kullanicisi donen response body icindeki "Deleted Course ID" bilgisinin endpointde yazan id path parametresi ile ayni oldugunu dogrular
 
     Examples:
       | id   |
-      | 2392 |
+      | 2411 |
 
 
   Scenario Outline: When a DELETE request is sent with valid authorization credentials and a non-existent record (id), it should
@@ -37,9 +37,9 @@ Feature: As an administrator, I want to delete the course information with the s
     # Api kullanicisi DELETE request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
-    * The api user confirms that the remark information in the response body is "failed".
+    * The api user verifies that the "remark" information in the response body is "failed".
     # Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
-    * The api user verifies that the message information in the response body is "There is not course for this id."
+    * The api user verifies that the "data.message" information in the response body is "There is not course for this id.".
     # Api kullanicisi response bodydeki message bilgisinin "There is not course for this id." oldugunu dogrular
 
     Examples:
@@ -59,9 +59,9 @@ Feature: As an administrator, I want to delete the course information with the s
     # Api kullanicisi DELETE request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
-    * The api user confirms that the remark information in the response body is "failed".
+    * The api user verifies that the "remark" information in the response body is "failed".
     # Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
-    * The api user verifies that the message information in the response body is "No id"
+    * The api user verifies that the "data.message" information in the response body is "No id".
     # Api kullanicisi response bodydeki message bilgisinin "No id" oldugunu dogrular
 
 
@@ -77,14 +77,14 @@ Feature: As an administrator, I want to delete the course information with the s
     # Api kullanicisi DELETE request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
-    * The api user confirms that the remark information in the response body is "failed".
+    * The api user verifies that the "remark" information in the response body is "failed".
     # Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
-    * The api user verifies that the message information in the response body is "To access this data, you must log in as a admin."
+    * The api user verifies that the "data.message" information in the response body is "To access this data, you must log in as a admin.".
     # Api kullanicisi response bodydeki message bilgisinin "To access this data, you must log in as a admin." oldugunu dogrular
 
     Examples:
       | id   |
-      | 2392 |
+      | 2411 |
 
 
   Scenario Outline: When a DELETE request is sent with invalid (invalid token) authorization credentials and correct (id),
@@ -100,7 +100,7 @@ Feature: As an administrator, I want to delete the course information with the s
 
     Examples:
       | id   |
-      | 2392 |
+      | 2411 |
 
 
   Scenario Outline: The deletion of the course record via the API should be verified. This can be confirmed by sending a GET
@@ -115,10 +115,10 @@ Feature: As an administrator, I want to delete the course information with the s
     # Api kullanicisi GET request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
-    * The api user verifies that the message information in the response body is "There is not course for this id."
+    * The api user verifies that the "data.message" information in the response body is "There is not course for this id.".
     # Api kullanicisi response bodydeki message bilgisinin "There is not course for this id." oldugunu dogrular
 
     Examples:
       | id   |
-      | 2392 |
+      | 2411 |
 

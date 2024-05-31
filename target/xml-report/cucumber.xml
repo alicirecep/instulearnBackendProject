@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="1" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="0.744">
-    <testcase classname="As an administrator, I want to update the information of the course category with the specified ID via an API connection." name="When a PATCH request is sent with valid authorization credentials, correct id, and data to the" time="0.152">
-        <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception"><![CDATA[* The api user constructs the base url with the "admin" token...............passed
-* The api user sets "api/updateCategory/637" path parameters................passed
-* The api user prepares a PATCH request containing the "Web Development 101" information to send to the api updateCategory endpoint..undefined
-* The api user sends a "PATCH" request body and saves the returned response..skipped
-* The api user verifies that the status code is 200.........................skipped
-* The api user confirms that the remark information in the response body is "success"..skipped
-* The api user verifies that the Message information in the response body is "Successfully Updated.".skipped
-* The api user verifies that the "Updated Category Id" information in the returned response body is the same as the id path parameter written in the endpoint..skipped
+<testsuite errors="0" failures="1" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="2.386">
+    <testcase classname="As an administrator, I want to access courses via an API connection." name="When a GET request is sent to the /api/courses endpoint with invalid (student or teacher) authorization credentials," time="0.733">
+        <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception"><![CDATA[* The api user constructs the base url with the "student" token.............passed
+* The api user sets "api/courses" path parameters...........................passed
+* The api user sends a "GET" request and saves the returned response........passed
+* The api user verifies that the status code is 203.........................passed
+* The api user confirms that the "remark" information in the response body is "failed"..passed
+* The api user verifies that the "remark" information in the response body is "failed"..undefined
+* The api user verifies that the message information in the response body is "To access this data, you must log in as a admin.".skipped
+* The api user verifies that the message information in the response body is "To access this data, you must log in as a admin.".skipped
 ]]></failure>
     </testcase>
 </testsuite>
