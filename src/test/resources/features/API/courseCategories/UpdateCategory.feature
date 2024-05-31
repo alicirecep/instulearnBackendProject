@@ -16,9 +16,9 @@ Feature: As an administrator, I want to update the information of the course cat
     # Api kullanicisi PATCH request body gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 200.
     # Api kullanicisi status codeun 200 oldugunu dogrular
-    * The api user confirms that the remark information in the response body is "success".
+    * The api user verifies that the "remark" information in the response body is "success".
     # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
-    * The api user verifies that the Message information in the response body is "Successfully Updated."
+    * The api user verifies that the "Message" information in the response body is "Successfully Updated.".
     # Api kullanicisi response bodydeki Message bilgisinin "Successfully Updated." oldugunu dogrular
     * The api user verifies that the "Updated Category Id" information in the returned response body is the same as the id path parameter written in the endpoint.
     # Api kullanicisi donen response body icindeki "Updated Category Id" bilgisinin endpointde yazan id path parametresi ile ayni oldugunu dogrular
@@ -42,7 +42,7 @@ Feature: As an administrator, I want to update the information of the course cat
     # Api kullanicisi PATCH request body gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 422.
     # Api kullanicisi status codeun 422 oldugunu dogrular
-    * The api user confirms that the message in the response body is "The title field is required."
+    * The api user verifies that the "message" information in the response body is "The title field is required.".
     # Api kullanicisi response bodyde dönen message bilgisinin "The title field is required." oldugunu dogrular
 
     Examples:
@@ -64,9 +64,9 @@ Feature: As an administrator, I want to update the information of the course cat
     # Api kullanicisi PATCH request body gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
-    * The api user confirms that the remark information in the response body is "failed".
+    * The api user verifies that the "remark" information in the response body is "failed".
     # Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
-    * The api user verifies that the message information in the response body is "There is not category for this id."
+    * The api user verifies that the "data.message" information in the response body is "There is not category for this id.".
     # Api kullanicisi response bodydeki message bilgisinin "There is not category for this id." oldugunu dogrular
 
     Examples:
@@ -88,9 +88,9 @@ Feature: As an administrator, I want to update the information of the course cat
     # Api kullanicisi PATCH request body gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
-    * The api user confirms that the remark information in the response body is "failed".
+    * The api user verifies that the "remark" information in the response body is "failed".
     # Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
-    * The api user verifies that the message information in the response body is "No id"
+    * The api user verifies that the "data.message" information in the response body is "No id".
     # Api kullanicisi response bodydeki message bilgisinin "No id" oldugunu dogrular
 
     Examples:
@@ -112,9 +112,9 @@ Feature: As an administrator, I want to update the information of the course cat
     # Api kullanicisi PATCH request body gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
-    * The api user confirms that the remark information in the response body is "failed".
+    * The api user verifies that the "remark" information in the response body is "failed".
     # Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
-    * The api user verifies that the message information in the response body is "To access this data, you must log in as a admin."
+    * The api user verifies that the "data.message" information in the response body is "To access this data, you must log in as a admin.".
     # Api kullanicisi response bodydeki message bilgisinin "To access this data, you must log in as a admin." oldugunu dogrular
 
     Examples:

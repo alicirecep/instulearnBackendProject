@@ -40,9 +40,9 @@ public class API_Stepdefinitions {
         API_Methods.statusCodeAssert(code);
     }
 
-    @Given("The api user confirms that the remark information in the response body is {string}.")
-    public void the_api_user_confirms_that_the_remark_information_in_the_response_body_is(String remark) {
-        API_Methods.assertBody("remark", remark);
+    @Given("The api user verifies that the {string} information in the response body is {string}.")
+    public void the_api_user_verifies_that_the_information_in_the_response_body_is(String key, String value) {
+        API_Methods.assertBody(key, value);
     }
 
     @Given("The api user verifies the information in the response body for the entry with the specified {int} index, including {int}, {int}, {int}, {string}, {int}, {string}, {int}, {int}, {int}, {string}, {string}, {string}, and {string}.")
@@ -63,11 +63,6 @@ public class API_Stepdefinitions {
         assertEquals(title, jsonPath.getString("AddedCourseID.webinars[" + dataIndex + "].translations[0].title"));
         assertTrue(jsonPath.getString("AddedCourseID.webinars[" + dataIndex + "].translations[0].seo_description").contains(seo_description));
         assertTrue(jsonPath.getString("AddedCourseID.webinars[" + dataIndex + "].translations[0].description").contains(description));
-    }
-
-    @Given("The api user verifies that the message information in the response body is {string}")
-    public void the_api_user_verifies_that_the_message_information_in_the_response_body_is(String message) {
-        API_Methods.assertBody("data.message", message);
     }
 
     @Given("The api user sends a {string} request, saves the returned response, and verifies that the status code is '401' with the reason phrase Unauthorized.")
@@ -122,11 +117,6 @@ public class API_Stepdefinitions {
         API_Methods.sendRequest(httpMethod, requestBody);
     }
 
-    @Given("The api user verifies that the Message information in the response body is {string}")
-    public void the_api_user_verifies_that_the_Message_information_in_the_response_body_is(String Message) {
-        API_Methods.assertBody("Message", Message);
-    }
-
     @Given("The api user prepares a POST request to send to the api addCourse endpoint containing the information {string}, {string}, {string}, {string}, {int}, {int}, {int} and {string}.")
     public void the_api_user_prepares_a_post_request_to_send_to_the_api_add_course_endpoint_containing_the_information_and(String title, String type, String slug, String start_date, int duration, int capacity, int price, String description) {
         requestBody = builder
@@ -141,11 +131,6 @@ public class API_Stepdefinitions {
                 .buildUsingMap();
 
         System.out.println("POST Request Body : " + requestBody);
-    }
-
-    @Given("The api user confirms that the message in the response body is {string}")
-    public void the_api_user_confirms_that_the_message_in_the_response_body_is(String message) {
-        API_Methods.assertBody("message", message);
     }
 
     @Given("The api user prepares a POST request that contains no data.")
@@ -257,5 +242,6 @@ public class API_Stepdefinitions {
         System.out.println("PATCH Request Body : " + requestBody);
     }
     // ************************************************************************************************************
+
 
 }

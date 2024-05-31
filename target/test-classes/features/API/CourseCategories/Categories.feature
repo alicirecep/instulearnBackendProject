@@ -12,7 +12,7 @@ Feature: As an administrator, I want to access course categories via an API conn
     # Api kullanicisi GET request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 200.
     # Api kullanicisi status codeun 200 oldugunu dogrular
-    * The api user confirms that the remark information in the response body is "success".
+    * The api user verifies that the "remark" information in the response body is "success".
     # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
     * The api user verifies that the information for the entry with the specified <dataIndex> in the response body includes "<slug>", "<icon>", <order>, <id>, <category_id>, "<locale>" and "<title>".
     # Api kullanıcısı response body icindeki <dataIndex> indexe sahip olanin "<slug>", "<icon>", <order>, <id>, <category_id>, "<locale>" ve "<title>" bilgilerini doğrular.
@@ -35,9 +35,9 @@ Feature: As an administrator, I want to access course categories via an API conn
     # Api kullanicisi GET request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
-    * The api user confirms that the remark information in the response body is "failed".
+    * The api user verifies that the "remark" information in the response body is "failed".
     # Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
-    * The api user verifies that the message information in the response body is "To access this data, you must log in as a admin."
+    * The api user verifies that the "data.message" information in the response body is "To access this data, you must log in as a admin.".
     # Api kullanicisi response bodydeki message bilgisinin "To access this data, you must log in as a admin." oldugunu dogrular
 
 

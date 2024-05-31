@@ -22,7 +22,7 @@ Feature: As an administrator, I want to delete the course category information w
 
     Examples:
       | id  |
-      | 657 |
+      | 635 |
 
 
   Scenario Outline: When sending a DELETE request with valid authorization credentials but containing an unregistered id,
@@ -85,7 +85,7 @@ Feature: As an administrator, I want to delete the course category information w
 
     Examples:
       | id  |
-      | 657 |
+      | 635 |
 
 
   Scenario Outline: When sending a DELETE request with invalid (invalid token) authorization credentials but with the correct id,
@@ -101,7 +101,7 @@ Feature: As an administrator, I want to delete the course category information w
 
     Examples:
       | id  |
-      | 657 |
+      | 635 |
 
 
   Scenario Outline: To confirm that a course category has been deleted via the API, the deletion can be verified by sending a
@@ -120,6 +120,6 @@ Feature: As an administrator, I want to delete the course category information w
 
     Examples:
       | id  |
-      | 657 |
+      | 635 |
 
 
