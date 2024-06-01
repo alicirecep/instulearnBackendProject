@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="1" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="2.386">
-    <testcase classname="As an administrator, I want to access courses via an API connection." name="When a GET request is sent to the /api/courses endpoint with invalid (student or teacher) authorization credentials," time="0.733">
-        <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception"><![CDATA[* The api user constructs the base url with the "student" token.............passed
-* The api user sets "api/courses" path parameters...........................passed
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="2" time="9.685">
+    <testcase classname="As an administrator, I want to access detailed information about the course price plan with the specified ID via an API connection." name="When a GET request with valid authorization credentials and the correct (id) is sent to the /api/pricePlan/{id}" time="7.785">
+        <system-out><![CDATA[* The api user constructs the base url with the "admin" token...............passed
+* The api user sets "api/pricePlan/31" path parameters......................passed
 * The api user sends a "GET" request and saves the returned response........passed
-* The api user verifies that the status code is 203.........................passed
-* The api user confirms that the "remark" information in the response body is "failed"..passed
-* The api user verifies that the "remark" information in the response body is "failed"..undefined
-* The api user verifies that the message information in the response body is "To access this data, you must log in as a admin.".skipped
-* The api user verifies that the message information in the response body is "To access this data, you must log in as a admin.".skipped
-]]></failure>
+* The api user verifies that the status code is 200.........................passed
+* The api user verifies that the "remark" information in the response body is "success"..passed
+* The api user verifies the contents of 31, 864, 2003, 1719792000, 1722384000, 25, 55, 1625299801, 4, 31, "en" and "First Price Plan" in the response body's data..passed
+]]></system-out>
+    </testcase>
+    <testcase classname="As an administrator, I want to access detailed information about the course price plan with the specified ID via an API connection." name="When a GET request with valid authorization credentials and the correct (id) is sent to the /api/pricePlan/{id} 2" time="1.373">
+        <system-out><![CDATA[* The api user constructs the base url with the "admin" token...............passed
+* The api user sets "api/pricePlan/28" path parameters......................passed
+* The api user sends a "GET" request and saves the returned response........passed
+* The api user verifies that the status code is 200.........................passed
+* The api user verifies that the "remark" information in the response body is "success"..passed
+* The api user verifies the contents of 28, 1015, 1998, 1727740800, 1730246400, 35, 20, 1624965807, 1, 28, "en" and "Golden Offer" in the response body's data..passed
+]]></system-out>
     </testcase>
 </testsuite>
