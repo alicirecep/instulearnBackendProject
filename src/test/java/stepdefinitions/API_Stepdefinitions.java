@@ -7,7 +7,9 @@ import io.restassured.path.json.JsonPath;
 import utilities.API_Utilities.API_Methods;
 import utilities.API_Utilities.RequestBuilder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -66,8 +68,8 @@ public class API_Stepdefinitions {
     }
 
     @Given("The api user sends a {string} request, saves the returned response, and verifies that the status code is '401' with the reason phrase Unauthorized.")
-    public void the_api_user_sends_a_request_saves_the_returned_response_and_verifies_that_the_status_code_is_with_the_reason_phrase_unauthorized(String httpeMethod) {
-        assertTrue(API_Methods.tryCatchRequest(httpeMethod, null).equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
+    public void the_api_user_sends_a_request_saves_the_returned_response_and_verifies_that_the_status_code_is_with_the_reason_phrase_unauthorized(String httpMethod) {
+        assertEquals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api"), API_Methods.tryCatchRequest(httpMethod, null));
     }
     // *********************************************************************************************************
 
@@ -159,8 +161,7 @@ public class API_Stepdefinitions {
 
     @Given("The api user sends a {string} request, saves the response, and verifies that the status code is '401' with the reason phrase Unauthorized.")
     public void the_api_user_sends_a_request_saves_the_response_and_verifies_that_the_status_code_is_with_the_reason_phrase_unauthorized(String httpMethod) {
-        assertTrue(API_Methods.tryCatchRequest(httpMethod, requestBody).equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
-
+        assertEquals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api"), API_Methods.tryCatchRequest(httpMethod, requestBody));
     }
 
     @Given("The api user verifies that the {string} information in the returned response body is the same as the id path parameter written in the endpoint.")
@@ -240,6 +241,49 @@ public class API_Stepdefinitions {
                 .buildUsingMap();
 
         System.out.println("PATCH Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // ******************************************* /api/pricePlans ************************************************
+    @Given("The api user verifies that the information for the entry at the specified {int} in the response body includes {int}, {int}, {int}, {int}, {int}, {int}, {int}, {int}, {string} and {string}.")
+    public void the_api_user_verifies_that_the_information_for_the_entry_at_the_specified_in_the_response_body_includes_and(int dataIndex, int creator_id, int webinar_id, int start_date, int end_date, int discount, int created_at, int id, int ticket_id, String locale, String title) {
+        jsonPath = API_Methods.response.jsonPath();
+
+        assertEquals(creator_id, jsonPath.getInt("data[" + dataIndex + "].creator_id"));
+        assertEquals(webinar_id, jsonPath.getInt("data[" + dataIndex + "].webinar_id"));
+        assertNull(jsonPath.get("data[" + dataIndex + "].bundle_id"));
+        assertEquals(start_date, jsonPath.getInt("data[" + dataIndex + "].start_date"));
+        assertEquals(end_date, jsonPath.getInt("data[" + dataIndex + "].end_date"));
+        assertEquals(discount, jsonPath.getInt("data[" + dataIndex + "].discount"));
+        assertNull(jsonPath.get("data[" + dataIndex + "].capacity"));
+        assertNull(jsonPath.get("data[" + dataIndex + "].order"));
+        assertEquals(created_at, jsonPath.getInt("data[" + dataIndex + "].created_at"));
+        assertEquals(id, jsonPath.getInt("data[" + dataIndex + "].translations[0].id"));
+        assertEquals(ticket_id, jsonPath.getInt("data[" + dataIndex + "].translations[0].ticket_id"));
+        assertEquals(locale, jsonPath.getString("data[" + dataIndex + "].translations[0].locale"));
+        assertEquals(title, jsonPath.getString("data[" + dataIndex + "].translations[0].title"));
+    }
+    // ************************************************************************************************************
+
+    // ***************************************** /api/pricePlan/{id} **********************************************
+    @Given("The api user verifies the contents of {int}, {int}, {int}, {int}, {int}, {int}, {int}, {int}, {int}, {int}, {string} and {string} in the response body's data.")
+    public void the_api_user_verifies_the_contents_of_and_in_the_response_body_s_data(int data_id, int creator_id, int webinar_id, int start_date, int end_date, int discount, int capacity, int created_at, int translations_id, int ticket_id, String locale, String title) {
+        responseMap = API_Methods.response.as(HashMap.class);
+
+        assertEquals(data_id, ((Map) (responseMap.get("data"))).get("id"));
+        assertEquals(creator_id, ((Map) (responseMap.get("data"))).get("creator_id"));
+        assertEquals(webinar_id, ((Map) (responseMap.get("data"))).get("webinar_id"));
+        assertNull(((Map) (responseMap.get("data"))).get("bundle_id"));
+        assertEquals(start_date, ((Map) (responseMap.get("data"))).get("start_date"));
+        assertEquals(end_date, ((Map) (responseMap.get("data"))).get("end_date"));
+        assertEquals(discount, ((Map) (responseMap.get("data"))).get("discount"));
+        assertEquals(capacity, ((Map) (responseMap.get("data"))).get("capacity"));
+        assertNull(((Map) (responseMap.get("data"))).get("order"));
+        assertEquals(created_at, ((Map) (responseMap.get("data"))).get("created_at"));
+        assertEquals(translations_id, ((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("translations"))).get(0)).get("id"));
+        assertEquals(ticket_id, ((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("translations"))).get(0)).get("ticket_id"));
+        assertEquals(locale, ((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("translations"))).get(0)).get("locale"));
+        assertEquals(title, ((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("translations"))).get(0)).get("title"));
     }
     // ************************************************************************************************************
 
