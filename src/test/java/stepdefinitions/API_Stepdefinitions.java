@@ -1,9 +1,11 @@
 package stepdefinitions;
 
+import com.google.gson.Gson;
 import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
 import io.restassured.path.json.JsonPath;
+import pojos.PricePlanPojo;
 import utilities.API_Utilities.API_Methods;
 import utilities.API_Utilities.RequestBuilder;
 
@@ -20,6 +22,8 @@ public class API_Stepdefinitions {
     String requestBody;
     RequestBuilder builder = new RequestBuilder();
     HashMap<String, Object> responseMap;
+    PricePlanPojo pricePlanPojo;
+    Gson gson = new Gson(); // Gson kütüphanesini kullanarak bir POJO nesnesini JSON formatında bir Stringe dönüştürebilirsiniz.
 
     @Given("The api user constructs the base url with the {string} token.")
     public void the_api_user_constructs_the_base_url_with_the_token(String userType) {
@@ -287,5 +291,21 @@ public class API_Stepdefinitions {
     }
     // ************************************************************************************************************
 
+    // ******************************************* /api/addPricePlan **********************************************
+    @Given("The api user prepares a POST request to send to the api addPricePlan endpoint, containing the information {string}, {string}, {int}, {int} and {int}.")
+    public void the_api_user_prepares_a_post_request_to_send_to_the_api_add_price_plan_endpoint_containing_the_information_and(String title, String dateRange, int discount, int capacity, int webinar_id) {
+        pricePlanPojo = new PricePlanPojo(title, dateRange, discount, capacity, webinar_id);
+        requestBody = gson.toJson(pricePlanPojo); // Burada POJO nesnesini JSON formatında bir Stringe dönüştürdük.
+        System.out.println("POST Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
 
+    // *************************************** /api/updatePricePlan/{id} ******************************************
+    @Given("The api user prepares a PATCH request to send to the api updatePricePlan endpoint, containing the information {string}, {string}, {int}, {int} and {int}.")
+    public void the_api_user_prepares_a_patch_request_to_send_to_the_api_update_price_plan_endpoint_containing_the_information_and(String title, String dateRange, int discount, int capacity, int webinar_id) {
+        pricePlanPojo = new PricePlanPojo(title, dateRange, discount, capacity, webinar_id);
+        requestBody = gson.toJson(pricePlanPojo); // Burada POJO nesnesini JSON formatında bir Stringe dönüştürdük.
+        System.out.println("PATCH Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
 }
