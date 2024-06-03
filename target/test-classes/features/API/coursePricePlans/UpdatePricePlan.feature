@@ -142,9 +142,20 @@ Feature: As an administrator, I want to update the information of the course pri
       | 96 | Price Plans | 2024-06-01 - 2024-06-30 | 30       | 100      | 2004       |
 
 
+  Scenario Outline: The update of the course pricing plan record should be verified via the API. This can be confirmed by sending
+  a GET request to the /api/pricePlan/{id} endpoint with the returned Updated Price Plans ID
 
+    * The api user constructs the base url with the "admin" token.
+    # Api kullanicisi "admin" token ile base urli olusturur
+    * The api user sets "api/pricePlan/<id>" path parameters.
+    # Api kullanicisi "api/pricePlan/{id}" path parametrelerini olusturur
+    * The api user sends a "GET" request and saves the returned response.
+    # Api kullanicisi GET request gonderir ve donen responsei kaydeder
+    * The api user confirms that the title information in the response body is "<titleValue>".
+    # Api kullanicisi response bodydeki title bilgisinin "<titleValue>" olduğunu doğrular.
 
-
-
+    Examples:
+      | id | titleValue  |
+      | 96 | Price Plans |
 
 

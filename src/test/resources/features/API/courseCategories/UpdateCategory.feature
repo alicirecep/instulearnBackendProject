@@ -28,9 +28,9 @@ Feature: As an administrator, I want to update the information of the course cat
       | 637 | Education and Training |
 
 
-  Scenario Outline: When a PATCH request with valid authorization credentials but without data is sent to the
-  /api/updateCategory/{id} endpoint, it should be verified that the status code returned is 422 and the message
-  field in the response body is "The title field is required."
+  Scenario Outline: When a PATCH request with valid authorization credentials, the correct (id), and no data is sent to the
+  /api/updateCategory/{id} endpoint, it should be verified that the returned status code is 203, the remark information in the
+  response body is "failed", and the message information is "There is no information to update."
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -40,10 +40,12 @@ Feature: As an administrator, I want to update the information of the course cat
     # Api kullanicisi data icermeyen bir patch request hazırlar
     * The api user sends a "PATCH" request body and saves the returned response.
     # Api kullanicisi PATCH request body gonderir ve donen responsei kaydeder
-    * The api user verifies that the status code is 422.
-    # Api kullanicisi status codeun 422 oldugunu dogrular
-    * The api user verifies that the "message" information in the response body is "The title field is required.".
-    # Api kullanicisi response bodyde dönen message bilgisinin "The title field is required." oldugunu dogrular
+    * The api user verifies that the status code is 203.
+    # Api kullanicisi status codeun 203 oldugunu dogrular
+    * The api user verifies that the "remark" information in the response body is "failed".
+    # Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
+    * The api user verifies that the "message" information in the response body is "There is no information to update.".
+    # Api kullanicisi response bodyde dönen message bilgisinin "There is no information to update." oldugunu dogrular
 
     Examples:
       | id  |

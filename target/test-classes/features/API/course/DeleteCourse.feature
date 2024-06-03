@@ -22,7 +22,7 @@ Feature: As an administrator, I want to delete the course information with the s
 
     Examples:
       | id   |
-      | 2411 |
+      | 2506 |
 
 
   Scenario Outline: When a DELETE request is sent with valid authorization credentials and a non-existent record (id), it should
@@ -84,7 +84,7 @@ Feature: As an administrator, I want to delete the course information with the s
 
     Examples:
       | id   |
-      | 2411 |
+      | 2506 |
 
 
   Scenario Outline: When a DELETE request is sent with invalid (invalid token) authorization credentials and correct (id),
@@ -100,7 +100,7 @@ Feature: As an administrator, I want to delete the course information with the s
 
     Examples:
       | id   |
-      | 2411 |
+      | 2506 |
 
 
   Scenario Outline: The deletion of the course record via the API should be verified. This can be confirmed by sending a GET
@@ -120,5 +120,5 @@ Feature: As an administrator, I want to delete the course information with the s
 
     Examples:
       | id   |
-      | 2411 |
+      | 2506 |
 
