@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="9.048">
-    <testcase classname="As an administrator, I want to update the information of the course price plan with the specified ID via an API connection." name="When a PATCH request with valid authorization credentials and correct data (id) is sent to the" time="8.565">
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="8.767">
+    <testcase classname="As an administrator, I want to update the information of the course FAQ with the specified ID via an API connection." name="The status code returned after a PATCH request with valid authorization credentials, correct (id), and data" time="8.26">
         <system-out><![CDATA[* The api user constructs the base url with the "admin" token...............passed
-* The api user sets "api/updatePricePlan/96" path parameters................passed
-* The api user prepares a PATCH request to send to the api updatePricePlan endpoint, containing the information "Price Plans", "2024-06-01 - 2024-06-30", 30, 100 and 2004..passed
-* The api user sends a "PATCH" request body and saves the returned response..passed
+* The api user sets "api/updateCoursefaq/165" path parameters...............passed
+* The api user prepares a PATCH request containing the "Will I receive a certificate upon completion of the course?" and "Yes, upon successful completion of the course, you will receive a certificate of completion to showcase your achievement." information to send to the api updateCoursefaq endpoint..passed
+* The api user sends a "PATCH" request and saves the returned response......passed
 * The api user verifies that the status code is 200.........................passed
 * The api user verifies that the "remark" information in the response body is "success"..passed
 * The api user verifies that the "Message" information in the response body is "Successfully Updated."..passed
-* The api user verifies that the "Updated Price Plans ID" information in the returned response body is the same as the id path parameter written in the endpoint..passed
+* The api user verifies that the "Updated Course Faq ID" information in the returned response body is the same as the id path parameter written in the endpoint..passed
 ]]></system-out>
     </testcase>
 </testsuite>
