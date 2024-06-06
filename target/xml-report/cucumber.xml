@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="9.048">
-    <testcase classname="As an administrator, I want to update the information of the course price plan with the specified ID via an API connection." name="When a PATCH request with valid authorization credentials and correct data (id) is sent to the" time="8.565">
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="8.31">
+    <testcase classname="As an administrator, I want to create a new product record via an API connection." name="The creation of a new product record via the API should be verified. This can be confirmed by sending a" time="7.72">
         <system-out><![CDATA[* The api user constructs the base url with the "admin" token...............passed
-* The api user sets "api/updatePricePlan/96" path parameters................passed
-* The api user prepares a PATCH request to send to the api updatePricePlan endpoint, containing the information "Price Plans", "2024-06-01 - 2024-06-30", 30, 100 and 2004..passed
-* The api user sends a "PATCH" request body and saves the returned response..passed
+* The api user sets "api/product/97" path parameters........................passed
+* The api user sends a "GET" request and saves the returned response........passed
 * The api user verifies that the status code is 200.........................passed
 * The api user verifies that the "remark" information in the response body is "success"..passed
-* The api user verifies that the "Message" information in the response body is "Successfully Updated."..passed
-* The api user verifies that the "Updated Price Plans ID" information in the returned response body is the same as the id path parameter written in the endpoint..passed
 ]]></system-out>
     </testcase>
 </testsuite>

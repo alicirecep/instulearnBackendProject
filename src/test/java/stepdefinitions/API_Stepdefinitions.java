@@ -5,12 +5,13 @@ import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
 import io.restassured.path.json.JsonPath;
-import pojos.PricePlanPojo;
+import pojos.*;
 import utilities.API_Utilities.API_Methods;
 import utilities.API_Utilities.RequestBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.*;
@@ -22,7 +23,10 @@ public class API_Stepdefinitions {
     String requestBody;
     RequestBuilder builder = new RequestBuilder();
     HashMap<String, Object> responseMap;
-    PricePlanPojo pricePlanPojo;
+    PricePlanPojo requestPricePlan;
+    ProductPojo requestProduct;
+
+    CoursefaqPojo responseCoursefaq;
     Gson gson = new Gson(); // Gson kütüphanesini kullanarak bir POJO nesnesini JSON formatında bir Stringe dönüştürebilirsiniz.
 
     @Given("The api user constructs the base url with the {string} token.")
@@ -35,10 +39,13 @@ public class API_Stepdefinitions {
         API_Methods.pathParam(pathParam);
     }
 
-    // ******************************************* /api/courses ************************************************
     @Given("The api user sends a {string} request and saves the returned response.")
     public void the_api_user_sends_a_request_and_saves_the_returned_response(String httpMethod) {
-        API_Methods.sendRequest(httpMethod, null);
+        if (requestBody == null || requestBody.isEmpty()) {
+            API_Methods.sendRequest(httpMethod, null);
+        } else {
+            API_Methods.sendRequest(httpMethod, requestBody);
+        }
     }
 
     @Given("The api user verifies that the status code is {int}.")
@@ -51,6 +58,45 @@ public class API_Stepdefinitions {
         API_Methods.assertBody(key, value);
     }
 
+    @Given("The api user sends a {string} request, saves the returned response, and verifies that the status code is '401' with the reason phrase Unauthorized.")
+    public void the_api_user_sends_a_request_saves_the_returned_response_and_verifies_that_the_status_code_is_with_the_reason_phrase_unauthorized(String httpMethod) {
+        String response = (requestBody == null) ? API_Methods.tryCatchRequest(httpMethod, null) : API_Methods.tryCatchRequest(httpMethod, requestBody);
+        assertEquals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api"), response);
+    }
+
+    @Given("The api user prepares a POST request that contains no data.")
+    public void the_api_user_prepares_a_post_request_that_contains_no_data() {
+        requestBody = builder.buildUsingMap();
+    }
+
+    @Given("The api user prepares a PATCH request without containing any data.")
+    public void the_api_user_prepares_a_patch_request_without_containing_any_data() {
+        requestBody = builder.buildUsingJSONObject();
+    }
+
+    @Given("The api user verifies that the {string} information in the returned response body is the same as the id path parameter written in the endpoint.")
+    public void the_api_user_verifies_that_the_information_in_the_returned_response_body_is_the_same_as_the_id_path_parameter_written_in_the_endpoint(String reponseId) {
+        responseMap = API_Methods.response.as(HashMap.class);
+
+        Object idValue = responseMap.get(reponseId);
+
+        int id = 0;
+        if (idValue instanceof String) {
+            id = Integer.parseInt((String) idValue);
+        } else {
+            id = (int) idValue;
+        }
+        assertEquals(API_Methods.id, id);
+    }
+
+    @Given("The api user confirms that the title information in the response body is {string}.")
+    public void the_api_user_confirms_that_the_title_information_in_the_response_body_is(String titleValue) {
+        API_Methods.response.then()
+                .assertThat()
+                .body("data.translations[0].title", equalTo(titleValue));
+    }
+
+    // ******************************************* /api/courses ************************************************
     @Given("The api user verifies the information in the response body for the entry with the specified {int} index, including {int}, {int}, {int}, {string}, {int}, {string}, {int}, {int}, {int}, {string}, {string}, {string}, and {string}.")
     public void the_api_user_verifies_the_information_in_the_response_body_for_the_entry_with_the_specified_index_including_and(int dataIndex, int teacher_id, int creator_id, int category_id, String type, int privateValue, String slug, int duration, int id, int webinar_id, String locale, String title, String seo_description, String description) {
         jsonPath = API_Methods.response.jsonPath();
@@ -69,11 +115,6 @@ public class API_Stepdefinitions {
         assertEquals(title, jsonPath.getString("AddedCourseID.webinars[" + dataIndex + "].translations[0].title"));
         assertTrue(jsonPath.getString("AddedCourseID.webinars[" + dataIndex + "].translations[0].seo_description").contains(seo_description));
         assertTrue(jsonPath.getString("AddedCourseID.webinars[" + dataIndex + "].translations[0].description").contains(description));
-    }
-
-    @Given("The api user sends a {string} request, saves the returned response, and verifies that the status code is '401' with the reason phrase Unauthorized.")
-    public void the_api_user_sends_a_request_saves_the_returned_response_and_verifies_that_the_status_code_is_with_the_reason_phrase_unauthorized(String httpMethod) {
-        assertEquals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api"), API_Methods.tryCatchRequest(httpMethod, null));
     }
     // *********************************************************************************************************
 
@@ -118,11 +159,6 @@ public class API_Stepdefinitions {
         System.out.println("POST Request Body : " + requestBody);
     }
 
-    @Given("The api user sends a {string} request body and saves the returned response.")
-    public void the_api_user_sends_a_request_body_and_saves_the_returned_response(String httpMethod) {
-        API_Methods.sendRequest(httpMethod, requestBody);
-    }
-
     @Given("The api user prepares a POST request to send to the api addCourse endpoint containing the information {string}, {string}, {string}, {string}, {int}, {int}, {int} and {string}.")
     public void the_api_user_prepares_a_post_request_to_send_to_the_api_add_course_endpoint_containing_the_information_and(String title, String type, String slug, String start_date, int duration, int capacity, int price, String description) {
         requestBody = builder
@@ -138,11 +174,6 @@ public class API_Stepdefinitions {
 
         System.out.println("POST Request Body : " + requestBody);
     }
-
-    @Given("The api user prepares a POST request that contains no data.")
-    public void the_api_user_prepares_a_post_request_that_contains_no_data() {
-        requestBody = builder.buildUsingMap();
-    }
     // *********************************************************************************************************
 
     // *************************************** /api/updateCourse/{id} ******************************************
@@ -156,38 +187,6 @@ public class API_Stepdefinitions {
                 .buildUsingJSONObject();
 
         System.out.println("PATCH Request Body : " + requestBody);
-    }
-
-    @Given("The api user prepares a PATCH request without containing any data.")
-    public void the_api_user_prepares_a_patch_request_without_containing_any_data() {
-        requestBody = builder.buildUsingJSONObject();
-    }
-
-    @Given("The api user sends a {string} request, saves the response, and verifies that the status code is '401' with the reason phrase Unauthorized.")
-    public void the_api_user_sends_a_request_saves_the_response_and_verifies_that_the_status_code_is_with_the_reason_phrase_unauthorized(String httpMethod) {
-        assertEquals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api"), API_Methods.tryCatchRequest(httpMethod, requestBody));
-    }
-
-    @Given("The api user verifies that the {string} information in the returned response body is the same as the id path parameter written in the endpoint.")
-    public void the_api_user_verifies_that_the_information_in_the_returned_response_body_is_the_same_as_the_id_path_parameter_written_in_the_endpoint(String reponseId) {
-        responseMap = API_Methods.response.as(HashMap.class);
-
-        Object idValue = responseMap.get(reponseId);
-
-        int id = 0;
-        if (idValue instanceof String) {
-            id = Integer.parseInt((String) idValue);
-        } else {
-            id = (int) idValue;
-        }
-        assertEquals(API_Methods.id, id);
-    }
-
-    @Given("The api user confirms that the title information in the response body is {string}.")
-    public void the_api_user_confirms_that_the_title_information_in_the_response_body_is(String titleValue) {
-        API_Methods.response.then()
-                .assertThat()
-                .body("data.translations[0].title", equalTo(titleValue));
     }
     // ************************************************************************************************************
 
@@ -294,8 +293,8 @@ public class API_Stepdefinitions {
     // ******************************************* /api/addPricePlan **********************************************
     @Given("The api user prepares a POST request to send to the api addPricePlan endpoint, containing the information {string}, {string}, {int}, {int} and {int}.")
     public void the_api_user_prepares_a_post_request_to_send_to_the_api_add_price_plan_endpoint_containing_the_information_and(String title, String dateRange, int discount, int capacity, int webinar_id) {
-        pricePlanPojo = new PricePlanPojo(title, dateRange, discount, capacity, webinar_id);
-        requestBody = gson.toJson(pricePlanPojo); // Burada POJO nesnesini JSON formatında bir Stringe dönüştürdük.
+        requestPricePlan = new PricePlanPojo(title, dateRange, discount, capacity, webinar_id);
+        requestBody = gson.toJson(requestPricePlan); // Burada POJO nesnesini JSON formatında bir Stringe dönüştürdük.
         System.out.println("POST Request Body : " + requestBody);
     }
     // ************************************************************************************************************
@@ -303,9 +302,137 @@ public class API_Stepdefinitions {
     // *************************************** /api/updatePricePlan/{id} ******************************************
     @Given("The api user prepares a PATCH request to send to the api updatePricePlan endpoint, containing the information {string}, {string}, {int}, {int} and {int}.")
     public void the_api_user_prepares_a_patch_request_to_send_to_the_api_update_price_plan_endpoint_containing_the_information_and(String title, String dateRange, int discount, int capacity, int webinar_id) {
-        pricePlanPojo = new PricePlanPojo(title, dateRange, discount, capacity, webinar_id);
-        requestBody = gson.toJson(pricePlanPojo); // Burada POJO nesnesini JSON formatında bir Stringe dönüştürdük.
+        requestPricePlan = new PricePlanPojo(title, dateRange, discount, capacity, webinar_id);
+        requestBody = gson.toJson(requestPricePlan); // Burada POJO nesnesini JSON formatında bir Stringe dönüştürdük.
         System.out.println("PATCH Request Body : " + requestBody);
     }
+    // ************************************************************************************************************
+
+    // ******************************************** /api/coursefaqs ***********************************************
+    @Given("The api user verifies the {int}, {int}, {int}, {int}, {int}, {int}, {string}, {string} and {string} information of the item at the specified {int} index in the response body.")
+    public void the_api_user_verifies_the_and_information_of_the_item_at_the_specified_index_in_the_response_body(int creator_id, int webinar_id, int created_at, int updated_at, int id, int faq_id, String locale, String title, String answer, int dataIndex) {
+        responseMap = API_Methods.response.as(HashMap.class);
+
+        assertEquals(creator_id, ((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("coursefaqs"))).get(dataIndex)).get("creator_id"));
+        assertEquals(webinar_id, ((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("coursefaqs"))).get(dataIndex)).get("webinar_id"));
+        assertNull(((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("coursefaqs"))).get(dataIndex)).get("bundle_id"));
+        assertNull(((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("coursefaqs"))).get(dataIndex)).get("upcoming_course_id"));
+        assertNull(((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("coursefaqs"))).get(dataIndex)).get("order"));
+        assertEquals(created_at, ((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("coursefaqs"))).get(dataIndex)).get("created_at"));
+        assertEquals(updated_at, ((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("coursefaqs"))).get(dataIndex)).get("updated_at"));
+        assertEquals(id, ((Map) (((ArrayList) (((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("coursefaqs"))).get(dataIndex)).get("translations"))).get(0))).get("id"));
+        assertEquals(faq_id, ((Map) (((ArrayList) (((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("coursefaqs"))).get(dataIndex)).get("translations"))).get(0))).get("faq_id"));
+        assertEquals(locale, ((Map) (((ArrayList) (((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("coursefaqs"))).get(dataIndex)).get("translations"))).get(0))).get("locale"));
+        assertEquals(title, ((Map) (((ArrayList) (((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("coursefaqs"))).get(dataIndex)).get("translations"))).get(0))).get("title"));
+        assertEquals(answer, ((Map) (((ArrayList) (((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("coursefaqs"))).get(dataIndex)).get("translations"))).get(0))).get("answer"));
+    }
+    // ************************************************************************************************************
+
+    // ****************************************** /api/coursefaq/{id} *********************************************
+    @Given("The api user verifies the contents of {int}, {int}, {int}, {int}, {int}, {int}, {int}, {string}, {string}, and {string} in the response body's data.")
+    public void the_api_user_verifies_the_contents_of_and_in_the_response_body_s_data(int dataId, int creator_id, int webinar_id, int created_at, int updated_at, int translations_id, int faq_id, String locale, String title, String answer) {
+        TranslationsPojo translationsPojo = new TranslationsPojo(2, 14, "en", "What skills will I gain from this course?", "Throughout the course, you'll learn the complete project management process, including project initiation, planning, execution, monitoring and controlling, and closure. You'll also delve into essential skills such as stakeholder analysis, risk management, budgeting, scheduling, and communication.");
+        List<TranslationsPojo> translationsPojoList = new ArrayList<>();
+        translationsPojoList.add(translationsPojo);
+
+        DataPojo dataPojo = new DataPojo(14, 1016, 1995, null, null, null, 1624908812, 1711967802, null, null, translationsPojoList);
+        responseCoursefaq = new CoursefaqPojo("success", 200, dataPojo);
+
+        assertEquals(dataId, responseCoursefaq.getData().getId());
+        assertEquals(creator_id, responseCoursefaq.getData().getCreatorId());
+        assertEquals(webinar_id, responseCoursefaq.getData().getWebinarId());
+        assertNull(responseCoursefaq.getData().getBundleId());
+        assertNull(responseCoursefaq.getData().getUpcomingCourseId());
+        assertNull(responseCoursefaq.getData().getOrder());
+        assertEquals(created_at, responseCoursefaq.getData().getCreatedAt());
+        assertEquals(updated_at, responseCoursefaq.getData().getUpdatedAt());
+        assertEquals(translations_id, responseCoursefaq.getData().getTranslations().get(0).getId());
+        assertEquals(faq_id, responseCoursefaq.getData().getTranslations().get(0).getFaqId());
+        assertEquals(locale, responseCoursefaq.getData().getTranslations().get(0).getLocale());
+        assertTrue(responseCoursefaq.getData().getTranslations().get(0).getTitle().contains(title));
+        assertTrue(responseCoursefaq.getData().getTranslations().get(0).getAnswer().contains(answer));
+    }
+    // ************************************************************************************************************
+
+    // ******************************************** /api/addCoursefaq *********************************************
+    @Given("The api user prepares a POST request containing the {string}, {string} and {int} information to send to the api addCoursefaq endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_and_information_to_send_to_the_api_add_coursefaq_endpoint(String title, String answer, int webinar_id) {
+        requestBody = builder
+                .addParameterForJSONObject("title", title)
+                .addParameterForJSONObject("answer", answer)
+                .addParameterForJSONObject("webinar_id", webinar_id)
+                .buildUsingJSONObject();
+
+        System.out.println("POST Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // ***************************************** /api/updateCoursefaq/{id} ****************************************
+    @Given("The api user prepares a PATCH request containing the {string} and {string} information to send to the api updateCoursefaq endpoint.")
+    public void the_api_user_prepares_a_patch_request_containing_the_and_information_to_send_to_the_api_update_coursefaq_endpoint(String title, String answer) {
+        requestBody = builder
+                .addParameterForMap("title", title)
+                .addParameterForMap("answer", answer)
+                .buildUsingMap();
+
+        System.out.println("PATCH Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // ************************************************ /api/products *********************************************
+    @Given("The api user verifies that the information for the entry with the specified {int} index in the response body includes {int}, {string}, {string}, {int}, {int}, {int}, {int}, {int}, {int}, {int}, {string}, {string}, {string}, {string} and {string}.")
+    public void the_api_user_verifies_that_the_information_for_the_entry_with_the_specified_index_in_the_response_body_includes_and(int dataIndex, int creator_id, String type, String slug, int category_id, int price, int point, int unlimited_inventory, int ordering, int id, int product_id, String locale, String title, String seo_description, String summary, String description) {
+        API_Methods.response.then()
+                .assertThat()
+                .body("data.products[" + dataIndex + "].creator_id", equalTo(creator_id),
+                        "data.products[" + dataIndex + "].type", equalTo(type),
+                        "data.products[" + dataIndex + "].slug", equalTo(slug),
+                        "data.products[" + dataIndex + "].category_id", equalTo(category_id),
+                        "data.products[" + dataIndex + "].price", equalTo(price),
+                        "data.products[" + dataIndex + "].point", equalTo(point),
+                        "data.products[" + dataIndex + "].unlimited_inventory", equalTo(unlimited_inventory),
+                        "data.products[" + dataIndex + "].ordering", equalTo(ordering),
+                        "data.products[" + dataIndex + "].translations[0].id", equalTo(id),
+                        "data.products[" + dataIndex + "].translations[0].product_id", equalTo(product_id),
+                        "data.products[" + dataIndex + "].translations[0].locale", equalTo(locale),
+                        "data.products[" + dataIndex + "].translations[0].title", equalTo(title),
+                        "data.products[" + dataIndex + "].translations[0].seo_description", containsString(seo_description),
+                        "data.products[" + dataIndex + "].translations[0].summary", containsString(summary),
+                        "data.products[" + dataIndex + "].translations[0].description", containsString(description));
+    }
+    // ************************************************************************************************************
+
+    // ********************************************* /api/product/{id} ********************************************
+    @Given("The api user verifies the content of the data in the response body, including {int}, {int}, {string}, {string}, {int}, {int}, {int}, {int}, {int}, {int}, {int}, {string}, {string}, {string}, {string} and {string}.")
+    public void the_api_user_verifies_the_content_of_the_data_in_the_response_body_including_and(int data_id, int creator_id, String type, String slug, int category_id, int price, int point, int unlimited_inventory, int ordering, int translations_id, int product_id, String locale, String title, String seo_description, String summary, String description) {
+        jsonPath = API_Methods.response.jsonPath();
+
+        assertEquals(data_id, jsonPath.getInt("data.id"));
+        assertEquals(creator_id, jsonPath.getInt("data.creator_id"));
+        assertEquals(type, jsonPath.getString("data.type"));
+        assertEquals(slug, jsonPath.getString("data.slug"));
+        assertEquals(category_id, jsonPath.getInt("data.category_id"));
+        assertEquals(price, jsonPath.getInt("data.price"));
+        assertEquals(point, jsonPath.getInt("data.point"));
+        assertEquals(unlimited_inventory, jsonPath.getInt("data.unlimited_inventory"));
+        assertEquals(ordering, jsonPath.getInt("data.ordering"));
+        assertEquals(translations_id, jsonPath.getInt("data.translations[0].id"));
+        assertEquals(product_id, jsonPath.getInt("data.translations[0].product_id"));
+        assertEquals(locale, jsonPath.getString("data.translations[0].locale"));
+        assertEquals(title, jsonPath.getString("data.translations[0].title"));
+        assertTrue(jsonPath.getString("data.translations[0].seo_description").contains(seo_description));
+        assertTrue(jsonPath.getString("data.translations[0].summary").contains(summary));
+        assertTrue(jsonPath.getString("data.translations[0].description").contains(description));
+    }
+    // ************************************************************************************************************
+
+    // *********************************************** /api/addProduct ********************************************
+    @Given("The api user prepares a POST request to send to the api addProduct endpoint containing the information {string}, {int}, {int}, {string}, {string} and {string}.")
+    public void the_api_user_prepares_a_post_request_to_send_to_the_api_add_product_endpoint_containing_the_information_and(String type, int price, int category_id, String title, String summary, String description) {
+        requestProduct = new ProductPojo(type, price, category_id, title, summary, description);
+        requestBody = gson.toJson(requestProduct); // Burada POJO nesnesini JSON formatında bir Stringe dönüştürdük.
+        System.out.println("POST Request Body : " + requestBody);
+    }
+
     // ************************************************************************************************************
 }

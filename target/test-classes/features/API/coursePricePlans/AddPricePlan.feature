@@ -10,8 +10,8 @@ Feature: As an administrator, I want to create a new course price plan record vi
     # Api kullanicisi "api/addPricePlan" path parametrelerini olusturur
     * The api user prepares a POST request to send to the api addPricePlan endpoint, containing the information "<title>", "<dateRange>", <discount>, <capacity> and <webinar_id>.
     # Api kullanicisi api addPricePlan endpointine gondermek icin "<title>", "<dateRange>", <discount>, <capacity> ve <webinar_id> bilgisilerini iceren bir post request hazirlar
-    * The api user sends a "POST" request body and saves the returned response.
-    # Api kullanicisi POST request body gonderir ve donen responsei kaydeder
+    * The api user sends a "POST" request and saves the returned response.
+    # Api kullanicisi POST request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 200.
     # Api kullanicisi status codeun 200 oldugunu dogrular
     * The api user verifies that the "remark" information in the response body is "success".
@@ -34,8 +34,8 @@ Feature: As an administrator, I want to create a new course price plan record vi
     # Api kullanicisi "api/addPricePlan" path parametrelerini olusturur
     * The api user prepares a POST request that contains no data.
     # Api kullanicisi data icermeyen bir post request hazırlar
-    * The api user sends a "POST" request body and saves the returned response.
-    # Api kullanicisi POST request body gonderir ve donen responsei kaydeder
+    * The api user sends a "POST" request and saves the returned response.
+    # Api kullanicisi POST request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 422.
     # Api kullanicisi status codeun 422 oldugunu dogrular
     * The api user verifies that the "message" information in the response body is "The title field is required. (and 3 more errors)".
@@ -53,8 +53,8 @@ Feature: As an administrator, I want to create a new course price plan record vi
     # Api kullanicisi "api/addPricePlan" path parametrelerini olusturur
     * The api user prepares a POST request to send to the api addPricePlan endpoint, containing the information "<title>", "<dateRange>", <discount>, <capacity> and <webinar_id>.
     # Api kullanicisi api addPricePlan endpointine gondermek icin "<title>", "<dateRange>", <discount>, <capacity> ve <webinar_id> bilgisilerini iceren bir post request hazirlar
-    * The api user sends a "POST" request body and saves the returned response.
-    # Api kullanicisi POST request body gonderir ve donen responsei kaydeder
+    * The api user sends a "POST" request and saves the returned response.
+    # Api kullanicisi POST request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
     # Api kullanicisi status codeun 203 oldugunu dogrular
     * The api user verifies that the "remark" information in the response body is "failed".
@@ -77,8 +77,8 @@ Feature: As an administrator, I want to create a new course price plan record vi
     # Api kullanicisi "api/addPricePlan" path parametrelerini olusturur
     * The api user prepares a POST request to send to the api addPricePlan endpoint, containing the information "<title>", "<dateRange>", <discount>, <capacity> and <webinar_id>.
     # Api kullanicisi api addPricePlan endpointine gondermek icin "<title>", "<dateRange>", <discount>, <capacity> ve <webinar_id> bilgisilerini iceren bir post request hazirlar
-    * The api user sends a "POST" request body and saves the returned response.
-    # Api kullanicisi POST request body gonderir ve donen responsei kaydeder
+    * The api user sends a "POST" request and saves the returned response.
+    # Api kullanicisi POST request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 401.
     # Api kullanicisi status codeun 401 oldugunu dogrular
     * The api user verifies that the "message" information in the response body is "Unauthenticated.".
