@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="8.767">
-    <testcase classname="As an administrator, I want to update the information of the course FAQ with the specified ID via an API connection." name="The status code returned after a PATCH request with valid authorization credentials, correct (id), and data" time="8.26">
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="8.31">
+    <testcase classname="As an administrator, I want to create a new product record via an API connection." name="The creation of a new product record via the API should be verified. This can be confirmed by sending a" time="7.72">
         <system-out><![CDATA[* The api user constructs the base url with the "admin" token...............passed
-* The api user sets "api/updateCoursefaq/165" path parameters...............passed
-* The api user prepares a PATCH request containing the "Will I receive a certificate upon completion of the course?" and "Yes, upon successful completion of the course, you will receive a certificate of completion to showcase your achievement." information to send to the api updateCoursefaq endpoint..passed
-* The api user sends a "PATCH" request and saves the returned response......passed
+* The api user sets "api/product/97" path parameters........................passed
+* The api user sends a "GET" request and saves the returned response........passed
 * The api user verifies that the status code is 200.........................passed
 * The api user verifies that the "remark" information in the response body is "success"..passed
-* The api user verifies that the "Message" information in the response body is "Successfully Updated."..passed
-* The api user verifies that the "Updated Course Faq ID" information in the returned response body is the same as the id path parameter written in the endpoint..passed
 ]]></system-out>
     </testcase>
 </testsuite>

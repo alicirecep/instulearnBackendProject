@@ -99,6 +99,63 @@ Feature: As an administrator, I want to update the information of the course FAQ
       | Will I receive a certificate upon completion of the course? | Yes, upon successful completion of the course, you will receive a certificate of completion to showcase your achievement. |
 
 
+  Scenario Outline: When a PATCH request with invalid (student or teacher) authorization credentials, the correct (id), and correct
+  data (title, answer) is sent to the /api/updateCoursefaq/{id} endpoint, it should be verified that the status code is 203 and
+  the response body contains a remark field with the value "failed" and a message field with the value
+  "To access this data, you must log in as a admin."
 
+    * The api user constructs the base url with the "student" token.
+    # Api kullanicisi "student" token ile base urli olusturur
+    * The api user sets "api/updateCoursefaq/<id>" path parameters.
+    # Api kullanicisi "api/updateCoursefaq/{id}" path parametrelerini olusturur
+    * The api user prepares a PATCH request containing the "<title>" and "<answer>" information to send to the api updateCoursefaq endpoint.
+    # Api kullanicisi api updateCoursefaq endpointine gondermek icin "<title>" ve "<answer>" bilgilerini iceren bir patch request hazirlar
+    * The api user sends a "PATCH" request and saves the returned response.
+    # Api kullanicisi PATCH request gonderir ve donen responsei kaydeder
+    * The api user verifies that the status code is 203.
+    # Api kullanicisi status codeun 203 oldugunu dogrular
+    * The api user verifies that the "remark" information in the response body is "failed".
+    # Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
+    * The api user verifies that the "data.message" information in the response body is "To access this data, you must log in as a admin.".
+    # Api kullanicisi response bodydeki message bilgisinin "To access this data, you must log in as a admin." oldugunu dogrular
+
+    Examples:
+      | id  | title                                                       | answer                                                                                                                    |
+      | 165 | Will I receive a certificate upon completion of the course? | Yes, upon successful completion of the course, you will receive a certificate of completion to showcase your achievement. |
+
+
+  Scenario Outline: When a PATCH request with invalid (invalid token) authorization credentials, the correct (id), and correct data
+  (title, answer) is sent to the /api/updateCoursefaq/{id} endpoint, it should be verified that the status code is 401 and the
+  response body contains a message field with the value "Unauthenticated."
+
+    * The api user constructs the base url with the "invalid" token.
+    # Api kullanicisi "invalid" token ile base urli olusturur
+    * The api user sets "api/updateCoursefaq/<id>" path parameters.
+    # Api kullanicisi "api/updateCoursefaq/{id}" path parametrelerini olusturur
+    * The api user prepares a PATCH request containing the "<title>" and "<answer>" information to send to the api updateCoursefaq endpoint.
+    # Api kullanicisi api updateCoursefaq endpointine gondermek icin "<title>" ve "<answer>" bilgilerini iceren bir patch request hazirlar
+    * The api user sends a "PATCH" request, saves the returned response, and verifies that the status code is '401' with the reason phrase Unauthorized.
+    # Api kullanicisi PATCH request gonderir, donen responsei kaydeder, status codeun '401' ve reason phrase bilgisinin Unauthorized oldugunu dogrular
+
+    Examples:
+      | id  | title                                                       | answer                                                                                                                    |
+      | 165 | Will I receive a certificate upon completion of the course? | Yes, upon successful completion of the course, you will receive a certificate of completion to showcase your achievement. |
+
+
+  Scenario Outline: The updated course faq record should be verified through the API by sending a GET request to the
+  /api/coursefaq/{id} endpoint with the Updated Course Faq ID returned in the response body.
+
+    * The api user constructs the base url with the "admin" token.
+    # Api kullanicisi "admin" token ile base urli olusturur
+    * The api user sets "api/coursefaq/<id>" path parameters.
+    # Api kullanicisi "api/coursefaq/{id}" path parametrelerini olusturur
+    * The api user sends a "GET" request and saves the returned response.
+    # Api kullanicisi GET request gonderir ve donen responsei kaydeder
+    * The api user confirms that the title information in the response body is "<titleValue>".
+    # Api kullanicisi response bodydeki title bilgisinin "<titleValue>" olduğunu doğrular.
+
+    Examples:
+      | id  | titleValue                                                  |
+      | 165 | Will I receive a certificate upon completion of the course? |
 
 
