@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="8.31">
-    <testcase classname="As an administrator, I want to create a new product record via an API connection." name="The creation of a new product record via the API should be verified. This can be confirmed by sending a" time="7.72">
-        <system-out><![CDATA[* The api user constructs the base url with the "admin" token...............passed
-* The api user sets "api/product/97" path parameters........................passed
-* The api user sends a "GET" request and saves the returned response........passed
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="11.144">
+    <testcase classname="As an administrator, I want to update the information of the product with the specified ID via an API connection." name="When a valid update request with proper authorization and correct (id) is sent to the /api/updateProduct/{id}" time="10.595">
+        <system-out><![CDATA[* The api user sends a POST request to the api "addProduct" endpoint to create a new "product" record and records the "Added Product ID" information..passed
+* The api user constructs the base url with the "admin" token...............passed
+* The api user sets "api/updateProduct" path parameters.....................passed
+* The api user prepares a PATCH request to the api updateProduct endpoint containing the following information "virtual", 150, 2, "Introduction to Yoga: A Beginner's Guide Video Course", "Discover the transformative power of yoga and embark on a journey to wellness." and "Are you ready to embark on a journey to holistic wellness? 'Introduction to Yoga: A Beginner's Guide' is designed for individuals who want to explore the ancient practice of yoga and reap its numerous benefits. In this comprehensive course, you will learn the fundamentals of yoga, including basic poses, breathing techniques, and meditation practices. Led by experienced yoga instructors, you will develop strength, flexibility, and inner peace as you progress through the course. Whether you're a complete beginner or looking to deepen your practice, this course will empower you to cultivate a healthier mind, body, and spirit. Join us and unlock the transformative power of yoga today!".passed
+* The api user sends a "PATCH" request and saves the returned response......passed
 * The api user verifies that the status code is 200.........................passed
 * The api user verifies that the "remark" information in the response body is "success"..passed
+* The api user verifies that the "Message" information in the response body is "Successfully Updated."..passed
+* The api user verifies that the "Updated Product ID" information in the returned response body is the same as the id path parameter written in the endpoint..passed
+* The api user verifies that the "data.translations[0].title" is "Introduction to Yoga: A Beginner's Guide Video Course" by sending a GET request to the "api" "product" endpoint with the "Updated Product ID" returned in the response body..passed
 ]]></system-out>
     </testcase>
 </testsuite>

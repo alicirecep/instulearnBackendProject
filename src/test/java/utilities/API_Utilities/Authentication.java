@@ -46,7 +46,6 @@ public class Authentication {
                 .when()
                 .body(reqBody.toString())
                 .post("/{pp1}/{pp2}");
-        response.prettyPrint();
 
 
         JsonPath repJP = response.jsonPath();
