@@ -1,8 +1,9 @@
 Feature: As an administrator, I want to create a new course price plan record via an API connection.
 
-  Scenario Outline: When a POST request with valid authorization credentials and the correct data (title, dateRange, discount,
-  capacity, webinar_id) is sent to the /api/addPricePlan endpoint, it should be verified that the status code is 200, the
-  remark information in the response body is "success", and the message information is "Successfully Added."
+  Scenario Outline: When a valid POST request with proper authorization and correct data (title, dateRange, discount, capacity,
+  webinar_id) is sent to the "/api/addPricePlan" endpoint, it should be verified that the status code is 200, and the response
+  body contains the messages "success" and "Successfully Added." To confirm the creation of the record, a GET request should
+  be sent to the /api/pricePlan/{id} endpoint using the returned Added Price Plans ID.
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -18,6 +19,8 @@ Feature: As an administrator, I want to create a new course price plan record vi
     # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
     * The api user verifies that the "Message" information in the response body is "Successfully Added.".
     # Api kullanicisi response bodydeki Message bilgisinin "Successfully Added." oldugunu dogrular
+    * The api user verifies that the "remark" is "success" by sending a GET request to the "api" "pricePlan" endpoint with the "Added Price Plans ID" returned in the response body.
+    # Api kullanicisi response bodyde donen "Added Price Plans ID" ile "api" "pricePlan" endpoint'ine GET request göndererek "remark" bilgisinin "success" oldugunu dogrular
 
     Examples:
       | title            | dateRange               | discount | capacity | webinar_id |
@@ -87,24 +90,4 @@ Feature: As an administrator, I want to create a new course price plan record vi
     Examples:
       | title            | dateRange               | discount | capacity | webinar_id |
       | Test Price Plans | 2024-06-01 - 2024-06-30 | 20       | 50       | 2002       |
-
-
-  Scenario Outline: The creation of a new course pricing plan record can be confirmed by sending a GET request to the
-  /api/pricePlan/{id} endpoint to verify the record.
-
-    * The api user constructs the base url with the "admin" token.
-    # Api kullanicisi "admin" token ile base urli olusturur
-    * The api user sets "api/pricePlan/<id>" path parameters.
-    # Api kullanicisi "api/pricePlan/{id}" path parametrelerini olusturur
-    * The api user sends a "GET" request and saves the returned response.
-    # Api kullanicisi GET request gonderir ve donen responsei kaydeder
-    * The api user verifies that the status code is 200.
-    # Api kullanicisi status codeun 200 oldugunu dogrular
-    * The api user verifies that the "remark" information in the response body is "success".
-    # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
-
-    Examples:
-      | id |
-      | 95 |
-
 

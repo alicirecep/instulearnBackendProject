@@ -1,8 +1,9 @@
 Feature: As an administrator, I want to create a new product record via an API connection.
 
-  Scenario Outline: When valid authorization information and correct data (type, price, category_id, title, summary, description)
-  are sent with a POST request to the /api/addProduct endpoint, the returned status code should be verified as 200.
-  The remark in the response body should be "success" and the Message should be "Successfully Added."
+  Scenario Outline: When a valid POST request with proper authorization and correct data is sent to the /api/addProduct endpoint,
+  the expected outcomes are: a status code of 200, a "success" remark in the response body, and a message stating
+  "Successfully Added." Furthermore, within the response body of the same request, the ID of the created product should be
+  included. By sending a GET request to the /api/product/{id} endpoint with this ID, the creation of the record is confirmed.
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -18,6 +19,8 @@ Feature: As an administrator, I want to create a new product record via an API c
     # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
     * The api user verifies that the "Message" information in the response body is "Successfully Added.".
     # Api kullanicisi response bodydeki Message bilgisinin "Successfully Added." oldugunu dogrular
+    * The api user verifies that the "remark" is "success" by sending a GET request to the "api" "product" endpoint with the "Added Product ID" returned in the response body.
+    # Api kullanicisi response bodyde donen "Added Product ID" ile "api" "product" endpoint'ine GET request göndererek "remark" bilgisinin "success" oldugunu dogrular
 
     Examples:
       | type    | price | category_id | title                                                 | summary                                                                        | description                                                                                                                                                                                                                                                                                                                                                                |
@@ -62,7 +65,6 @@ Feature: As an administrator, I want to create a new product record via an API c
     * The api user verifies that the "data.message" information in the response body is "To access this data, you must log in as a admin.".
     # Api kullanicisi response bodydeki message bilgisinin "To access this data, you must log in as a admin." oldugunu dogrular
 
-
     Examples:
       | type    | price | category_id | title                                                 | summary                                                                        | description                                                                                                                                                                                                                                                                                                                                                                |
       | virtual | 100   | 2           | Introduction to Yoga: A Beginner's Guide Video Course | Discover the transformative power of yoga and embark on a journey to wellness. | Embark on a journey to holistic wellness with 'Introduction to Yoga: A Beginner's Guide.' This course covers basic poses, breathing techniques, and meditation, led by experienced instructors. Suitable for beginners and those looking to deepen their practice, you'll gain strength, flexibility, and inner peace. Join us to unlock the transformative power of yoga! |
@@ -89,24 +91,5 @@ Feature: As an administrator, I want to create a new product record via an API c
       | type    | price | category_id | title                                                 | summary                                                                        | description                                                                                                                                                                                                                                                                                                                                                                |
       | virtual | 100   | 2           | Introduction to Yoga: A Beginner's Guide Video Course | Discover the transformative power of yoga and embark on a journey to wellness. | Embark on a journey to holistic wellness with 'Introduction to Yoga: A Beginner's Guide.' This course covers basic poses, breathing techniques, and meditation, led by experienced instructors. Suitable for beginners and those looking to deepen their practice, you'll gain strength, flexibility, and inner peace. Join us to unlock the transformative power of yoga! |
 
-
-  Scenario Outline: The creation of a new product record via the API should be verified. This can be confirmed by sending a
-  GET request to the /api/product/{id} endpoint with the Added Product ID returned from the response body,
-  thus verifying that the record has been created.
-
-    * The api user constructs the base url with the "admin" token.
-    # Api kullanicisi "admin" token ile base urli olusturur
-    * The api user sets "api/product/<id>" path parameters.
-    # Api kullanicisi "api/product/{id}" path parametrelerini olusturur
-    * The api user sends a "GET" request and saves the returned response.
-    # Api kullanicisi GET request gonderir ve donen responsei kaydeder
-    * The api user verifies that the status code is 200.
-    # Api kullanicisi status codeun 200 oldugunu dogrular
-    * The api user verifies that the "remark" information in the response body is "success".
-    # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
-
-    Examples:
-      | id |
-      | 97 |
 
 

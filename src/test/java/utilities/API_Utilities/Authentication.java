@@ -46,13 +46,11 @@ public class Authentication {
                 .when()
                 .body(reqBody.toString())
                 .post("/{pp1}/{pp2}");
-        response.prettyPrint();
 
 
         JsonPath repJP = response.jsonPath();
 
         String token = repJP.getString("data.access_token");
-        System.out.println("token = " + token);
 
         return token;
     }

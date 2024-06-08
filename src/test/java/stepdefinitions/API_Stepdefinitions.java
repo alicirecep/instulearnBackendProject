@@ -5,6 +5,7 @@ import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
 import io.restassured.path.json.JsonPath;
+import org.hamcrest.Matchers;
 import pojos.*;
 import utilities.API_Utilities.API_Methods;
 import utilities.API_Utilities.RequestBuilder;
@@ -25,9 +26,9 @@ public class API_Stepdefinitions {
     HashMap<String, Object> responseMap;
     PricePlanPojo requestPricePlan;
     ProductPojo requestProduct;
-
     CoursefaqPojo responseCoursefaq;
     Gson gson = new Gson(); // Gson kütüphanesini kullanarak bir POJO nesnesini JSON formatında bir Stringe dönüştürebilirsiniz.
+    int adddedId;
 
     @Given("The api user constructs the base url with the {string} token.")
     public void the_api_user_constructs_the_base_url_with_the_token(String userType) {
@@ -36,7 +37,12 @@ public class API_Stepdefinitions {
 
     @Given("The api user sets {string} path parameters.")
     public void the_api_user_sets_path_parameters(String pathParam) {
-        API_Methods.pathParam(pathParam);
+        if (adddedId == 0) {
+            API_Methods.pathParam(pathParam);
+        } else {
+            API_Methods.pathParam(pathParam + "/" + adddedId);
+        }
+
     }
 
     @Given("The api user sends a {string} request and saves the returned response.")
@@ -76,24 +82,17 @@ public class API_Stepdefinitions {
 
     @Given("The api user verifies that the {string} information in the returned response body is the same as the id path parameter written in the endpoint.")
     public void the_api_user_verifies_that_the_information_in_the_returned_response_body_is_the_same_as_the_id_path_parameter_written_in_the_endpoint(String reponseId) {
-        responseMap = API_Methods.response.as(HashMap.class);
-
-        Object idValue = responseMap.get(reponseId);
-
-        int id = 0;
-        if (idValue instanceof String) {
-            id = Integer.parseInt((String) idValue);
-        } else {
-            id = (int) idValue;
-        }
-        assertEquals(API_Methods.id, id);
+        API_Methods.assertPathParam(reponseId);
     }
 
-    @Given("The api user confirms that the title information in the response body is {string}.")
-    public void the_api_user_confirms_that_the_title_information_in_the_response_body_is(String titleValue) {
-        API_Methods.response.then()
-                .assertThat()
-                .body("data.translations[0].title", equalTo(titleValue));
+    @Given("The api user verifies that the {string} is {string} by sending a GET request to the {string} {string} endpoint with the {string} returned in the response body.")
+    public void the_api_user_verifies_that_the_is_by_sending_a_get_request_to_the_endpoint_with_the_returned_in_the_response_body(String path, String value, String pp1, String pp2, String reponseId) {
+        API_Methods.verification(pp1, pp2, reponseId, path, value);
+    }
+
+    @Given("The api user sends a POST request to the api {string} endpoint to create a new {string} record and records the {string} information.")
+    public void the_api_user_sends_a_post_request_to_the_api_endpoint_to_create_a_new_record_and_records_the_information(String pp2, String folder, String addedId) {
+        adddedId = API_Methods.addedId(pp2, folder, addedId);
     }
 
     // ******************************************* /api/courses ************************************************
@@ -435,4 +434,69 @@ public class API_Stepdefinitions {
     }
 
     // ************************************************************************************************************
+
+    // **************************************** /api/updateProduct/{id} *******************************************
+    @Given("The api user prepares a PATCH request to the api updateProduct endpoint containing the following information {string}, {int}, {int}, {string}, {string} and {string}")
+    public void the_api_user_prepares_a_patch_request_to_the_api_update_product_endpoint_containing_the_following_information_and(String type, int price, int category_id, String title, String summary, String description) {
+        requestProduct = new ProductPojo(type, price, category_id, title, summary, description);
+        requestBody = gson.toJson(requestProduct); // Burada POJO nesnesini JSON formatında bir Stringe dönüştürdük.
+        System.out.println("PATCH Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // ***************************************** /api/productCategories *******************************************
+    @Given("The api user verifies the {string}, {int}, {int}, {string} and {string} information for the {int} index in the response body.")
+    public void the_api_user_verifies_the_and_information_for_the_index_in_the_response_body(String icon, int id, int product_category_id, String locale, String title, int dataIndex) {
+        API_Methods.response.then()
+                .assertThat()
+                .body("data.categories[" + dataIndex + "].parent_id", equalTo(null),
+                        "data.categories[" + dataIndex + "].icon", equalTo(icon),
+                        "data.categories[" + dataIndex + "].order", equalTo(null),
+                        "data.categories[" + dataIndex + "].translations[0].id", equalTo(id),
+                        "data.categories[" + dataIndex + "].translations[0].product_category_id", equalTo(product_category_id),
+                        "data.categories[" + dataIndex + "].translations[0].locale", equalTo(locale),
+                        "data.categories[" + dataIndex + "].translations[0].title", equalTo(title));
+    }
+    // ************************************************************************************************************
+
+    // *************************************** /api/productCategory/{id} ******************************************
+    @Given("The api user verifies the content of the response body data {int}, {string}, {int}, {int}, {string} and {string}.")
+    public void the_api_user_verifies_the_content_of_the_response_body_data_and(int data_id, String icon, int translations_id, int product_category_id, String locale, String title) {
+        API_Methods.response.then()
+                .assertThat()
+                .body("data.id", equalTo(data_id),
+                        "data.parent_id", equalTo(null),
+                        "data.icon", equalTo(icon),
+                        "data.order", equalTo(null),
+                        "data.title", equalTo(null),
+                        "data.translations[0].id", equalTo(translations_id),
+                        "data.translations[0].product_category_id", equalTo(product_category_id),
+                        "data.translations[0].locale", equalTo(locale),
+                        "data.translations[0].title", equalTo(title));
+    }
+    // ************************************************************************************************************
+
+    // *************************************** /api/addProductCategory ********************************************
+    @Given("The api user prepares a POST request containing the {string} information to send to the api addProductCategory endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_add_product_category_endpoint(String title) {
+        requestBody = builder
+                .addParameterForJSONObject("title", title)
+                .buildUsingJSONObject();
+
+        System.out.println("POST Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // ************************************* /api/productCategory/{id} ********************************************
+    @Given("The api user prepares a PATCH request containing the {string} information to send to the api updateProductCategory endpoint.")
+    public void the_api_user_prepares_a_patch_request_containing_the_information_to_send_to_the_api_update_product_category_endpoint(String title) {
+        requestBody = builder
+                .addParameterForJSONObject("title", title)
+                .buildUsingJSONObject();
+
+        System.out.println("PATCH Request Body : " + requestBody);
+    }
+
+    // ************************************************************************************************************
+
 }

@@ -1,8 +1,9 @@
 Feature: As an administrator, I want to create a new course record via an API connection.
 
-  Scenario Outline: When a POST request with valid authorization credentials and correct data is sent, it should be verified
-  that the status code returned from the /api/addCourse endpoint is 200. Additionally, it should be confirmed that the remark
-  field in the response body is "success" and the Message field is "Successfully Added."
+  Scenario Outline: When a valid POST request with proper authorization and correct data is sent to the /api/addCourse endpoint,
+  it should be verified that the status code is 200, and the response body contains the messages "success" and "Successfully Added."
+  To confirm the creation of the record, a GET request should be sent to the /api/course/{id} endpoint using the returned Added
+  Course ID.
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -18,6 +19,8 @@ Feature: As an administrator, I want to create a new course record via an API co
     # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
     * The api user verifies that the "Message" information in the response body is "Successfully Added.".
     # Api kullanicisi response bodydeki Message bilgisinin "Successfully Added." oldugunu dogrular
+    * The api user verifies that the "remark" is "success" by sending a GET request to the "api" "course" endpoint with the "Added Course ID" returned in the response body.
+    # Api kullanicisi response bodyde donen "Added Course ID" ile "api" "course" endpoint'ine GET request göndererek "remark" bilgisinin "success" oldugunu dogrular
 
     Examples:
       | title               | type   | slug       | start_date | duration | capacity | price | description | teacher_id |
@@ -108,25 +111,5 @@ Feature: As an administrator, I want to create a new course record via an API co
     Examples:
       | title               | type   | slug       | start_date | duration | capacity | price | description | teacher_id |
       | Health And Fitness4 | course | Health-And | 1625081400 | 60       | 5        | 20    | desc        | 870        |
-
-
-  Scenario Outline: When a new course record is created via the API, it should be verified by sending a GET request to the
-  /api/course/{id} endpoint using the "Added Course ID" value obtained from the response body to confirm that the record has
-  been successfully created.
-
-    * The api user constructs the base url with the "admin" token.
-    # Api kullanicisi "admin" token ile base urli olusturur
-    * The api user sets "api/course/<id>" path parameters.
-    # Api kullanicisi "api/course/{id}" path parametrelerini olusturur
-    * The api user sends a "GET" request and saves the returned response.
-    # Api kullanicisi GET request gonderir ve donen responsei kaydeder
-    * The api user verifies that the status code is 200.
-    # Api kullanicisi status codeun 200 oldugunu dogrular
-    * The api user verifies that the "remark" information in the response body is "success".
-    # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
-
-    Examples:
-      | id   |
-      | 2389 |
 
 
