@@ -1,8 +1,9 @@
 Feature: As an administrator, I want to create a new course category record via an API connection.
 
-  Scenario Outline: When a POST request is sent to the /api/addCategory endpoint with valid authorization credentials and
-  correct data (title), it should be verified that the status code returned is 200 and the remark field in the response body is
-  "success" and the Message field is "Successfully Added."
+  Scenario Outline: When a valid POST request with proper authorization and correct data (title) is sent to the /api/addCategory
+  endpoint, it should be verified that the status code is 200, and the response body contains the messages "success" and
+  "Successfully Added." To confirm the creation of the record, a GET request should be sent to the /api/category/{id} endpoint
+  using the returned Added Category ID.
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -18,6 +19,8 @@ Feature: As an administrator, I want to create a new course category record via 
     # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
     * The api user verifies that the "Message" information in the response body is "Successfully Added.".
     # Api kullanicisi response bodydeki Message bilgisinin "Successfully Added." oldugunu dogrular
+    * The api user verifies that the "remark" is "success" by sending a GET request to the "api" "category" endpoint with the "Added Category ID" returned in the response body.
+    # Api kullanicisi response bodyde donen "Added Category ID" ile "api" "category" endpoint'ine GET request göndererek "remark" bilgisinin "success" oldugunu dogrular
 
     Examples:
       | title            |
@@ -87,23 +90,4 @@ Feature: As an administrator, I want to create a new course category record via 
       | title            |
       | Online Education |
 
-
-  Scenario Outline: The creation of a new course category record via the API should be verified. This can be achieved by sending a
-  GET request to the /api/category/{id} endpoint using the Added Category ID value obtained from the response body to confirm
-  that the record has been created.
-
-    * The api user constructs the base url with the "admin" token.
-    # Api kullanicisi "admin" token ile base urli olusturur
-    * The api user sets "api/category/<id>" path parameters.
-    # Api kullanicisi "api/category/{id}" path parametrelerini olusturur
-    * The api user sends a "GET" request and saves the returned response.
-    # Api kullanicisi GET request gonderir ve donen responsei kaydeder
-    * The api user verifies that the status code is 200.
-    # Api kullanicisi status codeun 200 oldugunu dogrular
-    * The api user verifies that the "remark" information in the response body is "success".
-    # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
-
-    Examples:
-      | id  |
-      | 637 |
 

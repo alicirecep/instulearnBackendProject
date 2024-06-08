@@ -5,6 +5,7 @@ import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
 import io.restassured.path.json.JsonPath;
+import org.hamcrest.Matchers;
 import pojos.*;
 import utilities.API_Utilities.API_Methods;
 import utilities.API_Utilities.RequestBuilder;
@@ -82,13 +83,6 @@ public class API_Stepdefinitions {
     @Given("The api user verifies that the {string} information in the returned response body is the same as the id path parameter written in the endpoint.")
     public void the_api_user_verifies_that_the_information_in_the_returned_response_body_is_the_same_as_the_id_path_parameter_written_in_the_endpoint(String reponseId) {
         API_Methods.assertPathParam(reponseId);
-    }
-
-    @Given("The api user confirms that the title information in the response body is {string}.")
-    public void the_api_user_confirms_that_the_title_information_in_the_response_body_is(String titleValue) {
-        API_Methods.response.then()
-                .assertThat()
-                .body("data.translations[0].title", equalTo(titleValue));
     }
 
     @Given("The api user verifies that the {string} is {string} by sending a GET request to the {string} {string} endpoint with the {string} returned in the response body.")
@@ -453,7 +447,56 @@ public class API_Stepdefinitions {
     // ***************************************** /api/productCategories *******************************************
     @Given("The api user verifies the {string}, {int}, {int}, {string} and {string} information for the {int} index in the response body.")
     public void the_api_user_verifies_the_and_information_for_the_index_in_the_response_body(String icon, int id, int product_category_id, String locale, String title, int dataIndex) {
-        responseMap = API_Methods.response.as(HashMap.class);
+        API_Methods.response.then()
+                .assertThat()
+                .body("data.categories[" + dataIndex + "].parent_id", equalTo(null),
+                        "data.categories[" + dataIndex + "].icon", equalTo(icon),
+                        "data.categories[" + dataIndex + "].order", equalTo(null),
+                        "data.categories[" + dataIndex + "].translations[0].id", equalTo(id),
+                        "data.categories[" + dataIndex + "].translations[0].product_category_id", equalTo(product_category_id),
+                        "data.categories[" + dataIndex + "].translations[0].locale", equalTo(locale),
+                        "data.categories[" + dataIndex + "].translations[0].title", equalTo(title));
     }
     // ************************************************************************************************************
+
+    // *************************************** /api/productCategory/{id} ******************************************
+    @Given("The api user verifies the content of the response body data {int}, {string}, {int}, {int}, {string} and {string}.")
+    public void the_api_user_verifies_the_content_of_the_response_body_data_and(int data_id, String icon, int translations_id, int product_category_id, String locale, String title) {
+        API_Methods.response.then()
+                .assertThat()
+                .body("data.id", equalTo(data_id),
+                        "data.parent_id", equalTo(null),
+                        "data.icon", equalTo(icon),
+                        "data.order", equalTo(null),
+                        "data.title", equalTo(null),
+                        "data.translations[0].id", equalTo(translations_id),
+                        "data.translations[0].product_category_id", equalTo(product_category_id),
+                        "data.translations[0].locale", equalTo(locale),
+                        "data.translations[0].title", equalTo(title));
+    }
+    // ************************************************************************************************************
+
+    // *************************************** /api/addProductCategory ********************************************
+    @Given("The api user prepares a POST request containing the {string} information to send to the api addProductCategory endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_add_product_category_endpoint(String title) {
+        requestBody = builder
+                .addParameterForJSONObject("title", title)
+                .buildUsingJSONObject();
+
+        System.out.println("POST Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // ************************************* /api/productCategory/{id} ********************************************
+    @Given("The api user prepares a PATCH request containing the {string} information to send to the api updateProductCategory endpoint.")
+    public void the_api_user_prepares_a_patch_request_containing_the_information_to_send_to_the_api_update_product_category_endpoint(String title) {
+        requestBody = builder
+                .addParameterForJSONObject("title", title)
+                .buildUsingJSONObject();
+
+        System.out.println("PATCH Request Body : " + requestBody);
+    }
+
+    // ************************************************************************************************************
+
 }

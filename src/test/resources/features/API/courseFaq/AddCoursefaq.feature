@@ -1,8 +1,9 @@
 Feature: As an administrator, I want to create a new course FAQ record via an API connection.
 
-  Scenario Outline: When a POST body with valid authorization credentials and correct data (title, answer, webinar_id) is sent to the
-  /api/addCoursefaq endpoint, it should be verified that the returned status code is 200, the remark information in the response
-  body is "success", and the Message information is "Successfully Added."
+  Scenario Outline: When a valid POST request with proper authorization and correct data (title, answer, webinar_id) is sent to the
+  /api/addCoursefaq endpoint, it should be verified that the status code is 200, and the response body contains the messages
+  "success" and "Successfully Added." To confirm the creation of the record, a GET request should be sent to the
+  /api/coursefaq/{id} endpoint using the returned Added Course Faq ID.
 
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
@@ -18,6 +19,8 @@ Feature: As an administrator, I want to create a new course FAQ record via an AP
     # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
     * The api user verifies that the "Message" information in the response body is "Successfully Added.".
     # Api kullanicisi response bodydeki Message bilgisinin "Successfully Added." oldugunu dogrular
+    * The api user verifies that the "remark" is "success" by sending a GET request to the "api" "coursefaq" endpoint with the "Added Course Faq ID" returned in the response body.
+    # Api kullanicisi response bodyde donen "Added Course Faq ID" ile "api" "coursefaq" endpoint'ine GET request göndererek "remark" bilgisinin "success" oldugunu dogrular
 
     Examples:
       | title                                                                                   | answer                                                                                                                                                                                                                                                                                                  | webinar_id |
@@ -87,25 +90,3 @@ Feature: As an administrator, I want to create a new course FAQ record via an AP
     Examples:
       | title                                                                                   | answer                                                                                                                                                                                                                                                                                                  | webinar_id |
       | What are the key features that differentiate your online learning platform from others? | The key features that distinguish our online learning platform from others include: a wide range of course content, interactive learning tools, student support services, personalized learning paths that provide a customized learning experience, and a team of up-to-date and qualified instructors | 1995       |
-
-
-  Scenario Outline: The creation of a new course FAQ record via the API should be verified. This is achieved by confirming that the
-  Added Course Faq ID returned in the response body matches the one obtained by sending a GET request to the /api/coursefaq/{id}
-  endpoint, thus confirming the creation of the record.
-
-    * The api user constructs the base url with the "admin" token.
-    # Api kullanicisi "admin" token ile base urli olusturur
-    * The api user sets "api/coursefaq/<id>" path parameters.
-    # Api kullanicisi "api/coursefaq/{id}" path parametrelerini olusturur
-    * The api user sends a "GET" request and saves the returned response.
-    # Api kullanicisi GET request gonderir ve donen responsei kaydeder
-    * The api user verifies that the status code is 200.
-    # Api kullanicisi status codeun 200 oldugunu dogrular
-    * The api user verifies that the "remark" information in the response body is "success".
-    # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
-
-    Examples:
-      | id  |
-      | 164 |
-
-

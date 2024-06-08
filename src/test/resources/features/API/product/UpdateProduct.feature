@@ -32,13 +32,15 @@ Feature: As an administrator, I want to update the information of the product wi
       | virtual | 150   | 2           | Introduction to Yoga: A Beginner's Guide Video Course | Discover the transformative power of yoga and embark on a journey to wellness. | Are you ready to embark on a journey to holistic wellness? 'Introduction to Yoga: A Beginner's Guide' is designed for individuals who want to explore the ancient practice of yoga and reap its numerous benefits. In this comprehensive course, you will learn the fundamentals of yoga, including basic poses, breathing techniques, and meditation practices. Led by experienced yoga instructors, you will develop strength, flexibility, and inner peace as you progress through the course. Whether you're a complete beginner or looking to deepen your practice, this course will empower you to cultivate a healthier mind, body, and spirit. Join us and unlock the transformative power of yoga today! |
 
 
-  Scenario Outline: When a PATCH request with valid authorization details and a correct (id) but no data is sent to the
+  Scenario: When a PATCH request with valid authorization details and a correct (id) but no data is sent to the
   /api/updateProduct/{id} endpoint, it should be verified that the status code is 203, the remark in the response body is
   "failed" and the message is "There is no information to update."
 
+    * The api user sends a POST request to the api "addProduct" endpoint to create a new "product" record and records the "Added Product ID" information.
+    # Api kullanıcısı api "addProduct" endpointine POST isteği göndererek yeni bir "product" kaydı oluşturur ve "Added Product ID" bilgisini kaydeder.
     * The api user constructs the base url with the "admin" token.
     # Api kullanicisi "admin" token ile base urli olusturur
-    * The api user sets "api/updateProduct/<id>" path parameters.
+    * The api user sets "api/updateProduct" path parameters.
     # Api kullanicisi "api/updateProduct/{id}" path parametrelerini olusturur
     * The api user prepares a PATCH request without containing any data.
     # Api kullanicisi data icermeyen bir patch request hazırlar
@@ -51,9 +53,6 @@ Feature: As an administrator, I want to update the information of the product wi
     * The api user verifies that the "message" information in the response body is "There is no information to update.".
     # Api kullanicisi response bodyde dönen message bilgisinin "There is no information to update." oldugunu dogrular
 
-    Examples:
-      | id  |
-      | 100 |
 
 
   Scenario Outline: When a PATCH request with valid authorization details, an invalid (id), and correct data is sent to the
@@ -109,9 +108,11 @@ Feature: As an administrator, I want to update the information of the product wi
   that the status code is 203, the remark in the response body is "failed" and the message is
   "To access this data, you must log in as a admin."
 
+    * The api user sends a POST request to the api "addProduct" endpoint to create a new "product" record and records the "Added Product ID" information.
+    # Api kullanıcısı api "addProduct" endpointine POST isteği göndererek yeni bir "product" kaydı oluşturur ve "Added Product ID" bilgisini kaydeder.
     * The api user constructs the base url with the "student" token.
     # Api kullanicisi "student" token ile base urli olusturur
-    * The api user sets "api/updateProduct/<id>" path parameters.
+    * The api user sets "api/updateProduct" path parameters.
     # Api kullanicisi "api/updateProduct/{id}" path parametrelerini olusturur
     * The api user prepares a PATCH request to the api updateProduct endpoint containing the following information "<type>", <price>, <category_id>, "<title>", "<summary>" and "<description>"
     # Api kullanicisi api updateProduct endpointine gondermek icin "<type>", <price>, <category_id>, "<title>", "<summary>" ve "<description>" bilgilerini iceren bir patch request hazirlar
@@ -125,17 +126,19 @@ Feature: As an administrator, I want to update the information of the product wi
     # Api kullanicisi response bodydeki message bilgisinin "To access this data, you must log in as a admin." oldugunu dogrular
 
     Examples:
-      | id  | type    | price | category_id | title                                                 | summary                                                                        | description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-      | 100 | virtual | 150   | 2           | Introduction to Yoga: A Beginner's Guide Video Course | Discover the transformative power of yoga and embark on a journey to wellness. | Are you ready to embark on a journey to holistic wellness? 'Introduction to Yoga: A Beginner's Guide' is designed for individuals who want to explore the ancient practice of yoga and reap its numerous benefits. In this comprehensive course, you will learn the fundamentals of yoga, including basic poses, breathing techniques, and meditation practices. Led by experienced yoga instructors, you will develop strength, flexibility, and inner peace as you progress through the course. Whether you're a complete beginner or looking to deepen your practice, this course will empower you to cultivate a healthier mind, body, and spirit. Join us and unlock the transformative power of yoga today! |
+      | type    | price | category_id | title                                                 | summary                                                                        | description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+      | virtual | 150   | 2           | Introduction to Yoga: A Beginner's Guide Video Course | Discover the transformative power of yoga and embark on a journey to wellness. | Are you ready to embark on a journey to holistic wellness? 'Introduction to Yoga: A Beginner's Guide' is designed for individuals who want to explore the ancient practice of yoga and reap its numerous benefits. In this comprehensive course, you will learn the fundamentals of yoga, including basic poses, breathing techniques, and meditation practices. Led by experienced yoga instructors, you will develop strength, flexibility, and inner peace as you progress through the course. Whether you're a complete beginner or looking to deepen your practice, this course will empower you to cultivate a healthier mind, body, and spirit. Join us and unlock the transformative power of yoga today! |
 
 
   Scenario Outline: When a PATCH request with invalid (invalid token) authorization credentials, correct (id), and valid data
   (type, price, category_id, title, summary, description) is sent to the /api/updateProduct/{id} endpoint, it should be verified
   that the status code is 401 and the message in the response body is "Unauthenticated."
 
+    * The api user sends a POST request to the api "addProduct" endpoint to create a new "product" record and records the "Added Product ID" information.
+    # Api kullanıcısı api "addProduct" endpointine POST isteği göndererek yeni bir "product" kaydı oluşturur ve "Added Product ID" bilgisini kaydeder.
     * The api user constructs the base url with the "invalid" token.
     # Api kullanicisi "invalid" token ile base urli olusturur
-    * The api user sets "api/updateProduct/<id>" path parameters.
+    * The api user sets "api/updateProduct" path parameters.
     # Api kullanicisi "api/updateProduct/{id}" path parametrelerini olusturur
     * The api user prepares a PATCH request to the api updateProduct endpoint containing the following information "<type>", <price>, <category_id>, "<title>", "<summary>" and "<description>"
     # Api kullanicisi api updateProduct endpointine gondermek icin "<type>", <price>, <category_id>, "<title>", "<summary>" ve "<description>" bilgilerini iceren bir patch request hazirlar
@@ -143,7 +146,7 @@ Feature: As an administrator, I want to update the information of the product wi
     # Api kullanicisi PATCH request gonderir, donen responsei kaydeder, status codeun '401' ve reason phrase bilgisinin Unauthorized oldugunu dogrular
 
     Examples:
-      | id  | type    | price | category_id | title                                                 | summary                                                                        | description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-      | 100 | virtual | 150   | 2           | Introduction to Yoga: A Beginner's Guide Video Course | Discover the transformative power of yoga and embark on a journey to wellness. | Are you ready to embark on a journey to holistic wellness? 'Introduction to Yoga: A Beginner's Guide' is designed for individuals who want to explore the ancient practice of yoga and reap its numerous benefits. In this comprehensive course, you will learn the fundamentals of yoga, including basic poses, breathing techniques, and meditation practices. Led by experienced yoga instructors, you will develop strength, flexibility, and inner peace as you progress through the course. Whether you're a complete beginner or looking to deepen your practice, this course will empower you to cultivate a healthier mind, body, and spirit. Join us and unlock the transformative power of yoga today! |
+      |  type    | price | category_id | title                                                 | summary                                                                        | description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+      | virtual | 150   | 2           | Introduction to Yoga: A Beginner's Guide Video Course | Discover the transformative power of yoga and embark on a journey to wellness. | Are you ready to embark on a journey to holistic wellness? 'Introduction to Yoga: A Beginner's Guide' is designed for individuals who want to explore the ancient practice of yoga and reap its numerous benefits. In this comprehensive course, you will learn the fundamentals of yoga, including basic poses, breathing techniques, and meditation practices. Led by experienced yoga instructors, you will develop strength, flexibility, and inner peace as you progress through the course. Whether you're a complete beginner or looking to deepen your practice, this course will empower you to cultivate a healthier mind, body, and spirit. Join us and unlock the transformative power of yoga today! |
 
 

@@ -184,14 +184,8 @@ public class API_Methods {
         spec = new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("base_url", "api")).build();
         spec.pathParams("pp1", "api", "pp2", pp2);
         TestData testData = new TestData();
-        JSONObject requestBody = null;
 
-        switch (folder) {
-            case "product":
-                requestBody = testData.productRequestBody();
-                break;
-
-        }
+        HashMap<String, Object> requestBody = testData.requestBody(folder);
 
         response = given()
                 .spec(spec)
@@ -200,7 +194,7 @@ public class API_Methods {
                 .header("x-api-key", "1234")
                 .header("Authorization", "Bearer " + Authentication.generateToken("admin"))
                 .when()
-                .body(requestBody.toString())
+                .body(requestBody)
                 .post("/{pp1}/{pp2}");
 
         responseMap = API_Methods.response.as(HashMap.class);

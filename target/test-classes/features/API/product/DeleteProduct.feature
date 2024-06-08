@@ -66,14 +66,16 @@ Feature: As an administrator, I want to delete the product information with the 
     # Api kullanicisi response bodydeki message bilgisinin "No id" oldugunu dogrular
 
 
-  Scenario Outline: When a DELETE request with invalid (student or teacher) authorization credentials but with correct (id)
+  Scenario: When a DELETE request with invalid (student or teacher) authorization credentials but with correct (id)
   is sent to the /api/deleteProduct/{id} endpoint, the returned status code should be 203, the remark field in the response
   body should be "failed", and the message field should be "To access this data, you must log in as a admin."
   This should be verified.
 
+    * The api user sends a POST request to the api "addProduct" endpoint to create a new "product" record and records the "Added Product ID" information.
+    # Api kullanıcısı api "addProduct" endpointine POST isteği göndererek yeni bir "product" kaydı oluşturur ve "Added Product ID" bilgisini kaydeder.
     * The api user constructs the base url with the "instructor" token.
     # Api kullanicisi "instructor" token ile base urli olusturur
-    * The api user sets "api/deleteProduct/<id>" path parameters.
+    * The api user sets "api/deleteProduct" path parameters.
     # Api kullanicisi "api/deleteProduct/{id}" path parametrelerini olusturur
     * The api user sends a "DELETE" request and saves the returned response.
     # Api kullanicisi DELETE request gonderir ve donen responsei kaydeder
@@ -84,24 +86,19 @@ Feature: As an administrator, I want to delete the product information with the 
     * The api user verifies that the "data.message" information in the response body is "To access this data, you must log in as a admin.".
     # Api kullanicisi response bodydeki message bilgisinin "To access this data, you must log in as a admin." oldugunu dogrular
 
-    Examples:
-      | id  |
-      | 109 |
 
 
-  Scenario Outline: When a DELETE request with invalid (invalid token) authorization credentials but with correct (id) is sent to the
+  Scenario: When a DELETE request with invalid (invalid token) authorization credentials but with correct (id) is sent to the
   /api/deleteProduct/{id} endpoint, the returned status code should be 401, and the message field in the response body should be
   "Unauthenticated." This should be verified.
 
+    * The api user sends a POST request to the api "addProduct" endpoint to create a new "product" record and records the "Added Product ID" information.
+    # Api kullanıcısı api "addProduct" endpointine POST isteği göndererek yeni bir "product" kaydı oluşturur ve "Added Product ID" bilgisini kaydeder.
     * The api user constructs the base url with the "invalid" token.
     # Api kullanicisi "invalid" token ile base urli olusturur
-    * The api user sets "api/deleteProduct/<id>" path parameters.
+    * The api user sets "api/deleteProduct" path parameters.
     # Api kullanicisi "api/deleteProduct/{id}" path parametrelerini olusturur
     * The api user sends a "DELETE" request, saves the returned response, and verifies that the status code is '401' with the reason phrase Unauthorized.
     # Api kullanicisi DELETE request gonderir, donen responsei kaydeder, status codeun '401' ve reason phrase bilgisinin Unauthorized oldugunu dogrular
-
-    Examples:
-      | id  |
-      | 109 |
 
 

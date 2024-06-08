@@ -51,7 +51,6 @@ public class Authentication {
         JsonPath repJP = response.jsonPath();
 
         String token = repJP.getString("data.access_token");
-        System.out.println("token = " + token);
 
         return token;
     }
