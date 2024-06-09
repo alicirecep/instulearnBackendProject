@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="1" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="8.212">
-    <testcase classname="As an administrator, I want to update the information of the product category with the specified ID via an API connection." name="When a PATCH request with valid credentials, a non-existing (id), and correct data (title) is sent to the" time="7.586">
-        <failure message="status code: 405, reason phrase: Method Not Allowed" type="io.restassured.internal.http.HttpResponseException"><![CDATA[* The api user constructs the base url with the "admin" token...............passed
-* The api user sets "api/updateProductCategory52145" path parameters........passed
-* The api user prepares a PATCH request containing the "Education and Training" information to send to the api updateProductCategory endpoint..passed
+<testsuite errors="0" failures="1" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="11.514">
+    <testcase classname="As an administrator or teacher, I want to update the information of the blog with the specified ID via an API connection." name="When a PATCH request is sent to the /api/updateBlog/{id} endpoint with valid credentials and correct data," time="10.882">
+        <failure message="status code: 500, reason phrase: Internal Server Error" type="io.restassured.internal.http.HttpResponseException"><![CDATA[* The api user sends a POST request to the api "addBlog" endpoint to create a new "blog" record and records the "Added Blog ID" information..passed
+* The api user constructs the base url with the "admin" token...............passed
+* The api user sets "api/updateBlog" path parameters........................passed
+* The api user prepares a PATCH request to send to the api updateBlog endpoint with the "Online Education", 33, "Online education has rapidly evolved from a niche alternative to a mainstream method of learning." and "Accessibility Through MOOCs:Massive Open Online Courses (MOOCs) pioneered accessible online learning, offering high-quality courses from prestigious universities to a global audience. Platforms like Coursera and edX made education more inclusive, breaking down geographical and financial barriers." information..passed
 * The api user sends a "PATCH" request and saves the returned response......failed
-* The api user verifies that the status code is 203.........................skipped
-* The api user verifies that the "remark" information in the response body is "failed"..skipped
-* The api user verifies that the "data.message" information in the response body is "There is not product category for this id."..skipped
+* The api user verifies that the status code is 200.........................skipped
+* The api user verifies that the "remark" information in the response body is "success"..skipped
+* The api user verifies that the "Message" information in the response body is "Successfully Updated."..skipped
+* The api user verifies that the "Updated Blog Id" information in the returned response body is the same as the id path parameter written in the endpoint..skipped
+* The api user verifies that the "data.translations[0].title" is "Online Education" by sending a GET request to the "api" "blog" endpoint with the "Updated Blog Id" returned in the response body..skipped
 
 StackTrace:
-io.restassured.internal.http.HttpResponseException: status code: 405, reason phrase: Method Not Allowed
+io.restassured.internal.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error
 	at io.restassured.internal.http.HTTPBuilder.defaultFailureHandler(HTTPBuilder.java:629)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
@@ -107,8 +110,8 @@ io.restassured.internal.http.HttpResponseException: status code: 405, reason phr
 	at io.restassured.internal.RequestSpecificationImpl.patch(RequestSpecificationImpl.groovy:196)
 	at io.restassured.internal.RequestSpecificationImpl.patch(RequestSpecificationImpl.groovy)
 	at utilities.API_Utilities.API_Methods.sendRequest(API_Methods.java:76)
-	at stepdefinitions.API_Stepdefinitions.the_api_user_sends_a_request_and_saves_the_returned_response(API_Stepdefinitions.java:53)
-	at ✽.The api user sends a "PATCH" request and saves the returned response.(file:///C:/Users/ACER/OneDrive%20-%20edulog/Masaüstü/instulearnBackendProject/src/test/resources/features/API/productCategories/UpdateProductCategory.feature:67)
+	at stepdefinitions.API_Stepdefinitions.the_api_user_sends_a_request_and_saves_the_returned_response(API_Stepdefinitions.java:54)
+	at ✽.The api user sends a "PATCH" request and saves the returned response.(file:///C:/Users/ACER/OneDrive%20-%20edulog/Masaüstü/instulearnBackendProject/src/test/resources/features/API/blogs/UpdateBlog.feature:18)
 ]]></failure>
     </testcase>
 </testsuite>

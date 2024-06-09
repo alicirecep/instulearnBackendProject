@@ -27,6 +27,7 @@ public class API_Stepdefinitions {
     PricePlanPojo requestPricePlan;
     ProductPojo requestProduct;
     CoursefaqPojo responseCoursefaq;
+    ProductfaqPojo requestProductFaq;
     Gson gson = new Gson(); // Gson kütüphanesini kullanarak bir POJO nesnesini JSON formatında bir Stringe dönüştürebilirsiniz.
     int adddedId;
 
@@ -499,4 +500,134 @@ public class API_Stepdefinitions {
 
     // ************************************************************************************************************
 
+    // **************************************** /api/productfaqs **************************************************
+    @Given("The api user verifies the details of the record at the {int} index in the response body {int}, {int}, {int}, {int}, {int}, {string}, {string}, and {string}.")
+    public void the_api_user_verifies_the_details_of_the_record_at_the_index_in_the_response_body_and(int dataIndex, int creator_id, int product_id, int created_at, int id, int product_faq_id, String locale, String title, String answer) {
+        jsonPath = API_Methods.response.jsonPath();
+
+        assertEquals(creator_id, jsonPath.getInt("data[" + dataIndex + "].creator_id"));
+        assertEquals(product_id, jsonPath.getInt("data[" + dataIndex + "].product_id"));
+        assertNull(jsonPath.get("data[" + dataIndex + "].order"));
+        assertEquals(created_at, jsonPath.getInt("data[" + dataIndex + "].created_at"));
+        assertEquals(id, jsonPath.getInt("data[" + dataIndex + "].translations[0].id"));
+        assertEquals(product_faq_id, jsonPath.getInt("data[" + dataIndex + "].translations[0].product_faq_id"));
+        assertEquals(locale, jsonPath.getString("data[" + dataIndex + "].translations[0].locale"));
+        assertEquals(title, jsonPath.getString("data[" + dataIndex + "].translations[0].title"));
+        assertTrue(jsonPath.getString("data[" + dataIndex + "].translations[0].answer").contains(answer));
+    }
+    // ************************************************************************************************************
+
+    // ************************************* /api/productfaq/{id} *************************************************
+    @Given("The api user verifies the content of the data {int}, {int}, {int}, {int}, {int}, {int}, {string}, {string} and {string} in the response body.")
+    public void the_api_user_verifies_the_content_of_the_data_and_in_the_response_body(int data_id, int creator_id, int product_id, int created_at, int translations_id, int product_faq_id, String locale, String title, String answer) {
+        jsonPath = API_Methods.response.jsonPath();
+
+        assertEquals(data_id, jsonPath.getInt("data.id"));
+        assertEquals(creator_id, jsonPath.getInt("data.creator_id"));
+        assertEquals(product_id, jsonPath.getInt("data.product_id"));
+        assertNull(jsonPath.get("data.order"));
+        assertEquals(created_at, jsonPath.getInt("data.created_at"));
+        assertEquals(translations_id, jsonPath.getInt("data.translations[0].id"));
+        assertEquals(product_faq_id, jsonPath.getInt("data.translations[0].product_faq_id"));
+        assertEquals(locale, jsonPath.getString("data.translations[0].locale"));
+        assertTrue(jsonPath.getString("data.translations[0].title").contains(title));
+        assertTrue(jsonPath.getString("data.translations[0].answer").contains(answer));
+    }
+    // ************************************************************************************************************
+
+    // *************************************** /api/addProductfaq *************************************************
+    @Given("The api user prepares a POST request to send to the api addProductfaq endpoint with the information {string}, {string} and {int}")
+    public void the_api_user_prepares_a_post_request_to_send_to_the_api_add_productfaq_endpoint_with_the_information_and(String title, String answer, int product_id) {
+        requestProductFaq = new ProductfaqPojo(title, answer, product_id);
+        requestBody = gson.toJson(requestProductFaq); // Burada POJO nesnesini JSON formatında bir Stringe dönüştürdük.
+        System.out.println("POST Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // *********************************** /api/updateProductfaq/{id} *********************************************
+    @Given("The api user prepares a PATCH request to send to the api updateProductfaq endpoint, containing the {string}, {string} and {int} information.")
+    public void the_api_user_prepares_a_patch_request_to_send_to_the_api_update_productfaq_endpoint_containing_the_and_information(String title, String answer, int product_id) {
+        requestProductFaq = new ProductfaqPojo(title, answer, product_id);
+        requestBody = gson.toJson(requestProductFaq); // Burada POJO nesnesini JSON formatında bir Stringe dönüştürdük.
+        System.out.println("PATCH Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // ********************************************** /api/blogs **************************************************
+    @Given("The api user verifies the information in the response body at the {int} index, including {int}, {int}, {string}, {string}, {int}, {int}, {string}, {int}, {int}, {int}, {int}, {int}, {string}, {string}, {string}, {string} and {string}.")
+    public void the_api_user_verifies_the_information_in_the_response_body_at_the_index_including_and(int dataIndex, int category_id, int author_id, String slug, String image, int visit_count, int enable_comment, String status, int created_at, int updated_at, int comments_count, int id, int blog_id, String locale, String title, String description, String content, String meta_description) {
+        API_Methods.response.then()
+                .assertThat()
+                .body("data.blog[" + dataIndex + "].category_id", equalTo(category_id),
+                        "data.blog[" + dataIndex + "].author_id", equalTo(author_id),
+                        "data.blog[" + dataIndex + "].slug", equalTo(slug),
+                        "data.blog[" + dataIndex + "].image", equalTo(image),
+                        "data.blog[" + dataIndex + "].visit_count", equalTo(visit_count),
+                        "data.blog[" + dataIndex + "].enable_comment", equalTo(enable_comment),
+                        "data.blog[" + dataIndex + "].status", equalTo(status),
+                        "data.blog[" + dataIndex + "].created_at", equalTo(created_at),
+                        "data.blog[" + dataIndex + "].updated_at", equalTo(updated_at),
+                        "data.blog[" + dataIndex + "].comments_count", equalTo(comments_count),
+                        "data.blog[" + dataIndex + "].translations[0].id", equalTo(id),
+                        "data.blog[" + dataIndex + "].translations[0].blog_id", equalTo(blog_id),
+                        "data.blog[" + dataIndex + "].translations[0].locale", equalTo(locale),
+                        "data.blog[" + dataIndex + "].translations[0].title", equalTo(title),
+                        "data.blog[" + dataIndex + "].translations[0].description", equalTo(description),
+                        "data.blog[" + dataIndex + "].translations[0].content", equalTo(content),
+                        "data.blog[" + dataIndex + "].translations[0].meta_description", equalTo(meta_description));
+    }
+    // ************************************************************************************************************
+
+    // ******************************************** /api/blog/{id} ************************************************
+    @Given("The api user verifies the content of the data in the response body, which includes {int}, {int}, {int}, {string}, {string}, {int}, {int}, {string}, {int}, {int}, {int}, {int}, {string}, {string}, {string}, {string} and {string}.")
+    public void the_api_user_verifies_the_content_of_the_data_in_the_response_body_which_includes_and(int data_id, int category_id, int author_id, String slug, String image, int visit_count, int enable_comment, String status, int created_at, int updated_at, int translations_id, int blog_id, String locale, String title, String description, String content, String meta_description) {
+        API_Methods.response.then()
+                .assertThat()
+                .body("data.id", equalTo(data_id),
+                        "data.category_id", equalTo(category_id),
+                        "data.author_id", equalTo(author_id),
+                        "data.slug", equalTo(slug),
+                        "data.image", equalTo(image),
+                        "data.visit_count", equalTo(visit_count),
+                        "data.enable_comment", equalTo(enable_comment),
+                        "data.status", equalTo(status),
+                        "data.created_at", equalTo(created_at),
+                        "data.updated_at", equalTo(updated_at),
+                        "data.translations[0].id", equalTo(translations_id),
+                        "data.translations[0].blog_id", equalTo(blog_id),
+                        "data.translations[0].locale", equalTo(locale),
+                        "data.translations[0].title", equalTo(title),
+                        "data.translations[0].description", equalTo(description),
+                        "data.translations[0].content", equalTo(content),
+                        "data.translations[0].meta_description", equalTo(meta_description));
+    }
+    // ************************************************************************************************************
+
+    // ********************************************** /api/addBlog ************************************************
+    @Given("The api user prepares a POST request to send to the api addBlog endpoint with the information {string}, {int}, {string} and {string}")
+    public void the_api_user_prepares_a_post_request_to_send_to_the_api_add_blog_endpoint_with_the_information_and(String title, int category_id, String description, String content) {
+        requestBody = builder
+                .addParameterForMap("title", title)
+                .addParameterForMap("category_id", category_id)
+                .addParameterForMap("description", description)
+                .addParameterForMap("content", content)
+                .buildUsingMap();
+
+        System.out.println("POST Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // ******************************************* /api/updateBlog/{id} *******************************************
+    @Given("The api user prepares a PATCH request to send to the api updateBlog endpoint with the {string}, {int}, {string} and {string} information.")
+    public void the_api_user_prepares_a_patch_request_to_send_to_the_api_update_blog_endpoint_with_the_and_information(String title, int category_id, String description, String content) {
+        requestBody = builder
+                .addParameterForMap("title", title)
+                .addParameterForMap("category_id", category_id)
+                .addParameterForMap("description", description)
+                .addParameterForMap("content", content)
+                .buildUsingMap();
+
+        System.out.println("PATCH Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
 }

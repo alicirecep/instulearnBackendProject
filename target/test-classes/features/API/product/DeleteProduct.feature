@@ -87,7 +87,6 @@ Feature: As an administrator, I want to delete the product information with the 
     # Api kullanicisi response bodydeki message bilgisinin "To access this data, you must log in as a admin." oldugunu dogrular
 
 
-
   Scenario: When a DELETE request with invalid (invalid token) authorization credentials but with correct (id) is sent to the
   /api/deleteProduct/{id} endpoint, the returned status code should be 401, and the message field in the response body should be
   "Unauthenticated." This should be verified.
