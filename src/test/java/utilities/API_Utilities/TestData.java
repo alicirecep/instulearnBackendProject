@@ -1,9 +1,21 @@
 package utilities.API_Utilities;
 
+import com.github.javafaker.Faker;
+
 import java.util.HashMap;
 
 public class TestData {
     HashMap<String, HashMap<String, Object>> reqBody = new HashMap<>();
+    Faker faker = new Faker();
+
+    public HashMap blogCategoryRequestBody() {
+
+        HashMap<String, Object> requestBody = new HashMap<>();
+
+        requestBody.put("title", faker.book().title());
+
+        return requestBody;
+    }
 
     public HashMap blogRequestBody() {
 
@@ -111,6 +123,7 @@ public class TestData {
         reqBody.put("productCategory", productCategoryRequestBody());
         reqBody.put("productFaq", productFaqRequestBody());
         reqBody.put("blog", blogRequestBody());
+        reqBody.put("blogCategory", blogCategoryRequestBody());
 
         return reqBody.get(folder);
     }

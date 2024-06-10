@@ -1,117 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="1" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="11.514">
-    <testcase classname="As an administrator or teacher, I want to update the information of the blog with the specified ID via an API connection." name="When a PATCH request is sent to the /api/updateBlog/{id} endpoint with valid credentials and correct data," time="10.882">
-        <failure message="status code: 500, reason phrase: Internal Server Error" type="io.restassured.internal.http.HttpResponseException"><![CDATA[* The api user sends a POST request to the api "addBlog" endpoint to create a new "blog" record and records the "Added Blog ID" information..passed
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="12.51">
+    <testcase classname="As an administrator, I want to update the information of the blog category with the specified ID via an API connection." name="When a PATCH request with valid authorization and correct data (title) is sent to the /api/updateBlogCategory/{id}" time="11.628">
+        <system-out><![CDATA[* The api user sends a POST request to the api "addBlogCategory" endpoint to create a new "blogCategory" record and records the "Added Blog Category ID" information..passed
 * The api user constructs the base url with the "admin" token...............passed
-* The api user sets "api/updateBlog" path parameters........................passed
-* The api user prepares a PATCH request to send to the api updateBlog endpoint with the "Online Education", 33, "Online education has rapidly evolved from a niche alternative to a mainstream method of learning." and "Accessibility Through MOOCs:Massive Open Online Courses (MOOCs) pioneered accessible online learning, offering high-quality courses from prestigious universities to a global audience. Platforms like Coursera and edX made education more inclusive, breaking down geographical and financial barriers." information..passed
-* The api user sends a "PATCH" request and saves the returned response......failed
-* The api user verifies that the status code is 200.........................skipped
-* The api user verifies that the "remark" information in the response body is "success"..skipped
-* The api user verifies that the "Message" information in the response body is "Successfully Updated."..skipped
-* The api user verifies that the "Updated Blog Id" information in the returned response body is the same as the id path parameter written in the endpoint..skipped
-* The api user verifies that the "data.translations[0].title" is "Online Education" by sending a GET request to the "api" "blog" endpoint with the "Updated Blog Id" returned in the response body..skipped
-
-StackTrace:
-io.restassured.internal.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error
-	at io.restassured.internal.http.HTTPBuilder.defaultFailureHandler(HTTPBuilder.java:629)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
-	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:107)
-	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:323)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1268)
-	at groovy.lang.MetaClassImpl.invokeMethodClosure(MetaClassImpl.java:1048)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1142)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1035)
-	at groovy.lang.Closure.call(Closure.java:412)
-	at groovy.lang.Closure.call(Closure.java:428)
-	at groovy.lang.Closure$call$0.call(Unknown Source)
-	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:47)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:125)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:139)
-	at io.restassured.internal.RequestSpecificationImpl$RestAssuredHttpBuilder.doRequest(RequestSpecificationImpl.groovy:2098)
-	at io.restassured.internal.http.HTTPBuilder.doRequest(HTTPBuilder.java:497)
-	at io.restassured.internal.http.HTTPBuilder.request(HTTPBuilder.java:454)
-	at io.restassured.internal.http.HTTPBuilder$request$3.call(Unknown Source)
-	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:47)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:125)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:166)
-	at io.restassured.internal.RequestSpecificationImpl.sendHttpRequest(RequestSpecificationImpl.groovy:1465)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
-	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:107)
-	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:323)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1268)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1035)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:819)
-	at groovy.lang.GroovyObject.invokeMethod(GroovyObject.java:39)
-	at org.codehaus.groovy.runtime.callsite.PogoInterceptableSite.call(PogoInterceptableSite.java:45)
-	at org.codehaus.groovy.runtime.callsite.PogoInterceptableSite.callCurrent(PogoInterceptableSite.java:55)
-	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:51)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:171)
-	at io.restassured.internal.RequestSpecificationImpl.sendRequest(RequestSpecificationImpl.groovy:1214)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
-	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:107)
-	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:323)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1268)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1035)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:819)
-	at groovy.lang.GroovyObject.invokeMethod(GroovyObject.java:39)
-	at org.codehaus.groovy.runtime.callsite.PogoInterceptableSite.call(PogoInterceptableSite.java:45)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:166)
-	at io.restassured.internal.filter.SendRequestFilter.filter(SendRequestFilter.groovy:30)
-	at io.restassured.filter.Filter$filter$0.call(Unknown Source)
-	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:47)
-	at io.restassured.filter.Filter$filter.call(Unknown Source)
-	at io.restassured.internal.filter.FilterContextImpl.next(FilterContextImpl.groovy:72)
-	at io.restassured.filter.time.TimingFilter.filter(TimingFilter.java:56)
-	at io.restassured.filter.Filter$filter.call(Unknown Source)
-	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:47)
-	at io.restassured.filter.Filter$filter$0.call(Unknown Source)
-	at io.restassured.internal.filter.FilterContextImpl.next(FilterContextImpl.groovy:72)
-	at io.restassured.filter.FilterContext$next.call(Unknown Source)
-	at io.restassured.internal.RequestSpecificationImpl.applyPathParamsAndSendRequest(RequestSpecificationImpl.groovy:1686)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
-	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:107)
-	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:323)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1268)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1035)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:819)
-	at groovy.lang.GroovyObject.invokeMethod(GroovyObject.java:39)
-	at org.codehaus.groovy.runtime.callsite.PogoInterceptableSite.call(PogoInterceptableSite.java:45)
-	at org.codehaus.groovy.runtime.callsite.PogoInterceptableSite.callCurrent(PogoInterceptableSite.java:55)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:203)
-	at io.restassured.internal.RequestSpecificationImpl.applyPathParamsAndSendRequest(RequestSpecificationImpl.groovy:1692)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
-	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:107)
-	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:323)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1268)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1035)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:819)
-	at groovy.lang.GroovyObject.invokeMethod(GroovyObject.java:39)
-	at org.codehaus.groovy.runtime.callsite.PogoInterceptableSite.call(PogoInterceptableSite.java:45)
-	at org.codehaus.groovy.runtime.callsite.PogoInterceptableSite.callCurrent(PogoInterceptableSite.java:55)
-	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:51)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:171)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:203)
-	at io.restassured.internal.RequestSpecificationImpl.patch(RequestSpecificationImpl.groovy:196)
-	at io.restassured.internal.RequestSpecificationImpl.patch(RequestSpecificationImpl.groovy)
-	at utilities.API_Utilities.API_Methods.sendRequest(API_Methods.java:76)
-	at stepdefinitions.API_Stepdefinitions.the_api_user_sends_a_request_and_saves_the_returned_response(API_Stepdefinitions.java:54)
-	at ✽.The api user sends a "PATCH" request and saves the returned response.(file:///C:/Users/ACER/OneDrive%20-%20edulog/Masaüstü/instulearnBackendProject/src/test/resources/features/API/blogs/UpdateBlog.feature:18)
-]]></failure>
+* The api user sets "api/updateBlogCategory" path parameters................passed
+* The api user prepares a PATCH request containing the "Education and Training" information to send to the api updateBlogCategory endpoint..passed
+* The api user sends a "PATCH" request and saves the returned response......passed
+* The api user verifies that the status code is 200.........................passed
+* The api user verifies that the "remark" information in the response body is "success"..passed
+* The api user verifies that the "Message" information in the response body is "Successfully Updated."..passed
+* The api user verifies that the "Updated Blog Category ID" information in the returned response body is the same as the id path parameter written in the endpoint..passed
+* The api user verifies that the "data.title" is "Education and Training" by sending a GET request to the "api" "blogCategory" endpoint with the "Updated Blog Category ID" returned in the response body..passed
+]]></system-out>
     </testcase>
 </testsuite>

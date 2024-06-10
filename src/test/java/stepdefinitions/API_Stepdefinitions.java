@@ -630,4 +630,48 @@ public class API_Stepdefinitions {
         System.out.println("PATCH Request Body : " + requestBody);
     }
     // ************************************************************************************************************
+
+    // ******************************************** /api/blogCategories *******************************************
+    @Given("The api user verifies the {string}, {string} and {int} information of the response body at the {int} index.")
+    public void the_api_user_verifies_the_and_information_of_the_response_body_at_the_index(String title, String slug, int blog_count, int dataIndex) {
+        responseMap = API_Methods.response.as(HashMap.class);
+
+        assertEquals(title, ((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("blogCategories"))).get(dataIndex)).get("title"));
+        assertEquals(slug, ((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("blogCategories"))).get(dataIndex)).get("slug"));
+        assertEquals(blog_count, ((Map) ((ArrayList) (((Map) (responseMap.get("data"))).get("blogCategories"))).get(dataIndex)).get("blog_count"));
+    }
+    // ************************************************************************************************************
+
+    // ***************************************** /api/blogCategory/{id} *******************************************
+    @Given("The api user verifies the content of data {int}, {string} and {string} in the response body.")
+    public void the_api_user_verifies_the_content_of_data_and_in_the_response_body(int data_id, String title, String slug) {
+        responseMap = API_Methods.response.as(HashMap.class);
+
+        assertEquals(data_id, ((Map) (responseMap.get("data"))).get("id"));
+        assertEquals(title, ((Map) (responseMap.get("data"))).get("title"));
+        assertEquals(slug, ((Map) (responseMap.get("data"))).get("slug"));
+    }
+    // ************************************************************************************************************
+
+    // ******************************************* /api/addBlogCategory *******************************************
+    @Given("The api user prepares a POST request containing the {string} information to send to the api addBlogCategory endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_add_blog_category_endpoint(String title) {
+        requestBody = builder
+                .addParameterForMap("title", title)
+                .buildUsingMap();
+
+        System.out.println("POST Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // **************************************** /api/updateBlogCategory/{id} **************************************
+    @Given("The api user prepares a PATCH request containing the {string} information to send to the api updateBlogCategory endpoint.")
+    public void the_api_user_prepares_a_patch_request_containing_the_information_to_send_to_the_api_update_blog_category_endpoint(String title) {
+        requestBody = builder
+                .addParameterForMap("title", title)
+                .buildUsingMap();
+
+        System.out.println("PATCH Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
 }
