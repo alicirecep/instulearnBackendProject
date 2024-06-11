@@ -1,4 +1,4 @@
-package pojos;
+package pojos.coursefaq;
 
 import java.util.List;
 import java.io.Serializable;

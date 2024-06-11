@@ -5,8 +5,15 @@ import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
 import io.restassured.path.json.JsonPath;
-import org.hamcrest.Matchers;
-import pojos.*;
+import pojos.coupon.CouponDataPojo;
+import pojos.coupon.CouponPojo;
+import pojos.coupon.CouponPojoRequest;
+import pojos.coursefaq.CoursefaqPojo;
+import pojos.coursefaq.DataPojo;
+import pojos.coursefaq.TranslationsPojo;
+import pojos.pricePlan.PricePlanPojo;
+import pojos.product.ProductPojo;
+import pojos.productfaq.ProductfaqPojo;
 import utilities.API_Utilities.API_Methods;
 import utilities.API_Utilities.RequestBuilder;
 
@@ -28,6 +35,7 @@ public class API_Stepdefinitions {
     ProductPojo requestProduct;
     CoursefaqPojo responseCoursefaq;
     ProductfaqPojo requestProductFaq;
+    CouponPojoRequest requestCoupon;
     Gson gson = new Gson(); // Gson kütüphanesini kullanarak bir POJO nesnesini JSON formatında bir Stringe dönüştürebilirsiniz.
     int adddedId;
 
@@ -669,6 +677,87 @@ public class API_Stepdefinitions {
     public void the_api_user_prepares_a_patch_request_containing_the_information_to_send_to_the_api_update_blog_category_endpoint(String title) {
         requestBody = builder
                 .addParameterForMap("title", title)
+                .buildUsingMap();
+
+        System.out.println("PATCH Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // ************************************************ /api/coupons **********************************************
+    @Given("The api user verifies the {int}, {string}, {string}, {string}, {string}, {int}, {int}, {int}, {int}, {int}, {string}, {string}, {int}, {string}, {int} and {int} information of the entry at the {int} index in the response body.")
+    public void the_api_user_verifies_the_and_information_of_the_entry_at_the_index_in_the_response_body(int creator_id, String title, String discount_type, String source, String code, int percent, int amount, int max_amount, int minimum_order, int count, String user_type, String product_type, int for_first_purchase, String status, int expired_at, int created_at, int dataIndex) {
+        API_Methods.response.then()
+                .assertThat()
+                .body("data.discounts[" + dataIndex + "].creator_id", equalTo(creator_id),
+                        "data.discounts[" + dataIndex + "].title", equalTo(title),
+                        "data.discounts[" + dataIndex + "].discount_type", equalTo(discount_type),
+                        "data.discounts[" + dataIndex + "].source", equalTo(source),
+                        "data.discounts[" + dataIndex + "].code", equalTo(code),
+                        "data.discounts[" + dataIndex + "].percent", equalTo(percent),
+                        "data.discounts[" + dataIndex + "].amount", equalTo(amount),
+                        "data.discounts[" + dataIndex + "].max_amount", equalTo(max_amount),
+                        "data.discounts[" + dataIndex + "].minimum_order", equalTo(minimum_order),
+                        "data.discounts[" + dataIndex + "].count", equalTo(count),
+                        "data.discounts[" + dataIndex + "].user_type", equalTo(user_type),
+                        "data.discounts[" + dataIndex + "].product_type", equalTo(product_type),
+                        "data.discounts[" + dataIndex + "].for_first_purchase", equalTo(for_first_purchase),
+                        "data.discounts[" + dataIndex + "].status", equalTo(status),
+                        "data.discounts[" + dataIndex + "].expired_at", equalTo(expired_at),
+                        "data.discounts[" + dataIndex + "].created_at", equalTo(created_at));
+    }
+
+    // ************************************************************************************************************
+
+    // ******************************************** /api/coupon/{id} **********************************************
+    @Given("The api user verifies the content of data {int}, {int}, {string}, {string}, {string}, {string}, {int}, {int}, {int}, {int}, {int}, {string}, {string}, {int}, {string}, {int} and {int} in the response body.")
+    public void the_api_user_verifies_the_content_of_data_and_in_the_response_body(int dataId, int creator_id, String title, String discount_type, String source, String code, int percent, int amount, int max_amount, int minimum_order, int count, String user_type, String product_type, int for_first_purchase, String status, int expired_at, int created_at) {
+        CouponDataPojo couponDataPojo = new CouponDataPojo(dataId, creator_id, title, discount_type, source, code, percent, amount, max_amount, minimum_order, count, user_type, product_type, for_first_purchase, status, expired_at, created_at);
+
+        CouponPojo responseCoupon = new CouponPojo("success", 200, couponDataPojo);
+
+        assertEquals(dataId, responseCoupon.getData().getId());
+        assertEquals(creator_id, responseCoupon.getData().getCreatorId());
+        assertEquals(title, responseCoupon.getData().getTitle());
+        assertEquals(discount_type, responseCoupon.getData().getDiscountType());
+        assertEquals(source, responseCoupon.getData().getSource());
+        assertEquals(code, responseCoupon.getData().getCode());
+        assertEquals(percent, responseCoupon.getData().getPercent());
+        assertEquals(amount, responseCoupon.getData().getAmount());
+        assertEquals(max_amount, responseCoupon.getData().getMaxAmount());
+        assertEquals(minimum_order, responseCoupon.getData().getMinimumOrder());
+        assertEquals(count, responseCoupon.getData().getCount());
+        assertEquals(user_type, responseCoupon.getData().getUserType());
+        assertEquals(product_type, responseCoupon.getData().getProductType());
+        assertEquals(for_first_purchase, responseCoupon.getData().getForFirstPurchase());
+        assertEquals(status, responseCoupon.getData().getStatus());
+        assertEquals(expired_at, responseCoupon.getData().getExpiredAt());
+        assertEquals(created_at, responseCoupon.getData().getCreatedAt());
+    }
+    // ************************************************************************************************************
+
+    // ********************************************** /api/addCoupon **********************************************
+    @Given("The api user prepares a POST request to send to the api addCoupon endpoint containing the following information: {string}, {string}, {string}, {string}, {int}, {int}, {int}, {int}, {int}, {string}, {int} and {string}.")
+    public void the_api_user_prepares_a_post_request_to_send_to_the_api_add_coupon_endpoint_containing_the_following_information_and(String title, String discount_type, String source, String code, int percent, int amount, int max_amount, int minimum_order, int count, String product_type, int for_first_purchase, String expired_at) {
+        requestCoupon = new CouponPojoRequest(title, discount_type, source, code, percent, amount, max_amount, minimum_order, count, product_type, for_first_purchase, expired_at);
+        requestBody = gson.toJson(requestCoupon); // Burada POJO nesnesini JSON formatında bir Stringe dönüştürdük.
+        System.out.println("POST Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // ******************************************* /api/updateCoupon/{id} *****************************************
+    @Given("The api user prepares a PATCH request to send to the api updateCoupon endpoint containing the following information: {string}, {string}, {string}, {int}, {int}, {int}, {int}, {int}, {string} and {int}.")
+    public void the_api_user_prepares_a_patch_request_to_send_to_the_api_update_coupon_endpoint_containing_the_following_information_and(String title, String discount_type, String source, int percent, int amount, int max_amount, int minimum_order, int count, String product_type, int for_first_purchase) {
+        requestBody = builder
+                .addParameterForMap("title", title)
+                .addParameterForMap("discount_type", discount_type)
+                .addParameterForMap("source", source)
+                .addParameterForMap("percent", percent)
+                .addParameterForMap("amount", amount)
+                .addParameterForMap("max_amount", max_amount)
+                .addParameterForMap("minimum_order", minimum_order)
+                .addParameterForMap("count", count)
+                .addParameterForMap("product_type", product_type)
+                .addParameterForMap("for_first_purchase", for_first_purchase)
                 .buildUsingMap();
 
         System.out.println("PATCH Request Body : " + requestBody);

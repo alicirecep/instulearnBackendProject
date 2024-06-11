@@ -1,4 +1,4 @@
-package pojos;
+package pojos.pricePlan;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -8,6 +8,26 @@ public class TestData {
     HashMap<String, HashMap<String, Object>> reqBody = new HashMap<>();
     Faker faker = new Faker();
 
+    public HashMap couponRequestBody() {
+
+        HashMap<String, Object> requestBody = new HashMap<>();
+
+        requestBody.put("title", "Test Coupon");
+        requestBody.put("discount_type", "percentage");
+        requestBody.put("source", "course");
+        requestBody.put("code", "TST78944512");
+        requestBody.put("percent", 15);
+        requestBody.put("amount", 10);
+        requestBody.put("max_amount", 200);
+        requestBody.put("minimum_order", 1);
+        requestBody.put("count", 50);
+        requestBody.put("product_type", "all");
+        requestBody.put("for_first_purchase", 0);
+        requestBody.put("expired_at", "2024-06-06");
+
+        return requestBody;
+    }
+
     public HashMap blogCategoryRequestBody() {
 
         HashMap<String, Object> requestBody = new HashMap<>();
@@ -124,6 +144,7 @@ public class TestData {
         reqBody.put("productFaq", productFaqRequestBody());
         reqBody.put("blog", blogRequestBody());
         reqBody.put("blogCategory", blogCategoryRequestBody());
+        reqBody.put("coupon", couponRequestBody());
 
         return reqBody.get(folder);
     }
