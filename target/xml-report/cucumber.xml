@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="1" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="8.6">
-    <testcase classname="As an administrator, I want to update the information of the coupon with the specified ID via an API connection." name="When a PATCH request with valid authorization credentials and a correct (id) but no data is sent to the" time="7.841">
-        <failure message="Cannot invoke &quot;java.lang.Integer.intValue()&quot; because the return value of &quot;java.util.HashMap.get(Object)&quot; is null" type="java.lang.NullPointerException"><![CDATA[* The api user sends a POST request to the api "addCoupon" endpoint to create a new "coupon" record and records the "Added Coupon ID" information..failed
-* The api user constructs the base url with the "admin" token...............skipped
-* The api user sets "api/updateCoupon" path parameters......................skipped
-* The api user prepares a PATCH request without containing any data.........skipped
-* The api user sends a "PATCH" request and saves the returned response......skipped
-* The api user verifies that the status code is 203.........................skipped
-* The api user verifies that the "remark" information in the response body is "failed"..skipped
-* The api user verifies that the "message" information in the response body is "There is no information to update."..skipped
-
-StackTrace:
-java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because the return value of "java.util.HashMap.get(Object)" is null
-	at utilities.API_Utilities.API_Methods.addedId(API_Methods.java:201)
-	at stepdefinitions.API_Stepdefinitions.the_api_user_sends_a_post_request_to_the_api_endpoint_to_create_a_new_record_and_records_the_information(API_Stepdefinitions.java:104)
-	at ✽.The api user sends a POST request to the api "addCoupon" endpoint to create a new "coupon" record and records the "Added Coupon ID" information.(file:///C:/Users/ACER/OneDrive%20-%20edulog/Masaüstü/instulearnBackendProject/src/test/resources/features/API/coupons/UpdateCoupon.feature:39)
-]]></failure>
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="12.354">
+    <testcase classname="As an administrator, I want to update the information of the support department with the specified ID via an API connection." name="When a PATCH request containing correct data (title) along with valid authorization credentials and the" time="11.646">
+        <system-out><![CDATA[* The api user sends a POST request to the api "addDepartment" endpoint to create a new "department" record and records the "Added Support Department ID" information..passed
+* The api user constructs the base url with the "admin" token...............passed
+* The api user sets "api/updateDepartment" path parameters..................passed
+* The api user prepares a PATCH request containing the "Technical Service" information to send to the api updateDepartment endpoint..passed
+* The api user sends a "PATCH" request and saves the returned response......passed
+* The api user verifies that the status code is 200.........................passed
+* The api user verifies that the "remark" information in the response body is "success"..passed
+* The api user verifies that the "Message" information in the response body is "Successfully Updated."..passed
+* The api user verifies that the "Updated Support Department ID" information in the returned response body is the same as the id path parameter written in the endpoint..passed
+* The api user verifies that the "data.translations[0].title" is "Technical Service" by sending a GET request to the "api" "department" endpoint with the "Updated Support Department ID" returned in the response body..passed
+]]></system-out>
     </testcase>
 </testsuite>

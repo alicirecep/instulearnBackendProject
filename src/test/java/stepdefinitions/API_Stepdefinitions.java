@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.zh_tw.當;
 import io.restassured.path.json.JsonPath;
 import pojos.coupon.CouponDataPojo;
 import pojos.coupon.CouponPojo;
@@ -758,6 +759,123 @@ public class API_Stepdefinitions {
                 .addParameterForMap("count", count)
                 .addParameterForMap("product_type", product_type)
                 .addParameterForMap("for_first_purchase", for_first_purchase)
+                .buildUsingMap();
+
+        System.out.println("PATCH Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // ********************************************** /api/supports ***********************************************
+    @Given("The api user validates the {int}, {int}, {string}, {string}, {int}, {int}, {string}, {int}, {string} and {string} of the response body with index {int}.")
+    public void the_api_user_validates_the_and_of_the_response_body_with_index(int user_id, int department_id, String title, String status, int created_at, int updated_at, String status_order, int id, String full_name, String role_name, int dataIndex) {
+        API_Methods.response.then()
+                .assertThat()
+                .body("data.supports[" + dataIndex + "].user_id", equalTo(user_id),
+                        "data.supports[" + dataIndex + "].webinar_id", equalTo(null),
+                        "data.supports[" + dataIndex + "].department_id", equalTo(department_id),
+                        "data.supports[" + dataIndex + "].title", equalTo(title),
+                        "data.supports[" + dataIndex + "].status", equalTo(status),
+                        "data.supports[" + dataIndex + "].created_at", equalTo(created_at),
+                        "data.supports[" + dataIndex + "].updated_at", equalTo(updated_at),
+                        "data.supports[" + dataIndex + "].status_order", equalTo(status_order),
+                        "data.supports[" + dataIndex + "].user.id", equalTo(id),
+                        "data.supports[" + dataIndex + "].user.full_name", equalTo(full_name),
+                        "data.supports[" + dataIndex + "].user.role_name", equalTo(role_name));
+    }
+    // ************************************************************************************************************
+
+    // ********************************************** /api/support/{id} *******************************************
+    @Given("The api user validates the data {int}, {int}, {int}, {string}, {string}, {int}, {int}, {string}, {int}, {string} and {string} in the response body.")
+    public void the_api_user_validates_the_data_and_in_the_response_body(int data_id, int user_id, int department_id, String title, String status, int created_at, int updated_at, String status_order, int userId, String full_name, String role_name) {
+        API_Methods.response.then()
+                .assertThat()
+                .body("data.id", equalTo(data_id),
+                        "data.user_id", equalTo(user_id),
+                        "data.webinar_id", equalTo(null),
+                        "data.department_id", equalTo(department_id),
+                        "data.title", equalTo(title),
+                        "data.status", equalTo(status),
+                        "data.created_at", equalTo(created_at),
+                        "data.updated_at", equalTo(updated_at),
+                        "data.status_order", equalTo(status_order),
+                        "data.user.id", equalTo(userId),
+                        "data.user.full_name", equalTo(full_name),
+                        "data.user.role_name", equalTo(role_name));
+    }
+    // ************************************************************************************************************
+
+    // ************************************************ /api/addSupport *******************************************
+    @Given("The api user prepares a post request with {string}, {int} and {string} to send to the api addSupport endpoint")
+    public void the_api_user_prepares_a_post_request_with_and_to_send_to_the_api_add_support_endpoint(String title, int department_id, String message) {
+        requestBody = builder
+                .addParameterForMap("title", title)
+                .addParameterForMap("department_id", department_id)
+                .addParameterForMap("message", message)
+                .buildUsingMap();
+
+        System.out.println("POST Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // ********************************************* /api/updateSupport/{id} **************************************
+    @Given("The api user prepares a patch request with {string}, {int} and {string} to send to the api updateSupport endpoint.")
+    public void the_api_user_prepares_a_patch_request_with_and_to_send_to_the_api_update_support_endpoint(String title, int department_id, String message) {
+        requestBody = builder
+                .addParameterForMap("title", title)
+                .addParameterForMap("department_id", department_id)
+                .addParameterForMap("message", message)
+                .buildUsingMap();
+
+        System.out.println("PATCH Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // *********************************************** /api/departments *******************************************
+    @Given("The API user validates the {int}, {int}, {int}, {int}, {string} and {string} of the response body with index {int}.")
+    public void the_apı_user_validates_the_and_of_the_response_body_with_index(int created_at, int supports_count, int translations_id, int support_department_id, String locale, String title, int dataIndex) {
+        jsonPath = API_Methods.response.jsonPath();
+
+        assertEquals(created_at, jsonPath.getInt("data.departments[" + dataIndex + "].created_at"));
+        assertEquals(supports_count, jsonPath.getInt("data.departments[" + dataIndex + "].supports_count"));
+        assertNull(jsonPath.get("data.departments[" + dataIndex + "].title"));
+        assertEquals(translations_id, jsonPath.getInt("data.departments[" + dataIndex + "].translations[0].id"));
+        assertEquals(support_department_id, jsonPath.getInt("data.departments[" + dataIndex + "].translations[0].support_department_id"));
+        assertEquals(locale, jsonPath.getString("data.departments[" + dataIndex + "].translations[0].locale"));
+        assertEquals(title, jsonPath.getString("data.departments[" + dataIndex + "].translations[0].title"));
+    }
+    // ************************************************************************************************************
+
+    // ******************************************* /api/department/{id} *******************************************
+    @Given("The api user validates the data {int}, {int}, {int}, {int}, {string} and {string} in the response body.")
+    public void the_api_user_validates_the_data_and_in_the_response_body(int data_id, int created_at, int translations_id, int support_department_id, String locale, String title) {
+        jsonPath = API_Methods.response.jsonPath();
+
+        assertEquals(data_id, jsonPath.getInt("data.id"));
+        assertEquals(created_at, jsonPath.getInt("data.created_at"));
+        assertNull(jsonPath.get("data.title"));
+        assertEquals(translations_id, jsonPath.getInt("data.translations[0].id"));
+        assertEquals(support_department_id, jsonPath.getInt("data.translations[0].support_department_id"));
+        assertEquals(locale, jsonPath.getString("data.translations[0].locale"));
+        assertEquals(title, jsonPath.getString("data.translations[0].title"));
+    }
+    // ************************************************************************************************************
+
+    // ******************************************** /api/addDepartment ********************************************
+    @Given("The api user prepares a POST request containing the {string} information to send to the addDepartment endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_add_department_endpoint(String title) {
+        requestBody = builder
+                .addParameterForMap("title", title)
+                .buildUsingMap();
+
+        System.out.println("POST Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // ************************************* /api/updateDepartment/{id} *******************************************
+    @Given("The api user prepares a PATCH request containing the {string} information to send to the api updateDepartment endpoint.")
+    public void the_api_user_prepares_a_patch_request_containing_the_information_to_send_to_the_api_update_department_endpoint(String title) {
+        requestBody = builder
+                .addParameterForMap("title", title)
                 .buildUsingMap();
 
         System.out.println("PATCH Request Body : " + requestBody);

@@ -8,14 +8,35 @@ public class TestData {
     HashMap<String, HashMap<String, Object>> reqBody = new HashMap<>();
     Faker faker = new Faker();
 
+    public HashMap departmentRequestBody() {
+
+        HashMap<String, Object> requestBody = new HashMap<>();
+
+        requestBody.put("title", faker.book().title());
+
+        return requestBody;
+    }
+
+    public HashMap supportRequestBody() {
+
+        HashMap<String, Object> requestBody = new HashMap<>();
+
+        requestBody.put("title", faker.book().title());
+        requestBody.put("department_id", 2);
+        requestBody.put("message", "The purchase price I canceled has still not been refunded.");
+
+        return requestBody;
+    }
+
     public HashMap couponRequestBody() {
+        String code = faker.code().asin();
 
         HashMap<String, Object> requestBody = new HashMap<>();
 
         requestBody.put("title", "Test Coupon");
         requestBody.put("discount_type", "percentage");
         requestBody.put("source", "course");
-        requestBody.put("code", "TST78944512");
+        requestBody.put("code", code);
         requestBody.put("percent", 15);
         requestBody.put("amount", 10);
         requestBody.put("max_amount", 200);
@@ -145,6 +166,8 @@ public class TestData {
         reqBody.put("blog", blogRequestBody());
         reqBody.put("blogCategory", blogCategoryRequestBody());
         reqBody.put("coupon", couponRequestBody());
+        reqBody.put("support", supportRequestBody());
+        reqBody.put("department", departmentRequestBody());
 
         return reqBody.get(folder);
     }
