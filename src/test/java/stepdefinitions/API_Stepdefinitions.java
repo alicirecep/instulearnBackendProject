@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.zh_tw.當;
 import io.restassured.path.json.JsonPath;
 import pojos.coupon.CouponDataPojo;
 import pojos.coupon.CouponPojo;
@@ -17,6 +16,7 @@ import pojos.product.ProductPojo;
 import pojos.productfaq.ProductfaqPojo;
 import utilities.API_Utilities.API_Methods;
 import utilities.API_Utilities.RequestBuilder;
+import utilities.API_Utilities.TestData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -879,6 +879,78 @@ public class API_Stepdefinitions {
                 .buildUsingMap();
 
         System.out.println("PATCH Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // *********************************************** /api/contacts **********************************************
+    @Given("The api user verifies the {string}, {string}, {string}, {string}, {string}, {string}, and {int} information for the item at the {int} index in the response body.")
+    public void the_api_user_verifies_the_and_information_for_the_item_at_the_index_in_the_response_body(String name, String email, String phone, String subject, String message, String status, int created_at, int datIndex) {
+        API_Methods.response.then()
+                .assertThat()
+                .body("data.contacts[" + datIndex + "].name", equalTo(name),
+                        "data.contacts[" + datIndex + "].email", equalTo(email),
+                        "data.contacts[" + datIndex + "].phone", equalTo(phone),
+                        "data.contacts[" + datIndex + "].subject", equalTo(subject),
+                        "data.contacts[" + datIndex + "].message", equalTo(message),
+                        "data.contacts[" + datIndex + "].reply", equalTo(null),
+                        "data.contacts[" + datIndex + "].status", equalTo(status),
+                        "data.contacts[" + datIndex + "].created_at", equalTo(created_at));
+    }
+    // ************************************************************************************************************
+
+    // ***************************************** /api/contact/{id} ************************************************
+    @Given("The api user verifies the content of {int}, {string}, {string}, {string}, {string}, {string}, {string}, and {int} in the response body.")
+    public void the_api_user_verifies_the_content_of_and_in_the_response_body(int data_id, String name, String email, String phone, String subject, String message, String status, int created_at) {
+        API_Methods.response.then()
+                .assertThat()
+                .body("data.id", equalTo(data_id),
+                        "data.name", equalTo(name),
+                        "data.email", equalTo(email),
+                        "data.phone", equalTo(phone),
+                        "data.subject", equalTo(subject),
+                        "data.message", equalTo(message),
+                        "data.reply", equalTo(null),
+                        "data.status", equalTo(status),
+                        "data.created_at", equalTo(created_at));
+    }
+    // ************************************************************************************************************
+
+    // ******************************************* /api/addContact ************************************************
+    @Given("The api user prepares a POST request containing the {string}, {string}, {string} and {string} information to send to the api addContact endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_and_information_to_send_to_the_api_add_contact_endpoint(String name, String email, String subject, String message) {
+
+        String value = TestData.faker.phoneNumber().cellPhone();
+
+        // Telefon numarasını Long'a çevir
+        Long phoneNumber = Long.valueOf(value.replaceAll("[^\\d]", ""));
+
+        requestBody = builder
+                .addParameterForMap("name", name)
+                .addParameterForMap("email", email)
+                .addParameterForMap("phone", phoneNumber)
+                .addParameterForMap("subject", subject)
+                .addParameterForMap("message", message)
+                .buildUsingMap();
+
+        System.out.println("POST Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // ********************************** /api/updateContact/{id} *************************************************
+    @Given("The api user prepares a PATCH request containing the {string} and {string} information to send to the api updateContact endpoint.")
+    public void the_api_user_prepares_a_patch_request_containing_the_and_information_to_send_to_the_api_update_contact_endpoint(String subject, String message) {
+        String value = TestData.faker.phoneNumber().cellPhone();
+
+        // Telefon numarasını Long'a çevir
+        Long phoneNumber = Long.valueOf(value.replaceAll("[^\\d]", ""));
+
+        requestBody = builder
+                .addParameterForMap("phone", phoneNumber)
+                .addParameterForMap("subject", subject)
+                .addParameterForMap("message", message)
+                .buildUsingMap();
+
+        System.out.println("POST Request Body : " + requestBody);
     }
     // ************************************************************************************************************
 }

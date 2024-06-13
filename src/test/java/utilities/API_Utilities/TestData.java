@@ -6,7 +6,23 @@ import java.util.HashMap;
 
 public class TestData {
     HashMap<String, HashMap<String, Object>> reqBody = new HashMap<>();
-    Faker faker = new Faker();
+    public static Faker faker = new Faker();
+
+    public HashMap contactRequestBody() {
+
+        String value = TestData.faker.phoneNumber().cellPhone();
+        Long phoneNumber = Long.valueOf(value.replaceAll("[^\\d]", ""));
+
+        HashMap<String, Object> requestBody = new HashMap<>();
+
+        requestBody.put("name", "John Brown");
+        requestBody.put("email", "jbrown@gmail.com");
+        requestBody.put("phone", phoneNumber);
+        requestBody.put("subject", "Test Contact Subject");
+        requestBody.put("message", "Test Contact Message");
+
+        return requestBody;
+    }
 
     public HashMap departmentRequestBody() {
 
@@ -168,6 +184,7 @@ public class TestData {
         reqBody.put("coupon", couponRequestBody());
         reqBody.put("support", supportRequestBody());
         reqBody.put("department", departmentRequestBody());
+        reqBody.put("contact", contactRequestBody());
 
         return reqBody.get(folder);
     }

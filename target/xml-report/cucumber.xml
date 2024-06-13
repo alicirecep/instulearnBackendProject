@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="12.354">
-    <testcase classname="As an administrator, I want to update the information of the support department with the specified ID via an API connection." name="When a PATCH request containing correct data (title) along with valid authorization credentials and the" time="11.646">
-        <system-out><![CDATA[* The api user sends a POST request to the api "addDepartment" endpoint to create a new "department" record and records the "Added Support Department ID" information..passed
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="13.716">
+    <testcase classname="As an administrator, I want to update the information of the contact with the specified ID via an API connection." name="When a PATCH request containing valid authorization credentials, correct ID, and valid data" time="12.758">
+        <system-out><![CDATA[* The api user sends a POST request to the api "addContact" endpoint to create a new "contact" record and records the "Added Contact Message ID" information..passed
 * The api user constructs the base url with the "admin" token...............passed
-* The api user sets "api/updateDepartment" path parameters..................passed
-* The api user prepares a PATCH request containing the "Technical Service" information to send to the api updateDepartment endpoint..passed
+* The api user sets "api/updateContact" path parameters.....................passed
+* The api user prepares a PATCH request containing the "Subject Test Contact" and "Message Test Contact" information to send to the api updateContact endpoint..passed
 * The api user sends a "PATCH" request and saves the returned response......passed
 * The api user verifies that the status code is 200.........................passed
 * The api user verifies that the "remark" information in the response body is "success"..passed
 * The api user verifies that the "Message" information in the response body is "Successfully Updated."..passed
-* The api user verifies that the "Updated Support Department ID" information in the returned response body is the same as the id path parameter written in the endpoint..passed
-* The api user verifies that the "data.translations[0].title" is "Technical Service" by sending a GET request to the "api" "department" endpoint with the "Updated Support Department ID" returned in the response body..passed
+* The api user verifies that the "Updated Contact Message ID" information in the returned response body is the same as the id path parameter written in the endpoint..passed
+* The api user verifies that the "data.subject" is "Subject Test Contact" by sending a GET request to the "api" "contact" endpoint with the "Updated Contact Message ID" returned in the response body..passed
 ]]></system-out>
     </testcase>
 </testsuite>
