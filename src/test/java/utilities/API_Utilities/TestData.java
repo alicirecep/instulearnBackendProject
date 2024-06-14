@@ -8,6 +8,20 @@ public class TestData {
     HashMap<String, HashMap<String, Object>> reqBody = new HashMap<>();
     public static Faker faker = new Faker();
 
+    public HashMap badgeRequestBody() {
+
+        HashMap<String, Object> requestBody = new HashMap<>();
+
+        requestBody.put("title", "Test Badge");
+        requestBody.put("description", "Test Badge Description");
+        requestBody.put("type", "course_count");
+        requestBody.put("from", 25);
+        requestBody.put("to", 50);
+        requestBody.put("score", 50);
+
+        return requestBody;
+    }
+
     public HashMap contactRequestBody() {
 
         String value = TestData.faker.phoneNumber().cellPhone();
@@ -185,6 +199,7 @@ public class TestData {
         reqBody.put("support", supportRequestBody());
         reqBody.put("department", departmentRequestBody());
         reqBody.put("contact", contactRequestBody());
+        reqBody.put("badge", badgeRequestBody());
 
         return reqBody.get(folder);
     }

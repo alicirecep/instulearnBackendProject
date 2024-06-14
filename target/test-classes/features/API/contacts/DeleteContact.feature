@@ -86,6 +86,18 @@ Feature: As an administrator, I want to delete the contact information with the 
     # Api kullanicisi response bodydeki message bilgisinin "To access this data, you must log in as a admin." oldugunu dogrular
 
 
+  Scenario: Verify that when a DELETE request with invalid (invalid token) authorization credentials and a valid {id} is sent to
+  the /api/deleteContact/{id} endpoint, the returned status code is 401, and the message field in the response body is
+  "Unauthenticated."
+
+    * The api user sends a POST request to the api "addContact" endpoint to create a new "contact" record and records the "Added Contact Message ID" information.
+    # Api kullanıcısı api "addContact" endpointine POST isteği göndererek yeni bir "contact" kaydı oluşturur ve "Added Contact Message ID" bilgisini kaydeder.
+    * The api user constructs the base url with the "invalid" token.
+    # Api kullanicisi "invalid" token ile base urli olusturur
+    * The api user sets "api/deleteContact" path parameters.
+    # Api kullanicisi "api/deleteContact/{id}" path parametrelerini olusturur
+    * The api user sends a "DELETE" request, saves the returned response, and verifies that the status code is '401' with the reason phrase Unauthorized.
+    # Api kullanicisi DELETE request gonderir, donen responsei kaydeder, status codeun '401' ve reason phrase bilgisinin Unauthorized oldugunu dogrular
 
 
 

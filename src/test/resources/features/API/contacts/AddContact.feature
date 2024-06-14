@@ -7,21 +7,13 @@ Feature: As an administrator, I want to create a new contact record via an API c
   /api/contact/{id} endpoint in the API.
 
     * The api user constructs the base url with the "admin" token.
-    # Api kullanicisi "admin" token ile base urli olusturur
     * The api user sets "api/addContact" path parameters.
-    # Api kullanicisi "api/addContact" path parametrelerini olusturur
     * The api user prepares a POST request containing the "<name>", "<email>", "<subject>" and "<message>" information to send to the api addContact endpoint.
-    # Api kullanicisi api addContact endpointine gondermek icin "<name>", "<email>", <phone>, "<subject>" ve "<message>" bilgilerini iceren bir post request hazirlar
     * The api user sends a "POST" request and saves the returned response.
-    # Api kullanicisi POST request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 200.
-    # Api kullanicisi status codeun 200 oldugunu dogrular
     * The api user verifies that the "remark" information in the response body is "success".
-    # Api kullanicisi response bodydeki remark bilgisinin "success" oldugunu dogrular
     * The api user verifies that the "Message" information in the response body is "Successfully Added.".
-    # Api kullanicisi response bodydeki Message bilgisinin "Successfully Added." oldugunu dogrular
     * The api user verifies that the "remark" is "success" by sending a GET request to the "api" "contact" endpoint with the "Added Contact Message ID" returned in the response body.
-    # Api kullanicisi response bodyde donen "Added Contact Message ID" ile "api" "contact" endpoint'ine GET request göndererek "remark" bilgisinin "success" oldugunu dogrular
 
     Examples:
       | name       | email            | subject              | message              |
@@ -33,17 +25,11 @@ Feature: As an administrator, I want to create a new contact record via an API c
   response body is verified to be "The email must be a valid email address."
 
     * The api user constructs the base url with the "admin" token.
-    # Api kullanicisi "admin" token ile base urli olusturur
     * The api user sets "api/addContact" path parameters.
-    # Api kullanicisi "api/addContact" path parametrelerini olusturur
     * The api user prepares a POST request containing the "<name>", "<email>", "<subject>" and "<message>" information to send to the api addContact endpoint.
-    # Api kullanicisi api addContact endpointine gondermek icin "<name>", "<email>", <phone>, "<subject>" ve "<message>" bilgilerini iceren bir post request hazirlar
     * The api user sends a "POST" request and saves the returned response.
-    # Api kullanicisi POST request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 422.
-    # Api kullanicisi status codeun 422 oldugunu dogrular
     * The api user verifies that the "message" information in the response body is "The email must be a valid email address.".
-    # Api kullanicisi response bodydeki message bilgisinin "The email must be a valid email address." oldugunu dogrular
 
     Examples:
       | name       | email           | subject              | message              |
@@ -55,17 +41,11 @@ Feature: As an administrator, I want to create a new contact record via an API c
   "The name field is required. (and 4 more errors)"
 
     * The api user constructs the base url with the "admin" token.
-    # Api kullanicisi "admin" token ile base urli olusturur
     * The api user sets "api/addContact" path parameters.
-    # Api kullanicisi "api/addContact" path parametrelerini olusturur
     * The api user prepares a POST request that contains no data.
-    # Api kullanicisi data icermeyen bir post request hazırlar
     * The api user sends a "POST" request and saves the returned response.
-    # Api kullanicisi POST request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 422.
-    # Api kullanicisi status codeun 422 oldugunu dogrular
     * The api user verifies that the "message" information in the response body is "The name field is required. (and 4 more errors)".
-    # Api kullanicisi response bodyde dönen message bilgisinin "The name field is required. (and 4 more errors)" oldugunu dogrular
 
 
   Scenario Outline: When a POST body containing correct data (name, email, phone, subject, message) is sent with invalid
@@ -73,19 +53,12 @@ Feature: As an administrator, I want to create a new contact record via an API c
   field in the response body is "failed", and the message field is "To access this data, you must log in as a admin."
 
     * The api user constructs the base url with the "instructor" token.
-    # Api kullanicisi "instructor" token ile base urli olusturur
     * The api user sets "api/addContact" path parameters.
-    # Api kullanicisi "api/addContact" path parametrelerini olusturur
     * The api user prepares a POST request containing the "<name>", "<email>", "<subject>" and "<message>" information to send to the api addContact endpoint.
-    # Api kullanicisi api addContact endpointine gondermek icin "<name>", "<email>", <phone>, "<subject>" ve "<message>" bilgilerini iceren bir post request hazirlar
     * The api user sends a "POST" request and saves the returned response.
-    # Api kullanicisi POST request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 203.
-    # Api kullanicisi status codeun 203 oldugunu dogrular
     * The api user verifies that the "remark" information in the response body is "failed".
-    # Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
     * The api user verifies that the "data.message" information in the response body is "To access this data, you must log in as a admin.".
-    # Api kullanicisi response bodydeki message bilgisinin "To access this data, you must log in as a admin." oldugunu dogrular
 
     Examples:
       | name       | email            | subject              | message              |
@@ -97,17 +70,11 @@ Feature: As an administrator, I want to create a new contact record via an API c
   response body is confirmed to be "Unauthenticated."
 
     * The api user constructs the base url with the "invalid" token.
-    # Api kullanicisi "invalid" token ile base urli olusturur
     * The api user sets "api/addContact" path parameters.
-    # Api kullanicisi "api/addContact" path parametrelerini olusturur
     * The api user prepares a POST request containing the "<name>", "<email>", "<subject>" and "<message>" information to send to the api addContact endpoint.
-    # Api kullanicisi api addContact endpointine gondermek icin "<name>", "<email>", <phone>, "<subject>" ve "<message>" bilgilerini iceren bir post request hazirlar
     * The api user sends a "POST" request and saves the returned response.
-    # Api kullanicisi POST request gonderir ve donen responsei kaydeder
     * The api user verifies that the status code is 401.
-    # Api kullanicisi status codeun 401 oldugunu dogrular
     * The api user verifies that the "message" information in the response body is "Unauthenticated.".
-    # Api kullanicisi response bodyde dönen message bilgisinin "Unauthenticated." oldugunu dogrular
 
     Examples:
       | name       | email            | subject              | message              |

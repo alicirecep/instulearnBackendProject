@@ -953,4 +953,71 @@ public class API_Stepdefinitions {
         System.out.println("POST Request Body : " + requestBody);
     }
     // ************************************************************************************************************
+
+    // ********************************************** /api/badges *************************************************
+    @Given("The api user verifies the information for the entry with the {int} index in the response body, including {string}, {string}, {string}, {string}, {int}, {int}, {int}, {int}, {string}, {string}, and {string}.")
+    public void the_api_user_verifies_the_information_for_the_entry_with_the_index_in_the_response_body_including_and(int dataIndex, String image, String type, String from, String to, int score, int created_at, int id, int badge_id, String locale, String title, String description) {
+        jsonPath = API_Methods.response.jsonPath();
+
+        assertEquals(image, jsonPath.getString("data.badges[" + dataIndex + "].image"));
+        assertEquals(type, jsonPath.getString("data.badges[" + dataIndex + "].type"));
+        assertEquals(from, jsonPath.getString("data.badges[" + dataIndex + "].condition.from"));
+        assertEquals(to, jsonPath.getString("data.badges[" + dataIndex + "].condition.to"));
+        assertEquals(score, jsonPath.getInt("data.badges[" + dataIndex + "].score"));
+        assertEquals(created_at, jsonPath.getInt("data.badges[" + dataIndex + "].created_at"));
+        assertEquals(id, jsonPath.getInt("data.badges[" + dataIndex + "].translations[0].id"));
+        assertEquals(badge_id, jsonPath.getInt("data.badges[" + dataIndex + "].translations[0].badge_id"));
+        assertEquals(locale, jsonPath.getString("data.badges[" + dataIndex + "].translations[0].locale"));
+        assertEquals(title, jsonPath.getString("data.badges[" + dataIndex + "].translations[0].title"));
+        assertEquals(description, jsonPath.getString("data.badges[" + dataIndex + "].translations[0].description"));
+    }
+    // ************************************************************************************************************
+
+    // ******************************************** /api/badge/{id} ***********************************************
+    @Given("The API user verifies the contents of {int}, {string}, {string}, {string}, {string}, {int}, {int}, {int}, {int}, {string}, {string} and {string} in the response body data.")
+    public void the_apı_user_verifies_the_contents_of_and_in_the_response_body_data(int data_id, String image, String type, String from, String to, int score, int created_at, int translations_id, int badge_id, String locale, String title, String description) {
+        jsonPath = API_Methods.response.jsonPath();
+
+        assertEquals(data_id, jsonPath.getInt("data.id"));
+        assertEquals(image, jsonPath.getString("data.image"));
+        assertEquals(type, jsonPath.getString("data.type"));
+        assertEquals(from, jsonPath.getString("data.condition.from"));
+        assertEquals(to, jsonPath.getString("data.condition.to"));
+        assertEquals(score, jsonPath.getInt("data.score"));
+        assertEquals(created_at, jsonPath.getInt("data.created_at"));
+        assertEquals(translations_id, jsonPath.getInt("data.translations[0].id"));
+        assertEquals(badge_id, jsonPath.getInt("data.translations[0].badge_id"));
+        assertEquals(locale, jsonPath.getString("data.translations[0].locale"));
+        assertEquals(title, jsonPath.getString("data.translations[0].title"));
+        assertEquals(description, jsonPath.getString("data.translations[0].description"));
+    }
+    // ************************************************************************************************************
+
+    // ********************************************** /api/addBadge ***********************************************
+    @Given("The api user prepares a POST request to send to the api addBadge endpoint with the following information {string}, {string}, {string}, {int}, {int} and {int}.")
+    public void the_api_user_prepares_a_post_request_to_send_to_the_api_add_badge_endpoint_with_the_following_information_and(String title, String description, String type, int from, int to, int score) {
+        requestBody = builder
+                .addParameterForJSONObject("title", title)
+                .addParameterForJSONObject("description", description)
+                .addParameterForJSONObject("type", type)
+                .addParameterForJSONObject("from", from)
+                .addParameterForJSONObject("to", to)
+                .addParameterForJSONObject("score", score)
+                .buildUsingJSONObject();
+
+        System.out.println("POST Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
+
+    // ******************************************* /api/updateBadge/{id} ******************************************
+    @Given("The api user prepares a PATCH request containing {string} and {string} information to send to the api updateBadge endpoint.")
+    public void the_api_user_prepares_a_patch_request_containing_and_information_to_send_to_the_api_update_badge_endpoint(String title, String type) {
+        requestBody = builder
+                .addParameterForJSONObject("title", title)
+                .addParameterForJSONObject("type", type)
+                .buildUsingJSONObject();
+
+        System.out.println("PATCH Request Body : " + requestBody);
+    }
+    // ************************************************************************************************************
 }
