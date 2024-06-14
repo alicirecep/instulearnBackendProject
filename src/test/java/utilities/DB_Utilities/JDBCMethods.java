@@ -1,7 +1,5 @@
 package utilities.DB_Utilities;
 
-import helperDB.JDBC_Cons;
-
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -11,7 +9,7 @@ import java.util.*;
 
 import static helperDB.JDBC_Structure_Methods.*;
 
-public class JDBCMethods extends JDBC_Cons {
+public class JDBCMethods  {
 
     //prepared statement timestamp instant döndürür.
     static Instant instant = Instant.now();
