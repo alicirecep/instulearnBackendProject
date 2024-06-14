@@ -4,7 +4,6 @@ import config_Requirements.ConfigReader;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
